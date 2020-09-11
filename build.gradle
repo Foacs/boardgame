@@ -26,6 +26,7 @@ jacocoTestReport {
 
 sonarqube {
     properties {
+        property "sonar.organization", "foacs"
         property "sonar.projectKey", "Foacs_boardgame"
     }
 }
