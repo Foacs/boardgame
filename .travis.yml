@@ -22,7 +22,7 @@ before_script:
 
 addons:
   sonarcloud:
-    organization: "faocs"
+    organization: "foacs"
     token:
       secure: V3jSTeqkedo8AJ0q3Y1X/zYj9bA9YBZt80o2wUspeJStpywNvPjk1W08xopECLYO5Qd+S17NpWNdNWycIQNh5cx3g+zYw0JxmeZlHoOdRJZ1zt+WQ+YIqv1Iry2GVYgvJNxp9MVRwH1Jb6sgnWIShu8cGbjYq1L40BxWrbAchNdaWSYNVak1Kp4pwcBqd1V2rfNx0qmVc9AHoVnmNssdxbcXBw9wIfFboaohbbzMS0a4YKV/bx/5PwQjWvMzovDD2Y1c6p8iEzwf76HyE9KRcIp8eK6DYpuvlL37fRUwvYfP4XDnH7ivm5DczVl+cQ16ysf77I88mUVzLkDRMyHHc6q8yVVOmvdn3nnPNc1/Kv0Pcw+Cg7OJakXpLKtWgRkXq/npks+ujiD2bZr2XqzrDx5eSMXY+Hxud7UXzHXzalQn/PzAUYL/J/vRAvgsdFiOcdkZTi2f4IL53WAS9EgPzYGn/r7K1g3e/M2LiqS7xLbaJJvIFiuH/ZaB2ZCgWKfRiLjqGSOitXvRoxH5u4IkO3ZYMfnwMRdH6C58cqFjsgQaBTS8DDJSIat6JzFz6usifnVgetSd+WyKhWZbQWZ/9nTr2AlWhf9AIjDTV+4d4BBupGdyDZf1XgRtHe3dxmA6KPl+QzwndKfKYKBOuIWEJHx5LnQG0Ko/YpwWMbTBhDc=
 
