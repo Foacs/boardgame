@@ -1,64 +1,100 @@
 plugins {
-    id 'java'
-    id 'jacoco'
+//    id 'jacoco'
     id 'org.sonarqube' version "3.0"
 }
 
-group 'fr.foacs'
-version '0.1-SNAPSHOT'
+allprojects {
+    apply plugin: 'jacoco'
 
-sourceCompatibility = 11
+    group 'fr.foacs'
+    version '0.1-SNAPSHOT'
 
-repositories {
-    mavenCentral()
+    repositories {
+        mavenCentral()
+    }
+
+    ext {
+        appName = "board-game"
+        gdxVersion = '1.9.10'
+//        roboVMVersion = '2.3.8'
+//        box2DLightsVersion = '1.4'
+//        ashleyVersion = '1.7.0'
+//        aiVersion = '1.8.0'
+    }
 }
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+subprojects {
+    apply plugin: 'java'
 
-    /* LOMBOK */
-    compileOnly 'org.projectlombok:lombok:1.18.12'
-    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    sourceCompatibility = 11
 
-    /* LOMBOK Test */
-    testCompileOnly 'org.projectlombok:lombok:1.18.12'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+    dependencies {
+        testImplementation "org.junit.jupiter:junit-jupiter-api:5.6.0"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.6.0"
 
-    /* SLF4J */
-    implementation "org.slf4j:slf4j-api:1.7.30"
-    /* SLF4J-BINDING */
-    implementation "org.apache.logging.log4j:log4j-slf4j-impl:2.13.3"
-    /* LOG4J2 */
-    implementation "org.apache.logging.log4j:log4j-api:2.13.3"
-    implementation "org.apache.logging.log4j:log4j-core:2.13.3"
+        /* LOMBOK */
+        compileOnly 'org.projectlombok:lombok:1.18.12'
+        annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+        /* LOMBOK Test */
+        testCompileOnly 'org.projectlombok:lombok:1.18.12'
+        testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+        /* SLF4J */
+        implementation "org.slf4j:slf4j-api:1.7.30"
+        /* SLF4J-BINDING */
+        implementation "org.apache.logging.log4j:log4j-slf4j-impl:2.13.3"
+        /* LOG4J2 */
+        implementation "org.apache.logging.log4j:log4j-api:2.13.3"
+        implementation "org.apache.logging.log4j:log4j-core:2.13.3"
+
+        /*Google guava*/
+        implementation 'com.google.guava:guava:28.2-jre'
+    }
+
+    sonarqube {
+        properties {
+            property "sonar.sources", "src/main/java"
+            property "sonar.tests", "src/test/java"
+        }
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            html.enabled false
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+    check.dependsOn jacocoTestReport
 }
 
-jacocoTestReport {
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
     reports {
         xml.enabled true
+        xml.destination file("${buildDir}/reports/jacoco/report.xml")
         html.enabled false
+        csv.enabled false
     }
+}
+
+codeCoverageReport.dependsOn {
+    subprojects*.test
 }
 
 sonarqube {
     properties {
+        property "sonar.sourceEncoding", "UTF-8"
         property "sonar.organization", "foacs"
         property "sonar.projectKey", "Foacs_boardgame"
     }
 }
-
-task createProperties(dependsOn: processResources) {
-    doLast {
-        new File("$buildDir/resources/main/version.properties").withWriter { w ->
-            Properties p = new Properties()
-            p['version'] = project.version.toString()
-            p.store w, null
-        }
-    }
-}
-
-classes {
-    dependsOn createProperties
-}
-
-check.dependsOn jacocoTestReport

@@ -28,6 +28,7 @@ addons:
 script:
   - ./gradlew check
   - ./gradlew sonarqube
+  - ./gradlew codeCoverageReport
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash) -f /build/reports/jacoco/test/jacocoTestReport.xml
+  - bash <(curl -s https://codecov.io/bash)
