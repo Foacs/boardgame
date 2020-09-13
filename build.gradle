@@ -5,9 +5,9 @@ plugins {
 }
 
 group 'fr.foacs'
-version '1.0-SNAPSHOT'
+version '0.1-SNAPSHOT'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 11
 
 repositories {
     mavenCentral()
@@ -15,6 +15,22 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    /* LOMBOK */
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    /* LOMBOK Test */
+    testCompileOnly 'org.projectlombok:lombok:1.18.12'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    /* SLF4J */
+    implementation "org.slf4j:slf4j-api:1.7.30"
+    /* SLF4J-BINDING */
+    implementation "org.apache.logging.log4j:log4j-slf4j-impl:2.13.3"
+    /* LOG4J2 */
+    implementation "org.apache.logging.log4j:log4j-api:2.13.3"
+    implementation "org.apache.logging.log4j:log4j-core:2.13.3"
 }
 
 jacocoTestReport {
@@ -29,6 +45,20 @@ sonarqube {
         property "sonar.organization", "foacs"
         property "sonar.projectKey", "Foacs_boardgame"
     }
+}
+
+task createProperties(dependsOn: processResources) {
+    doLast {
+        new File("$buildDir/resources/main/version.properties").withWriter { w ->
+            Properties p = new Properties()
+            p['version'] = project.version.toString()
+            p.store w, null
+        }
+    }
+}
+
+classes {
+    dependsOn createProperties
 }
 
 check.dependsOn jacocoTestReport

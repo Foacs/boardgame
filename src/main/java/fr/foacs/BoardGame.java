@@ -36,11 +36,26 @@
 
 package fr.foacs;
 
+import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 /**
  * Entry point class
  */
+@Slf4j
 public class BoardGame {
   public static void main(final String[] args) {
-    // Nothing for the moment
+
+    Properties versionProperties = new Properties();
+
+    try (InputStream stream = BoardGame.class.getResourceAsStream("/version.properties")) {
+      versionProperties.load(stream);
+    } catch (IOException ioException) {
+      log.warn("Could not read version properties file", ioException);
+    }
+
+    log.info("Starting BoardGame version {} powered by java version {}", versionProperties.getOrDefault("version", "UNKNOWN"), System.getProperty("java.version"));
   }
 }
