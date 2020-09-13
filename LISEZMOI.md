@@ -26,11 +26,17 @@ Créer avec Java une application pour jouer à des jeux de plateau. Les deux pri
 ## Technologies
 - Java: > 11 _[openJDK-11](https://openjdk.java.net/projects/jdk/11/)_
 - Gradle: 5
+- LibGDX: 1.9
 
 ## Configuration
 Pour executer ce projet, installer le localement en utilisant le wrapper gradle:
 ```shell script
 ./gradlew build
+```
+
+Pour le lancer:
+```shell script
+./gradlew run
 ```
 
 ## Licence

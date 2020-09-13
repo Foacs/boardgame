@@ -25,11 +25,17 @@ Creating with Java an application to play board game. The two main purpose of th
 ## Technologies
 - Java: > 11 _[openJDK-11](https://openjdk.java.net/projects/jdk/11/)_
 - Gradle: 5
+- LibGDX: 1.9
 
 ## Setup
 To run this project, install it locally using gradle wrapper:
 ```shell script
 ./gradlew build
+```
+
+To launch it:
+```shell script
+./gradlew run
 ```
 
 ## License
