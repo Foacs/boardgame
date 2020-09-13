@@ -1,5 +1,17 @@
 # Contributing to BoardGame
 
+## Table of content
+- [GIT](#1git)
+    - [GIT rules](#11-some-git-rules)
+    - [GIT workflow](#12-git-workflow)
+    - [Writing good commit message](#13-writting-good-commit-messages)
+- [DOCUMENTATION](#2documentation)
+- [DEPENDENCIES](#3dependencies)
+- [TESTING](#4testing)
+- [STRUCTURE AND NAMING](#5structure-and-naming)
+- [CODE STYLE](#6code-style)
+    -[Google Java Style](#61-google-java-style)
+    
 ## 1.Git
 The branching strategy apply to this project follows the [GitHub flow](https://guides.github.com/introduction/flow/).
 ### 1.1 Some Git Rules
@@ -104,3 +116,104 @@ number of maintainers.
 - If a less known dependency is needed, discuss it with the team before using it.
 - Always make sure your app works with the latest version of its dependencies without breaking.
 - Check to see if the package has known security vulnerabilities with, e.g., [Snyk](https://snyk.io/test/)
+
+## 4.Testing
+- Write testable code, avoid side effects, extract side effects, write pure functions.
+
+    _Why:_
+    >You want to test a business logic as separate units. You have to "minimize the impact of randomness and 
+    >nondeterministic processes on the reliability of your code".
+    
+    >A pure function is a function that always returns the same output for the same input. Conversely, an
+    >impure function is one that may have side effects or depends on conditions from the outside to produce a
+    >value. That makes it less predictable.
+- Run test locally before making any pull requests to develop.
+- Document your tests including instructions in the relevant section of the `README.md` file.
+
+## 5.Structure and Naming
+
+## 6.Code style
+To ensure that defined code style is properly apply, any pull request is checked by [restyle.io](https://restyled.io) bot.
+The styles used for this project are:
+
+- Java: [Google Java Style](https://google.github.io/styleguide/javaguide.html)
+- Markdown: [Prettier Markdown](https://prettier.io/blog/2017/11/07/1.8.0.html)
+- YAML: [Prettier Yaml](https://prettier.io/blog/2018/07/29/1.14.0.html)
+
+### 6.1 Google Java Style
+#### Source file basics
+- **File Name**: consists of the case-sensitive name of the top-level class it contains, plus the `.java` extension.
+- **File encoding: UTF-8**
+- **Whitespace characters**: The ASCII horizontal space character (0x20) is the only character that appears anywhere in a source file.
+    - All other whitespace characters in string and character literals are escaped.
+    - Tab characters are __not__ used for indentation.
+- **Escape**: Prefer `\b, \t, \n, \f, \r, \", \' and \\` rather than corresponding octal (e.g. `\012`) or Unicode (e.g. `\u000a`)
+- **Non-ASCII characters**: Unicode escapes outside string literals and comments are strongly discouraged
+
+### Source file structure
+A source file consists of, in order:
+
+1. License or copyright information, if present
+2. Package statement
+3. Import statements
+4. Exactly one top-level class
+
+__Exactly one blank line__ separates each section that is present.
+
+- **Package statement**: The package statement is not line-wrapped. The column limit (Section 4.4, Column limit: 100) does not apply to package statements.
+- **Import statements**: 
+    - **Not Wildcard Import**
+    - **No line-wrapping**
+    - **Ordering and spacing**: Imports are ordered as follows:
+    
+        1. All static imports in a single block.
+        2. All non-static imports in a single block.
+    - **No static import for classes**
+- **Class declaration**:
+    - **Exactly one top-level class declaration**
+
+### Formatting
+
+- **Braces are used where optional**
+- **Nonempty blocks: K & R style**
+    - No line break before the opening brace.
+    - Line break after the opening brace.
+    - Line break before the closing brace.
+    - Line break after the closing brace, only if that brace terminates a statement 
+    or terminates the body of a method, constructor, or named class. For example, 
+    there is no line break after the brace if it is followed by else or a comma.
+- **Empty blocks: may be concise**: 
+```
+ // This is acceptable
+  void doNothing() {}
+
+  // This is equally acceptable
+  void doNothingElse() {
+  }
+
+  // This is not acceptable: No concise empty blocks in a multi-block statement
+  try {
+    doSomething();
+  } catch (Exception e) {}
+```
+- **Block indentation: +2 spaces**
+- **One statement per line**
+- **Column limit: 100**
+   
+    Exceptions:
+    - Lines where obeying the column limit is not possible (for example, a long URL in Javadoc, or a long JSNI method reference).
+    - package and import statements (see Sections 3.2 Package statement and 3.3 Import statements).
+    - Command lines in a comment that may be cut-and-pasted into a shell.
+    
+- **Indent continuation lines at least +4 spaces**
+- **Vertical Whitespace**
+
+    A single blank line always appears:
+    - Between consecutive members or initializers of a class: fields, constructors, methods, nested classes, static initializers, and instance initializers.
+        - Exception: A blank line between two consecutive fields (having no other code between them) is optional. Such blank lines are used as needed to create logical groupings of fields.
+        - Exception: Blank lines between enum constants are covered in Section 4.8.1.
+    - As required by other sections of this document (such as Section 3, Source file structure, and Section 3.3, Import statements).
+
+    A single blank line may also appear anywhere it improves readability, for example between statements to organize the code into logical subsections. A blank line before the first member or initializer, or after the last member or initializer of the class, is neither encouraged nor discouraged.
+
+    Multiple consecutive blank lines are permitted, but never required (or encouraged).
