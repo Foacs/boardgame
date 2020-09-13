@@ -1,2 +1,4 @@
 rootProject.name = 'boardgame'
+include 'core'
+include 'desktop'
 
