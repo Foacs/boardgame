@@ -5,6 +5,19 @@ dependencies {
     compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
 }
 
+task createProperties(dependsOn: processResources) {
+    doLast {
+        file("$buildDir/resources/main/version.properties").withWriter { w ->
+            Properties p = new Properties()
+            p['version'] = project.version.toString()
+            p['libgdx_version']=project.gdxVersion.toString()
+            p.store w, null
+        }
+    }
+}
+classes.dependsOn createProperties
+
+
 project.ext.mainClassName = "fr.foacs.boardgame.desktop.DesktopLauncher"
 
 task run(dependsOn: classes, type: JavaExec) {
