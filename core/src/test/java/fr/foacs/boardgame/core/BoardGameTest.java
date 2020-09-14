@@ -1,6 +1,6 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (13/09/2020 18:15)
+ * contributor(s): Alexis DINQUER (14/09/2020 21:06)
  *
  * adinquer@yahoo.com
  *
@@ -34,17 +34,18 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.boardgame.desktop;
+package fr.foacs.boardgame.core;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import fr.foacs.boardgame.core.BoardGame;
+import org.junit.jupiter.api.Test;
 
-public class DesktopLauncher {
-  public static void main(String[] args) {
-    LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-    config.width = 1024;
-    config.height = 768;
-    new LwjglApplication(BoardGame.getInstance(), config);
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+class BoardGameTest {
+
+  private final BoardGame victim = BoardGame.getInstance();
+
+  @Test
+  void test_getInstance_notNull() {
+    assertNotNull(victim);
   }
 }

@@ -1,6 +1,6 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (13/09/2020 18:15)
+ * contributor(s): Alexis DINQUER (14/09/2020 20:22)
  *
  * adinquer@yahoo.com
  *
@@ -34,17 +34,17 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.boardgame.desktop;
+package fr.foacs.boardgame.core.controllers;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import fr.foacs.boardgame.core.BoardGame;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import fr.foacs.boardgame.core.screens.BoardGameScreens;
 
-public class DesktopLauncher {
-  public static void main(String[] args) {
-    LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-    config.width = 1024;
-    config.height = 768;
-    new LwjglApplication(BoardGame.getInstance(), config);
-  }
+public interface BoardGameController {
+
+  void showScreen(BoardGameScreens screen);
+
+  ShapeRenderer getShapeRender();
+
+  SpriteBatch getBatch();
 }

@@ -17,13 +17,23 @@ task createProperties(dependsOn: processResources) {
 }
 classes.dependsOn createProperties
 
-
+//project.ext.assetsDir = new File("../core/src/resources")
 project.ext.mainClassName = "fr.foacs.boardgame.desktop.DesktopLauncher"
 
 task run(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
-//    workingDir = project.assetsDir
-    ignoreExitValue = true
+    workingDir = sourceSets.main.output.resourcesDir
+    setIgnoreExitValue(true)
 }
+
+task dist(type: Jar) {
+    from {configurations.compile.collect {zipTree(it)}}
+    with jar
+    manifest {
+        attributes 'Main-Class': project.mainClassName
+    }
+}
+
+dist.dependsOn classes

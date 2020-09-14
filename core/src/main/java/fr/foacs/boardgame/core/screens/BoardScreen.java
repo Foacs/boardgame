@@ -1,6 +1,6 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (13/09/2020 18:15)
+ * contributor(s): Alexis DINQUER (14/09/2020 19:42)
  *
  * adinquer@yahoo.com
  *
@@ -34,17 +34,51 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.boardgame.desktop;
+package fr.foacs.boardgame.core.screens;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import fr.foacs.boardgame.core.BoardGame;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import fr.foacs.boardgame.core.controllers.BoardGameController;
+import fr.foacs.boardgame.core.utils.PropertiesLoader;
+import lombok.extern.slf4j.Slf4j;
+import java.util.Properties;
 
-public class DesktopLauncher {
-  public static void main(String[] args) {
-    LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-    config.width = 1024;
-    config.height = 768;
-    new LwjglApplication(BoardGame.getInstance(), config);
+/**
+ * Screen used to display board
+ */
+@Slf4j
+public class BoardScreen extends AbstractScreen {
+
+  private final Color backgroundColor;
+  private final Color boardColor;
+
+  public BoardScreen(BoardGameController controller, SpriteBatch batch) {
+    super(controller, batch);
+    log.info("Create board screen");
+    final Properties colors = PropertiesLoader.loadProperties("colors");
+    this.backgroundColor = Color.valueOf(colors.getProperty("background", "#000000"));
+    this.boardColor = Color.valueOf(colors.getProperty("board", "#000000"));
   }
+
+  @Override
+  public void show() {
+    log.info("SHOW SCREEN: NO ACTION");
+  }
+
+  @Override
+  public void render(float delta) {
+    Gdx.gl.glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+    getShapeRenderer().begin(ShapeRenderer.ShapeType.Filled);
+    getShapeRenderer().setColor(this.boardColor);
+    getShapeRenderer().rect((Gdx.graphics.getWidth() -200)/2f, (Gdx.graphics.getHeight()-200)/2f,  200, 200);
+    getShapeRenderer().end();
+
+  }
+
+
 }

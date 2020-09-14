@@ -1,6 +1,6 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (13/09/2020 18:15)
+ * contributor(s): Alexis DINQUER (14/09/2020 20:31)
  *
  * adinquer@yahoo.com
  *
@@ -34,17 +34,59 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.boardgame.desktop;
+package fr.foacs.boardgame.core.screens;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import fr.foacs.boardgame.core.BoardGame;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import fr.foacs.boardgame.core.controllers.BoardGameController;
+import lombok.extern.slf4j.Slf4j;
 
-public class DesktopLauncher {
-  public static void main(String[] args) {
-    LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-    config.width = 1024;
-    config.height = 768;
-    new LwjglApplication(BoardGame.getInstance(), config);
+@Slf4j
+public abstract class AbstractScreen implements Screen {
+
+  private final BoardGameController controller;
+  private final SpriteBatch batch;
+
+  public AbstractScreen(final BoardGameController controller, final SpriteBatch batch) {
+    this.controller = controller;
+    this.batch = batch;
+  }
+
+  @Override
+  public void resize(int width, int height) {
+    log.info("RESIZE SCREEN: NO ACTION");
+  }
+
+  @Override
+  public void pause() {
+    log.info("PAUSE SCREEN: NO ACTION");
+  }
+
+  @Override
+  public void resume() {
+    log.info("RESUME SCREEN: NO ACTION");
+  }
+
+  @Override
+  public void hide() {
+    log.info("HIDE SCREEN: NO ACTION");
+  }
+
+  @Override
+  public void dispose() {
+    log.info("DISPOSE SCREEN: NO ACTION");
+  }
+
+  public SpriteBatch getBatch() {
+    return batch;
+  }
+
+  public BoardGameController getController() {
+    return controller;
+  }
+
+  public ShapeRenderer getShapeRenderer() {
+    return this.controller.getShapeRender();
   }
 }

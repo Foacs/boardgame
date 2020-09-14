@@ -37,6 +37,10 @@
 package fr.foacs.boardgame.core;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import fr.foacs.boardgame.core.controllers.BoardGameController;
+import fr.foacs.boardgame.core.screens.BoardGameScreens;
 import fr.foacs.boardgame.core.utils.PropertiesLoader;
 import lombok.extern.slf4j.Slf4j;
 import java.util.Properties;
@@ -46,7 +50,22 @@ import java.util.Properties;
  * Entry point class
  */
 @Slf4j
-public class BoardGame extends Game {
+public class BoardGame extends Game implements BoardGameController {
+
+  private SpriteBatch batch;
+  private ShapeRenderer shapeRenderer;
+
+  private static final BoardGame instance = new BoardGame();
+
+  private BoardGame() {
+    // Nothing to do here
+  }
+
+  public static BoardGame getInstance() {
+    return instance;
+  }
+
+
   @Override
   public void create() {
     Properties versionProperties = PropertiesLoader.loadProperties("version");
@@ -55,5 +74,31 @@ public class BoardGame extends Game {
         versionProperties.getOrDefault("version", "UNKNOWN"),
         versionProperties.getOrDefault("libgdx_version", "UNKNOWN"),
         System.getProperty("java.version"));
+
+    this.batch = new SpriteBatch();
+    this.shapeRenderer = new ShapeRenderer();
+
+    this.setScreen(BoardGameScreens.BOARD.createScreen(this));
+  }
+
+  @Override
+  public void showScreen(BoardGameScreens screen) {
+    // Nothing for the moment
+  }
+
+  @Override
+  public void dispose() {
+    batch.dispose();
+    shapeRenderer.dispose();
+  }
+
+  @Override
+  public ShapeRenderer getShapeRender() {
+    return this.shapeRenderer;
+  }
+
+  @Override
+  public SpriteBatch getBatch() {
+    return this.batch;
   }
 }

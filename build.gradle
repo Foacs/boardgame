@@ -31,6 +31,8 @@ subprojects {
     dependencies {
         testImplementation "org.junit.jupiter:junit-jupiter-api:5.6.0"
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.6.0"
+        testCompile "org.mockito:mockito-core:2.+"
+        testCompile "org.mockito:mockito-junit-jupiter:2.+"
 
         /* LOMBOK */
         compileOnly 'org.projectlombok:lombok:1.18.12'
