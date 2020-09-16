@@ -37,48 +37,79 @@
 package fr.foacs.boardgame.core;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import fr.foacs.boardgame.core.controllers.BoardGameController;
 import fr.foacs.boardgame.core.screens.BoardGameScreens;
 import fr.foacs.boardgame.core.utils.PropertiesLoader;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import java.util.Objects;
 import java.util.Properties;
 
 
 /**
- * Entry point class
+ * Entry point class.
+ * Initialize application scoped elements (e.g. Batch, ShapeRenderer)
+ * @since 0.1
  */
 @Slf4j
 public class BoardGame extends Game implements BoardGameController {
 
+  @Getter
+  @Setter
   private SpriteBatch batch;
+  @Getter
   private ShapeRenderer shapeRenderer;
+  @Getter
+  private AssetManager assetManager;
+  private SplashScreenWorker splashScreenWorker;
+  @Setter
+  private BoardGameScreens gameScreens;
+  @Getter
+  private boolean created = false;
+
 
   private static final BoardGame instance = new BoardGame();
 
   private BoardGame() {
-    // Nothing to do here
-  }
-
-  public static BoardGame getInstance() {
-    return instance;
-  }
-
-
-  @Override
-  public void create() {
     Properties versionProperties = PropertiesLoader.loadProperties("version");
-
     log.info("Starting BoardGame version {} powered by libGDX version {} and java version {}",
         versionProperties.getOrDefault("version", "UNKNOWN"),
         versionProperties.getOrDefault("libgdx_version", "UNKNOWN"),
         System.getProperty("java.version"));
+  }
 
-    this.batch = new SpriteBatch();
+  /**
+   * Gets an instance of BoardGame.
+   *
+   * @return The BoardGame instance.
+   */
+  public static BoardGame getInstance() {
+    return instance;
+  }
+
+  @Override
+  public void create() {
+    if (Objects.nonNull(splashScreenWorker)) {
+      this.splashScreenWorker.closeSplashScreen();
+    }
+    if (Objects.isNull(this.batch)) {
+      this.batch = new SpriteBatch();
+    }
     this.shapeRenderer = new ShapeRenderer();
+    this.assetManager = new AssetManager();
+    this.assetManager.setLoader(TiledMap.class, new TmxMapLoader());
+    this.loadAssets();
 
-    this.setScreen(BoardGameScreens.BOARD.createScreen(this));
+    if (Objects.nonNull(this.gameScreens)) {
+      this.setScreen(this.gameScreens.createScreen(this));
+    }
+    this.created = true;
   }
 
   @Override
@@ -88,17 +119,25 @@ public class BoardGame extends Game implements BoardGameController {
 
   @Override
   public void dispose() {
-    batch.dispose();
-    shapeRenderer.dispose();
+    this.batch.dispose();
+    this.shapeRenderer.dispose();
+    this.assetManager.dispose();
   }
 
-  @Override
-  public ShapeRenderer getShapeRender() {
-    return this.shapeRenderer;
+  /**
+   * Set the splashScreenWorker to used.
+   *
+   * @param splashScreenWorker The splashScreen to used.
+   */
+  public void setSplashScreenWorker(SplashScreenWorker splashScreenWorker) {
+    this.splashScreenWorker = splashScreenWorker;
   }
 
-  @Override
-  public SpriteBatch getBatch() {
-    return this.batch;
+  /**
+   * Load assets into assets manager.
+   */
+  private void loadAssets() {
+    this.assetManager.load("boards/test.tmx", TiledMap.class);
+    this.assetManager.finishLoading();
   }
 }

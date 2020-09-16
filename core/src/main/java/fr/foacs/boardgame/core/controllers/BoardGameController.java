@@ -36,15 +36,45 @@
 
 package fr.foacs.boardgame.core.controllers;
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import fr.foacs.boardgame.core.screens.BoardGameScreens;
 
+/**
+ * Controller main purpose is to handle screen.
+ * It provides to screen application scope graphical object (e.g. ShapeRenderer, SpriteBatch).
+ * It lets application to switch active screen.
+ *
+ * @since 0.1
+ */
 public interface BoardGameController {
 
+  /**
+   * Switch the active screen.
+   *
+   * @param screen The new active screen.
+   */
   void showScreen(BoardGameScreens screen);
 
-  ShapeRenderer getShapeRender();
+  /**
+   * Provide the shape renderer.
+   *
+   * @return the shape renderer.
+   */
+  ShapeRenderer getShapeRenderer();
 
+  /**
+   * Provide the sprite batch.
+   *
+   * @return The sprite batch.
+   */
   SpriteBatch getBatch();
+
+  /**
+   * Provide the asset manager.
+   *
+   * @return The asset manager.
+   */
+  AssetManager getAssetManager();
 }

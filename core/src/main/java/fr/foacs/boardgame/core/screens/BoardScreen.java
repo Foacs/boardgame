@@ -39,46 +39,73 @@ package fr.foacs.boardgame.core.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import fr.foacs.boardgame.core.controllers.BoardGameController;
+import fr.foacs.boardgame.core.models.Board;
 import fr.foacs.boardgame.core.utils.PropertiesLoader;
 import lombok.extern.slf4j.Slf4j;
+import java.util.Objects;
 import java.util.Properties;
 
 /**
- * Screen used to display board
+ * Screen used to display a board.
+ * @since 0.1
  */
 @Slf4j
 public class BoardScreen extends AbstractScreen {
 
   private final Color backgroundColor;
-  private final Color boardColor;
+  private final OrthographicCamera camera;
+  private OrthogonalTiledMapRenderer mapRenderer;
 
+  /**
+   * Create new board screen.
+   * Instantiate camera and load properties.
+   *
+   * @param controller The controller to use.
+   * @param batch The batch used to render sprites.
+   */
   public BoardScreen(BoardGameController controller, SpriteBatch batch) {
     super(controller, batch);
     log.info("Create board screen");
+
+    camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
     final Properties colors = PropertiesLoader.loadProperties("colors");
     this.backgroundColor = Color.valueOf(colors.getProperty("background", "#000000"));
-    this.boardColor = Color.valueOf(colors.getProperty("board", "#000000"));
   }
 
   @Override
   public void show() {
-    log.info("SHOW SCREEN: NO ACTION");
+    final Board board = new Board("test", getController().getAssetManager());
+    camera.position.x = board.getPixMapWidth() * 0.5f;
+    camera.position.y = board.getPixMapHeight() * 0.5f;
+    if (Objects.isNull(mapRenderer)) {
+      mapRenderer = new OrthogonalTiledMapRenderer(board.getBoardMap());
+    }
   }
 
   @Override
   public void render(float delta) {
+    this.rendered = true;
     Gdx.gl.glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-    getShapeRenderer().begin(ShapeRenderer.ShapeType.Filled);
-    getShapeRenderer().setColor(this.boardColor);
-    getShapeRenderer().rect((Gdx.graphics.getWidth() -200)/2f, (Gdx.graphics.getHeight()-200)/2f,  200, 200);
-    getShapeRenderer().end();
-
+    camera.update();
+    mapRenderer.setView(camera);
+    mapRenderer.render();
   }
 
-
+  /**
+   * Set the map renderer to use.
+   * Mainly used to test this class.
+   * <b>If renderer is set before screen is shown, screen do not create new one.</b>
+   *
+   * @param mapRenderer the map renderer to use.
+   */
+  public void setMapRenderer(OrthogonalTiledMapRenderer mapRenderer) {
+    this.mapRenderer = mapRenderer;
+  }
 }

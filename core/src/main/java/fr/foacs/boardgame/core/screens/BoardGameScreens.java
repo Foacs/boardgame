@@ -41,6 +41,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import fr.foacs.boardgame.core.controllers.BoardGameController;
 import java.util.function.BiFunction;
 
+/**
+ * Application applicable screens.
+ * Can create a screen.
+ *
+ * @since 0.1
+ */
 public enum BoardGameScreens {
 
   BOARD(BoardScreen::new);
@@ -51,6 +57,12 @@ public enum BoardGameScreens {
     this.supplier = supplier;
   }
 
+  /**
+   * Create a instance of the screen by using a controller.
+   *
+   * @param controller The controller to use.
+   * @return The new screen instance
+   */
   public Screen createScreen(BoardGameController controller) {
     return supplier.apply(controller, controller.getBatch());
   }

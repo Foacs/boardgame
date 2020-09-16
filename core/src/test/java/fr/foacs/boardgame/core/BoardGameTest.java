@@ -36,16 +36,71 @@
 
 package fr.foacs.boardgame.core;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.backends.headless.HeadlessApplication;
+import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import org.awaitility.Awaitility;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 class BoardGameTest {
 
-  private final BoardGame victim = BoardGame.getInstance();
+  private static final BoardGame VICTIM = BoardGame.getInstance();
+
+  private static final SpriteBatch BATCH = mock(SpriteBatch.class);
+  private static final SplashScreenWorker SPLASH_SCREEN_WORKER = mock(SplashScreenWorker.class);
+
+  @BeforeAll
+  static void setup() {
+    VICTIM.setBatch(BATCH);
+    VICTIM.setSplashScreenWorker(SPLASH_SCREEN_WORKER);
+    HeadlessApplicationConfiguration conf = new HeadlessApplicationConfiguration();
+    Gdx.gl = mock(GL20.class);
+    Gdx.gl20 = mock(GL20.class);
+    Gdx.app = new HeadlessApplication(VICTIM, conf);
+  }
+
+  @AfterAll
+  static void teardown() {
+    Gdx.app.exit();
+  }
 
   @Test
   void test_getInstance_notNull() {
-    assertNotNull(victim);
+    assertNotNull(VICTIM);
   }
+
+  @Test
+  void test_splashScreen_closed() {
+    verify(SPLASH_SCREEN_WORKER, times(1)).closeSplashScreen();
+  }
+
+  @Test
+  void test_getBatch_same() {
+    assertSame(BATCH, VICTIM.getBatch());
+  }
+
+  @Test
+  void test_getShapeRenderer_notNull() {
+    Awaitility.await().atMost(2, TimeUnit.SECONDS).until(VICTIM::isCreated);
+    assertNotNull(VICTIM.getShapeRenderer());
+  }
+
+  @Test
+  void test_getAssetManager_notNull() {
+    Awaitility.await().atMost(2, TimeUnit.SECONDS).until(VICTIM::isCreated);
+    assertNotNull(VICTIM.getAssetManager());
+  }
+
 }

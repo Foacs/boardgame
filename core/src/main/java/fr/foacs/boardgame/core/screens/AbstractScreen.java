@@ -36,57 +36,45 @@
 
 package fr.foacs.boardgame.core.screens;
 
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import fr.foacs.boardgame.core.controllers.BoardGameController;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Holds for screen the controller and the sprite batch.
+ *
+ * @since 0.1
+ */
 @Slf4j
-public abstract class AbstractScreen implements Screen {
+public abstract class AbstractScreen extends ScreenAdapter {
 
+  @Getter
   private final BoardGameController controller;
+  @Getter
   private final SpriteBatch batch;
+  @Getter
+  protected boolean rendered = false;
 
+  /**
+   * Create a screen from a controller and a batch.
+   *
+   * @param controller The controller.
+   * @param batch The sprite batch.
+   */
   public AbstractScreen(final BoardGameController controller, final SpriteBatch batch) {
     this.controller = controller;
     this.batch = batch;
   }
 
-  @Override
-  public void resize(int width, int height) {
-    log.info("RESIZE SCREEN: NO ACTION");
-  }
-
-  @Override
-  public void pause() {
-    log.info("PAUSE SCREEN: NO ACTION");
-  }
-
-  @Override
-  public void resume() {
-    log.info("RESUME SCREEN: NO ACTION");
-  }
-
-  @Override
-  public void hide() {
-    log.info("HIDE SCREEN: NO ACTION");
-  }
-
-  @Override
-  public void dispose() {
-    log.info("DISPOSE SCREEN: NO ACTION");
-  }
-
-  public SpriteBatch getBatch() {
-    return batch;
-  }
-
-  public BoardGameController getController() {
-    return controller;
-  }
-
+  /**
+   * Provide the shape renderer.
+   *
+   * @return The shape renderer.
+   */
   public ShapeRenderer getShapeRenderer() {
-    return this.controller.getShapeRender();
+    return this.controller.getShapeRenderer();
   }
 }

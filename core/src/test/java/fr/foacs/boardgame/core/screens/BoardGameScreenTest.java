@@ -37,18 +37,23 @@
 package fr.foacs.boardgame.core.screens;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import fr.foacs.boardgame.core.controllers.BoardGameController;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class BoardGameScreenTest {
 
   @Test
   void test_createScreen_Board() {
-    final Screen screen = BoardGameScreens.BOARD.createScreen(mock(BoardGameController.class));
+    final BoardGameController controller = mock(BoardGameController.class);
+    when(controller.getAssetManager()).thenReturn(mock(AssetManager.class));
+
+    final Screen screen = BoardGameScreens.BOARD.createScreen(controller);
     assertNotNull(screen);
     assertTrue(screen instanceof BoardScreen);
   }

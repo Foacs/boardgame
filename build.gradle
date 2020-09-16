@@ -1,5 +1,4 @@
 plugins {
-//    id 'jacoco'
     id 'org.sonarqube' version "3.0"
 }
 
@@ -33,6 +32,8 @@ subprojects {
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.6.0"
         testCompile "org.mockito:mockito-core:2.+"
         testCompile "org.mockito:mockito-junit-jupiter:2.+"
+
+        testImplementation 'org.awaitility:awaitility:4.0.3'
 
         /* LOMBOK */
         compileOnly 'org.projectlombok:lombok:1.18.12'

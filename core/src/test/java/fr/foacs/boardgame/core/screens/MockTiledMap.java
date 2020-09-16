@@ -1,6 +1,6 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (14/09/2020 22:55)
+ * contributor(s): Alexis DINQUER (16/09/2020 20:28)
  *
  * adinquer@yahoo.com
  *
@@ -36,35 +36,26 @@
 
 package fr.foacs.boardgame.core.screens;
 
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import fr.foacs.boardgame.core.controllers.BoardGameController;
+import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 
-import static org.mockito.Mockito.mock;
+public class MockTiledMap extends TiledMap {
 
-public class MockBoardController implements BoardGameController {
+  public static final int MAP_WIDTH = 15;
+  public static final int MAP_HEIGHT = 22;
+  public static final int TILE_WIDTH = 32;
+  public static final int TILE_HEIGHT = 36;
+  private static final MapProperties PROPERTIES = new MapProperties();
 
-  private final SpriteBatch batch = mock(SpriteBatch.class);
-  private final ShapeRenderer shapeRenderer = mock(ShapeRenderer.class);
-  private final AssetManager assetManager = new MockAssetManager();
-
-  @Override
-  public void showScreen(BoardGameScreens screen) {
+  static {
+    PROPERTIES.put("width", MAP_WIDTH);
+    PROPERTIES.put("height", MAP_HEIGHT);
+    PROPERTIES.put("tilewidth", TILE_WIDTH);
+    PROPERTIES.put("tileheight", TILE_HEIGHT);
   }
 
   @Override
-  public ShapeRenderer getShapeRenderer() {
-    return shapeRenderer;
-  }
-
-  @Override
-  public SpriteBatch getBatch() {
-    return batch;
-  }
-
-  @Override
-  public AssetManager getAssetManager() {
-    return assetManager;
+  public MapProperties getProperties() {
+    return PROPERTIES;
   }
 }

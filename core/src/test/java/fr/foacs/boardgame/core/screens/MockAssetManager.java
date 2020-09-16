@@ -1,6 +1,6 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (14/09/2020 22:55)
+ * contributor(s): Alexis DINQUER (15/09/2020 20:19)
  *
  * adinquer@yahoo.com
  *
@@ -37,34 +37,21 @@
 package fr.foacs.boardgame.core.screens;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import fr.foacs.boardgame.core.controllers.BoardGameController;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 
-import static org.mockito.Mockito.mock;
+public class MockAssetManager extends AssetManager {
 
-public class MockBoardController implements BoardGameController {
-
-  private final SpriteBatch batch = mock(SpriteBatch.class);
-  private final ShapeRenderer shapeRenderer = mock(ShapeRenderer.class);
-  private final AssetManager assetManager = new MockAssetManager();
+  TiledMap map = new MockTiledMap();
 
   @Override
-  public void showScreen(BoardGameScreens screen) {
+  public synchronized <T> T get(String fileName, Class<T> type) {
+    if (type.getTypeName().equals(TiledMap.class.getTypeName())) {
+      return (T) map;
+    }
+    return super.get(fileName, type);
   }
 
-  @Override
-  public ShapeRenderer getShapeRenderer() {
-    return shapeRenderer;
-  }
-
-  @Override
-  public SpriteBatch getBatch() {
-    return batch;
-  }
-
-  @Override
-  public AssetManager getAssetManager() {
-    return assetManager;
+  public TiledMap getMockedTiledMap() {
+    return map;
   }
 }

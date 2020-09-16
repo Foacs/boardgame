@@ -1,6 +1,6 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (14/09/2020 22:55)
+ * contributor(s): Alexis DINQUER (15/09/2020 20:01)
  *
  * adinquer@yahoo.com
  *
@@ -34,37 +34,48 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.boardgame.core.screens;
+package fr.foacs.boardgame.core.models;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import fr.foacs.boardgame.core.controllers.BoardGameController;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import lombok.Getter;
 
-import static org.mockito.Mockito.mock;
+/**
+ * Board entity - contains the board map and its properties.
+ * @since 0.1
+ */
+public class Board {
 
-public class MockBoardController implements BoardGameController {
+  @Getter
+  private final TiledMap boardMap;
+  @Getter
+  private final int tileWidth;
+  @Getter
+  private final int tileHeight;
+  @Getter
+  private final int mapWidth;
+  @Getter
+  private final int mapHeight;
+  @Getter
+  private final int pixMapWidth;
+  @Getter
+  private final int pixMapHeight;
 
-  private final SpriteBatch batch = mock(SpriteBatch.class);
-  private final ShapeRenderer shapeRenderer = mock(ShapeRenderer.class);
-  private final AssetManager assetManager = new MockAssetManager();
-
-  @Override
-  public void showScreen(BoardGameScreens screen) {
+  /**
+   * Create a board from its name.
+   * Retrieve the board map from assets.
+   *
+   * @param boardName The board name.
+   * @param assetManager The asset manager to use to retrieve board map.
+   */
+  public Board(final String boardName, final AssetManager assetManager) {
+    this.boardMap = assetManager.get("boards/" + boardName + ".tmx", TiledMap.class);
+    this.tileWidth = this.boardMap.getProperties().get("tilewidth", 0, Integer.class);
+    this.tileHeight = this.boardMap.getProperties().get("tileheight", 0, Integer.class);
+    this.mapWidth = this.boardMap.getProperties().get("width", 0, Integer.class);
+    this.mapHeight = this.boardMap.getProperties().get("height", 0, Integer.class);
+    this.pixMapWidth = this.mapWidth * this.tileWidth;
+    this.pixMapHeight = this.mapHeight * this.tileHeight;
   }
 
-  @Override
-  public ShapeRenderer getShapeRenderer() {
-    return shapeRenderer;
-  }
-
-  @Override
-  public SpriteBatch getBatch() {
-    return batch;
-  }
-
-  @Override
-  public AssetManager getAssetManager() {
-    return assetManager;
-  }
 }

@@ -42,10 +42,14 @@ import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import fr.foacs.boardgame.core.controllers.BoardGameController;
+import org.awaitility.Awaitility;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.ArgumentMatchers.anyFloat;
@@ -73,6 +77,7 @@ class BoardScreenTest {
 
     final BoardScreen boardScreen = new BoardScreen(controller, batch);
     spyBoardScreen = spy(boardScreen);
+    spyBoardScreen.setMapRenderer(mock(OrthogonalTiledMapRenderer.class));
     game.setScreen(spyBoardScreen);
   }
 
@@ -83,16 +88,19 @@ class BoardScreenTest {
 
   @Test
   void test_clearColor_call() {
+    Awaitility.await().atMost(2, TimeUnit.SECONDS).until(spyBoardScreen::isRendered);
     verify(Gdx.gl, atLeastOnce()).glClearColor(anyFloat(), anyFloat(), anyFloat(), anyFloat());
   }
 
   @Test
   void test_clearColorBufferBit_call() {
+    Awaitility.await().atMost(2, TimeUnit.SECONDS).until(spyBoardScreen::isRendered);
     verify(Gdx.gl, atLeastOnce()).glClear(GL20.GL_COLOR_BUFFER_BIT);
   }
 
   @Test
   void test_render_call() {
+    Awaitility.await().atMost(2, TimeUnit.SECONDS).until(spyBoardScreen::isRendered);
     verify(spyBoardScreen, atLeastOnce()).render(anyFloat());
   }
 

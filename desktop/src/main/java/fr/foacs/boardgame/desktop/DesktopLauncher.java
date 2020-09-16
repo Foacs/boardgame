@@ -39,12 +39,15 @@ package fr.foacs.boardgame.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import fr.foacs.boardgame.core.BoardGame;
+import fr.foacs.boardgame.core.screens.BoardGameScreens;
 
 public class DesktopLauncher {
   public static void main(String[] args) {
     LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-    config.width = 1024;
-    config.height = 768;
+    config.width = 1920;
+    config.height = 1080;
+    BoardGame.getInstance().setSplashScreenWorker(new DesktopSplashScreenWorker());
+    BoardGame.getInstance().setGameScreens(BoardGameScreens.BOARD);
     new LwjglApplication(BoardGame.getInstance(), config);
   }
 }

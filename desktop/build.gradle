@@ -32,7 +32,7 @@ task dist(type: Jar) {
     from {configurations.compile.collect {zipTree(it)}}
     with jar
     manifest {
-        attributes 'Main-Class': project.mainClassName
+        attributes ('Main-Class': project.mainClassName, 'SplashScreen-Image': 'foacs.png')
     }
 }
 

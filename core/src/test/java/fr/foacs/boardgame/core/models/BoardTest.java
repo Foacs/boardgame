@@ -1,6 +1,6 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (14/09/2020 22:55)
+ * contributor(s): Alexis DINQUER (16/09/2020 20:20)
  *
  * adinquer@yahoo.com
  *
@@ -34,37 +34,65 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.boardgame.core.screens;
+package fr.foacs.boardgame.core.models;
 
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import fr.foacs.boardgame.core.controllers.BoardGameController;
+import fr.foacs.boardgame.core.screens.MockAssetManager;
+import fr.foacs.boardgame.core.screens.MockTiledMap;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
-public class MockBoardController implements BoardGameController {
+class BoardTest {
 
-  private final SpriteBatch batch = mock(SpriteBatch.class);
-  private final ShapeRenderer shapeRenderer = mock(ShapeRenderer.class);
-  private final AssetManager assetManager = new MockAssetManager();
+  private static final String BOARD_NAME = "MySuperDuperBoard";
+  private Board victim;
+  private MockAssetManager mockAssetManager = new MockAssetManager();
 
-  @Override
-  public void showScreen(BoardGameScreens screen) {
+  @BeforeEach
+  void setup() {
+    victim = new Board(BOARD_NAME, mockAssetManager);
   }
 
-  @Override
-  public ShapeRenderer getShapeRenderer() {
-    return shapeRenderer;
+  @Test
+  void test_getBoardMap_NotNull() {
+    assertNotNull(victim.getBoardMap());
   }
 
-  @Override
-  public SpriteBatch getBatch() {
-    return batch;
+  @Test
+  void test_getBoardMap() {
+    assertSame(mockAssetManager.getMockedTiledMap(), victim.getBoardMap());
   }
 
-  @Override
-  public AssetManager getAssetManager() {
-    return assetManager;
+  @Test
+  void test_getTileWidth() {
+    assertEquals(MockTiledMap.TILE_WIDTH, victim.getTileWidth());
+  }
+
+  @Test
+  void test_getTileHeight() {
+    assertEquals(MockTiledMap.TILE_HEIGHT, victim.getTileHeight());
+  }
+
+  @Test
+  void test_getMapWidth() {
+    assertEquals(MockTiledMap.MAP_WIDTH, victim.getMapWidth());
+  }
+
+  @Test
+  void test_getMapHeight() {
+    assertEquals(MockTiledMap.MAP_HEIGHT, victim.getMapHeight());
+  }
+
+  @Test
+  void test_getPixMapWidth() {
+    assertEquals(MockTiledMap.TILE_WIDTH * MockTiledMap.MAP_WIDTH, victim.getPixMapWidth());
+  }
+
+  @Test
+  void test_getPixMapHeight() {
+    assertEquals(MockTiledMap.TILE_HEIGHT * MockTiledMap.MAP_HEIGHT, victim.getPixMapHeight());
   }
 }

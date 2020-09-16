@@ -1,6 +1,6 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (14/09/2020 22:55)
+ * contributor(s): Alexis DINQUER (15/09/2020 17:51)
  *
  * adinquer@yahoo.com
  *
@@ -34,37 +34,20 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.boardgame.core.screens;
+package fr.foacs.boardgame.desktop;
 
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import fr.foacs.boardgame.core.controllers.BoardGameController;
+import fr.foacs.boardgame.core.SplashScreenWorker;
+import java.awt.*;
+import java.util.Objects;
 
-import static org.mockito.Mockito.mock;
-
-public class MockBoardController implements BoardGameController {
-
-  private final SpriteBatch batch = mock(SpriteBatch.class);
-  private final ShapeRenderer shapeRenderer = mock(ShapeRenderer.class);
-  private final AssetManager assetManager = new MockAssetManager();
+public class DesktopSplashScreenWorker implements SplashScreenWorker {
 
   @Override
-  public void showScreen(BoardGameScreens screen) {
+  public void closeSplashScreen() {
+    SplashScreen splashScreen = SplashScreen.getSplashScreen();
+    if(Objects.nonNull(splashScreen)) {
+      splashScreen.close();
+    }
   }
 
-  @Override
-  public ShapeRenderer getShapeRenderer() {
-    return shapeRenderer;
-  }
-
-  @Override
-  public SpriteBatch getBatch() {
-    return batch;
-  }
-
-  @Override
-  public AssetManager getAssetManager() {
-    return assetManager;
-  }
 }
