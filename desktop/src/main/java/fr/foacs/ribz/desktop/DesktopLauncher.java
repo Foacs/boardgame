@@ -1,6 +1,6 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (13/09/2020 18:15)
+ * contributor(s): Alexis DINQUER (17/09/2020 19:10)
  *
  * adinquer@yahoo.com
  *
@@ -34,11 +34,11 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.boardgame.desktop;
+package fr.foacs.ribz.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import fr.foacs.boardgame.core.BoardGame;
+import fr.foacs.ribz.core.BoardGame;
 
 public class DesktopLauncher {
   public static void main(String[] args) {

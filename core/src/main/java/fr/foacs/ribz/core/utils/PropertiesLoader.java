@@ -1,6 +1,6 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (13/09/2020 17:07)
+ * contributor(s): Alexis DINQUER (17/09/2020 19:09)
  *
  * adinquer@yahoo.com
  *
@@ -34,9 +34,9 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.boardgame.core.utils;
+package fr.foacs.ribz.core.utils;
 
-import fr.foacs.boardgame.core.BoardGame;
+import fr.foacs.ribz.core.BoardGame;
 import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.io.InputStream;

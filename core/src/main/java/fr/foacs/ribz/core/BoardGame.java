@@ -1,6 +1,6 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (13/09/2020 20:37)
+ * contributor(s): Alexis DINQUER (17/09/2020 19:09)
  *
  * adinquer@yahoo.com
  *
@@ -34,7 +34,26 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
+package fr.foacs.ribz.core;
+
+import com.badlogic.gdx.Game;
+import fr.foacs.ribz.core.utils.PropertiesLoader;
+import lombok.extern.slf4j.Slf4j;
+import java.util.Properties;
+
+
 /**
- * Tests for desktop module
+ * Entry point class
  */
-package fr.foacs.boardgame.desktop;
+@Slf4j
+public class BoardGame extends Game {
+  @Override
+  public void create() {
+    Properties versionProperties = PropertiesLoader.loadProperties("version");
+
+    log.info("Starting RIBZ version {} powered by libGDX version {} and java version {}",
+        versionProperties.getOrDefault("version", "UNKNOWN"),
+        versionProperties.getOrDefault("libgdx_version", "UNKNOWN"),
+        System.getProperty("java.version"));
+  }
+}

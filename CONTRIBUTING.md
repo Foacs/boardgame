@@ -1,4 +1,4 @@
-# Contributing to BoardGame
+# Contributing to RIBZ
 
 ## Table of content
 - [GIT](#1git)
