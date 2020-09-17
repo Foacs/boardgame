@@ -95,6 +95,6 @@ sonarqube {
     properties {
         property "sonar.sourceEncoding", "UTF-8"
         property "sonar.organization", "foacs"
-        property "sonar.projectKey", "Foacs_boardgame"
+        property "sonar.projectKey", "Foacs_ribz"
     }
 }

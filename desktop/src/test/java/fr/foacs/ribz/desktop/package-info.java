@@ -1,6 +1,6 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (13/09/2020 17:16)
+ * contributor(s): Alexis DINQUER (17/09/2020 19:10)
  *
  * adinquer@yahoo.com
  *
@@ -34,47 +34,7 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.boardgame.core.utils;
-
-
-import org.junit.jupiter.api.Test;
-
-import java.util.Properties;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-class PropertiesLoaderTest {
-
-  @Test
-  void test_loadProperties_nullPropertiesName() {
-    assertThrows(IllegalArgumentException.class, () -> PropertiesLoader.loadProperties(null));
-  }
-
-  @Test
-  void test_loadProperties_emptyPropertiesName() {
-    assertThrows(IllegalArgumentException.class, () -> PropertiesLoader.loadProperties(""));
-  }
-
-  @Test
-  void test_loadProperties_blankPropertiesName() {
-    assertThrows(IllegalArgumentException.class, () -> PropertiesLoader.loadProperties("   "));
-  }
-
-  @Test
-  void test_loadProperties_unvalidPropertiesName() {
-    final Properties properties = PropertiesLoader.loadProperties("invalid");
-    assertNotNull(properties);
-    assertTrue(properties.entrySet().isEmpty());
-  }
-
-  @Test
-  void test_loadProperties_validPropertiesName() {
-    final Properties properties = PropertiesLoader.loadProperties("loader_test");
-    assertNotNull(properties);
-    assertTrue(properties.containsKey("test"));
-    assertEquals("A test value", properties.get("test"));
-  }
-}
+/**
+ * Tests for desktop module
+ */
+package fr.foacs.ribz.desktop;
