@@ -1,6 +1,6 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (13/09/2020 18:11)
+ * contributor(s): Alexis DINQUER (17/09/2020 19:09)
  *
  * adinquer@yahoo.com
  *
@@ -34,17 +34,18 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.boardgame.core;
+package fr.foacs.ribz.core;
 
 import com.badlogic.gdx.Game;
+import fr.foacs.ribz.core.utils.PropertiesLoader;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import fr.foacs.boardgame.core.controllers.BoardGameController;
-import fr.foacs.boardgame.core.screens.BoardGameScreens;
-import fr.foacs.boardgame.core.utils.PropertiesLoader;
+import fr.foacs.ribz.core.controllers.BoardGameController;
+import fr.foacs.ribz.core.screens.BoardGameScreens;
+import fr.foacs.ribz.core.utils.PropertiesLoader;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -78,7 +79,8 @@ public class BoardGame extends Game implements BoardGameController {
 
   private BoardGame() {
     Properties versionProperties = PropertiesLoader.loadProperties("version");
-    log.info("Starting BoardGame version {} powered by libGDX version {} and java version {}",
+
+    log.info("Starting RIBZ version {} powered by libGDX version {} and java version {}",
         versionProperties.getOrDefault("version", "UNKNOWN"),
         versionProperties.getOrDefault("libgdx_version", "UNKNOWN"),
         System.getProperty("java.version"));

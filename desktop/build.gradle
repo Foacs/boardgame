@@ -17,8 +17,8 @@ task createProperties(dependsOn: processResources) {
 }
 classes.dependsOn createProperties
 
-//project.ext.assetsDir = new File("../core/src/resources")
-project.ext.mainClassName = "fr.foacs.boardgame.desktop.DesktopLauncher"
+
+project.ext.mainClassName = "fr.foacs.ribz.desktop.DesktopLauncher"
 
 task run(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName

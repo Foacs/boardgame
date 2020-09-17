@@ -1,12 +1,12 @@
-[Français](https://github.com/Foacs/boardgame/blob/master/LISEZMOI.md)
-# BoardGame
+[Français](https://github.com/Foacs/ribz/blob/master/LISEZMOI.md)
+# RIBZ (RIBZ: Inspired By Zombies)
 
-![GitHub top language](https://img.shields.io/github/languages/top/Foacs/boardgame)
-[![Build Status](https://travis-ci.com/Foacs/boardgame.svg?branch=master)](https://travis-ci.com/Foacs/boardgame)
-[![codecov](https://codecov.io/gh/Foacs/boardgame/branch/master/graph/badge.svg)](https://codecov.io/gh/Foacs/boardgame)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Foacs_boardgame&metric=alert_status)](https://sonarcloud.io/dashboard?id=Foacs_boardgame)
+![GitHub top language](https://img.shields.io/github/languages/top/Foacs/ribz)
+[![Build Status](https://travis-ci.com/Foacs/ribz.svg?branch=master)](https://travis-ci.com/Foacs/ribz)
+[![codecov](https://codecov.io/gh/Foacs/ribz/branch/master/graph/badge.svg)](https://codecov.io/gh/Foacs/ribz)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Foacs_ribz&metric=alert_status)](https://sonarcloud.io/dashboard?id=Foacs_ribz)
 
-![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/foacs/boardgame?include_prereleases)
+![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/foacs/ribz?include_prereleases)
 ![License](https://img.shields.io/badge/license-CeCILL-blue)
 
 Board game application and library created with Java
@@ -39,6 +39,6 @@ To launch it:
 ```
 
 ## License
-> You can check out the full license [here](https://github.com/Foacs/boardgame/blob/master/LICENSE.md)
+> You can check out the full license [here](https://github.com/Foacs/ribz/blob/master/LICENSE.md)
 
 This project is licensed under the terms of the __CeCILL__ license.

@@ -1,6 +1,6 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (13/09/2020 17:18)
+ * contributor(s): Alexis DINQUER (17/09/2020 19:09)
  *
  * adinquer@yahoo.com
  *
@@ -34,7 +34,7 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.boardgame.core.utils;
+package fr.foacs.ribz.core.utils;
 
 
 import org.junit.jupiter.api.Test;

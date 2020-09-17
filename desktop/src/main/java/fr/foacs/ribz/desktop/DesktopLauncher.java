@@ -1,6 +1,6 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (13/09/2020 17:07)
+ * contributor(s): Alexis DINQUER (17/09/2020 19:10)
  *
  * adinquer@yahoo.com
  *
@@ -34,46 +34,20 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.boardgame.core.utils;
+package fr.foacs.ribz.desktop;
 
-import fr.foacs.boardgame.core.BoardGame;
-import lombok.extern.slf4j.Slf4j;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Objects;
-import java.util.Properties;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import fr.foacs.ribz.core.BoardGame;
+import fr.foacs.ribz.core.screens.BoardGameScreens;
 
-/**
- * Utility class to load from resource properties files.
- * @since 0.1
- */
-@Slf4j
-public final class PropertiesLoader {
-
-  private PropertiesLoader() {
-    throw new UnsupportedOperationException("You cannot instantiate PropertiesLoader");
+public class DesktopLauncher {
+  public static void main(String[] args) {
+    LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+    config.width = 1920;
+    config.height = 1080;
+    BoardGame.getInstance().setSplashScreenWorker(new DesktopSplashScreenWorker());
+    BoardGame.getInstance().setGameScreens(BoardGameScreens.BOARD);
+    new LwjglApplication(BoardGame.getInstance(), config);
   }
-
-  /**
-   * Load properties from a resource file by its name (without .properties extension).
-   *
-   * @param propertiesResourceName The properties resource file without extension
-   * @return The loaded properties.
-   */
-  public static Properties loadProperties(final String propertiesResourceName) {
-    ArgumentValidate.notBlank(propertiesResourceName, "You should specify a valid properties resource name");
-    Properties properties = new Properties();
-
-    try (InputStream stream = BoardGame.class.getResourceAsStream("/" + propertiesResourceName + ".properties")) {
-      if (Objects.isNull(stream)) {
-        throw new IOException("Unable to get stream for properties " + propertiesResourceName);
-      }
-      properties.load(stream);
-    } catch (IOException ioException) {
-      log.warn("Could not read {} properties file", propertiesResourceName, ioException);
-    }
-
-    return properties;
-  }
-
 }
