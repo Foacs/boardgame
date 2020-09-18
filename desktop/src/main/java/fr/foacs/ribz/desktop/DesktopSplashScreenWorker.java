@@ -1,8 +1,8 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (15/09/2020 17:51)
- *
- * adinquer@yahoo.com
+ * contributor(s):
+ * - Alexis DINQUER adinquer@yahoo.com
+ * - Brice KESSLER brice.kessler@outlook.com
  *
  * This software is a computer program whose purpose is to develop and
  * play board game.
@@ -34,14 +34,20 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.boardgame.desktop;
+package fr.foacs.ribz.desktop;
 
-import fr.foacs.boardgame.core.SplashScreenWorker;
-import java.awt.*;
+import fr.foacs.ribz.core.SplashScreenWorker;
+import java.awt.SplashScreen;
 import java.util.Objects;
 
+/**
+ * Desktop implementation of {@link SplashScreenWorker} interface.
+ */
 public class DesktopSplashScreenWorker implements SplashScreenWorker {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void closeSplashScreen() {
     SplashScreen splashScreen = SplashScreen.getSplashScreen();

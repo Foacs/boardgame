@@ -1,8 +1,8 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (17/09/2020 19:10)
- *
- * adinquer@yahoo.com
+ * contributor(s):
+ * - Alexis DINQUER adinquer@yahoo.com
+ * - Brice KESSLER brice.kessler@outlook.com
  *
  * This software is a computer program whose purpose is to develop and
  * play board game.

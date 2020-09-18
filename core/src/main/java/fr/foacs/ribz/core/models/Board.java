@@ -1,8 +1,8 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (15/09/2020 20:01)
- *
- * adinquer@yahoo.com
+ * contributor(s):
+ * - Alexis DINQUER adinquer@yahoo.com
+ * - Brice KESSLER brice.kessler@outlook.com
  *
  * This software is a computer program whose purpose is to develop and
  * play board game.
@@ -22,7 +22,7 @@
  * In this respect, the user's attention is drawn to the risks associated
  * with loading, using, modifying and/or developing or reproducing the
  * software by the user in light of its specific status of free software,
- * that may mean that it is complicated to manipulaten, and that also
+ * that may mean that it is complicated to manipulate, and that also
  * therefore means that it is reserved for developers and experienced
  * professionals having in-depth computer knowledge. Users are therefore
  * encourage to load and test the software's suitability as regards their
@@ -34,7 +34,7 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.boardgame.core.models;
+package fr.foacs.ribz.core.models;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -42,30 +42,25 @@ import lombok.Getter;
 
 /**
  * Board entity - contains the board map and its properties.
+ *
  * @since 0.1
  */
+@Getter
 public class Board {
 
-  @Getter
   private final TiledMap boardMap;
-  @Getter
   private final int tileWidth;
-  @Getter
   private final int tileHeight;
-  @Getter
   private final int mapWidth;
-  @Getter
   private final int mapHeight;
-  @Getter
   private final int pixMapWidth;
-  @Getter
   private final int pixMapHeight;
 
   /**
    * Create a board from its name.
    * Retrieve the board map from assets.
    *
-   * @param boardName The board name.
+   * @param boardName    The board name.
    * @param assetManager The asset manager to use to retrieve board map.
    */
   public Board(final String boardName, final AssetManager assetManager) {

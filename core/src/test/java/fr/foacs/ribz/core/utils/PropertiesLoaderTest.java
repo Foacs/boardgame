@@ -1,8 +1,8 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (17/09/2020 19:09)
- *
- * adinquer@yahoo.com
+ * contributor(s):
+ * - Alexis DINQUER adinquer@yahoo.com
+ * - Brice KESSLER brice.kessler@outlook.com
  *
  * This software is a computer program whose purpose is to develop and
  * play board game.
@@ -22,7 +22,7 @@
  * In this respect, the user's attention is drawn to the risks associated
  * with loading, using, modifying and/or developing or reproducing the
  * software by the user in light of its specific status of free software,
- * that may mean that it is complicated to manipulaten, and that also
+ * that may mean that it is complicated to manipulate, and that also
  * therefore means that it is reserved for developers and experienced
  * professionals having in-depth computer knowledge. Users are therefore
  * encourage to load and test the software's suitability as regards their
@@ -37,8 +37,10 @@
 package fr.foacs.ribz.core.utils;
 
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -46,35 +48,76 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Test class for the {@link PropertiesLoader} class.
+ */
+@DisplayName("Properties loader")
 class PropertiesLoaderTest {
 
+  /**
+   * Test the {@link PropertiesLoader#loadProperties(String)} method with null parameters
+   */
+  @DisplayName("Load properties: null parameter")
   @Test
-  void test_loadProperties_nullPropertiesName() {
-    assertThrows(IllegalArgumentException.class, () -> PropertiesLoader.loadProperties(null));
+  void testLoadPropertiesNullPropertiesName() {
+    assertThrows(NullPointerException.class, () -> PropertiesLoader.loadProperties(null));
   }
 
+  /**
+   * Test the {@link PropertiesLoader#loadProperties(String)} method with empty parameters
+   */
+  @DisplayName("Load properties: empty parameter")
   @Test
-  void test_loadProperties_emptyPropertiesName() {
+  void testLoadPropertiesEmptyPropertiesName() {
     assertThrows(IllegalArgumentException.class, () -> PropertiesLoader.loadProperties(""));
   }
 
+  /**
+   * Test the {@link PropertiesLoader#loadProperties(String)} method with blank parameters
+   */
+  @DisplayName("Load properties: blank parameter")
   @Test
-  void test_loadProperties_blankPropertiesName() {
+  void testLoadPropertiesBlankPropertiesName() {
     assertThrows(IllegalArgumentException.class, () -> PropertiesLoader.loadProperties("   "));
   }
 
+  /**
+   * Test the {@link PropertiesLoader#loadProperties(String)} method with invalid parameters
+   */
+  @DisplayName("Load properties: invalide parameter")
   @Test
-  void test_loadProperties_unvalidPropertiesName() {
+  void testLoadPropertiesInvalidPropertiesName() {
     final Properties properties = PropertiesLoader.loadProperties("invalid");
     assertNotNull(properties);
     assertTrue(properties.entrySet().isEmpty());
   }
 
+  /**
+   * Test the {@link PropertiesLoader#loadProperties(String)} method
+   */
+  @DisplayName("Load properties")
   @Test
   void test_loadProperties_validPropertiesName() {
     final Properties properties = PropertiesLoader.loadProperties("loader_test");
     assertNotNull(properties);
     assertTrue(properties.containsKey("test"));
     assertEquals("A test value", properties.get("test"));
+  }
+
+  /**
+   * Test the {@link PropertiesLoader} constructor
+   */
+  @DisplayName("Load properties constructor")
+  @Test
+  void testPropertiesLoaderConstructorThrows() {
+      final Class<?> propertiesLoaderClass;
+      try {
+        propertiesLoaderClass = Class.forName("fr.foacs.ribz.core.utils.PropertiesLoader");
+        final Constructor<?> declaredConstructor = propertiesLoaderClass.getDeclaredConstructors()[0];
+        declaredConstructor.setAccessible(true);
+        assertThrows(InvocationTargetException.class, declaredConstructor::newInstance);
+      } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+      }
   }
 }

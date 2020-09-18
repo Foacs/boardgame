@@ -1,8 +1,8 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (14/09/2020 20:31)
- *
- * adinquer@yahoo.com
+ * contributor(s):
+ * - Alexis DINQUER adinquer@yahoo.com
+ * - Brice KESSLER brice.kessler@outlook.com
  *
  * This software is a computer program whose purpose is to develop and
  * play board game.
@@ -22,7 +22,7 @@
  * In this respect, the user's attention is drawn to the risks associated
  * with loading, using, modifying and/or developing or reproducing the
  * software by the user in light of its specific status of free software,
- * that may mean that it is complicated to manipulaten, and that also
+ * that may mean that it is complicated to manipulate, and that also
  * therefore means that it is reserved for developers and experienced
  * professionals having in-depth computer knowledge. Users are therefore
  * encourage to load and test the software's suitability as regards their
@@ -34,13 +34,14 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.boardgame.core.screens;
+package fr.foacs.ribz.core.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import fr.foacs.boardgame.core.controllers.BoardGameController;
+import fr.foacs.ribz.core.controllers.BoardGameController;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -49,20 +50,19 @@ import lombok.extern.slf4j.Slf4j;
  * @since 0.1
  */
 @Slf4j
+@Getter
 public abstract class AbstractScreen extends ScreenAdapter {
 
-  @Getter
   private final BoardGameController controller;
-  @Getter
   private final SpriteBatch batch;
-  @Getter
-  protected boolean rendered = false;
+  @Setter
+  private boolean rendered = false;
 
   /**
    * Create a screen from a controller and a batch.
    *
    * @param controller The controller.
-   * @param batch The sprite batch.
+   * @param batch      The sprite batch.
    */
   public AbstractScreen(final BoardGameController controller, final SpriteBatch batch) {
     this.controller = controller;

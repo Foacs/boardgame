@@ -1,8 +1,8 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (16/09/2020 20:20)
- *
- * adinquer@yahoo.com
+ * contributor(s):
+ * - Alexis DINQUER adinquer@yahoo.com
+ * - Brice KESSLER brice.kessler@outlook.com
  *
  * This software is a computer program whose purpose is to develop and
  * play board game.
@@ -22,7 +22,7 @@
  * In this respect, the user's attention is drawn to the risks associated
  * with loading, using, modifying and/or developing or reproducing the
  * software by the user in light of its specific status of free software,
- * that may mean that it is complicated to manipulaten, and that also
+ * that may mean that it is complicated to manipulate, and that also
  * therefore means that it is reserved for developers and experienced
  * professionals having in-depth computer knowledge. Users are therefore
  * encourage to load and test the software's suitability as regards their
@@ -34,65 +34,102 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.boardgame.core.models;
+package fr.foacs.ribz.core.models;
 
-import fr.foacs.boardgame.core.screens.MockAssetManager;
-import fr.foacs.boardgame.core.screens.MockTiledMap;
+import fr.foacs.ribz.core.mocks.AssetManagerMock;
+import fr.foacs.ribz.core.mocks.TiledMapMock;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
+/**
+ * Test class for the {@link Board} class.
+ */
+@DisplayName("Board")
 class BoardTest {
 
   private static final String BOARD_NAME = "MySuperDuperBoard";
   private Board victim;
-  private MockAssetManager mockAssetManager = new MockAssetManager();
+  private AssetManagerMock assetManagerMock = new AssetManagerMock();
 
   @BeforeEach
   void setup() {
-    victim = new Board(BOARD_NAME, mockAssetManager);
+    victim = new Board(BOARD_NAME, assetManagerMock);
   }
 
+  /**
+   * Test the {@link Board#getBoardMap()} method return not null.
+   */
+  @DisplayName("Get board map: return not null")
   @Test
-  void test_getBoardMap_NotNull() {
+  void testGetBoardMapNotNull() {
     assertNotNull(victim.getBoardMap());
   }
 
+  /**
+   * Test the {@link Board#getBoardMap()} method
+   */
+  @DisplayName("Get board map")
   @Test
-  void test_getBoardMap() {
-    assertSame(mockAssetManager.getMockedTiledMap(), victim.getBoardMap());
+  void testGetBoardMap() {
+    assertSame(assetManagerMock.getMockedTiledMap(), victim.getBoardMap());
   }
 
+  /**
+   * Test the {@link Board#getTileHeight()} method
+   */
+  @DisplayName("Get tile width")
   @Test
   void test_getTileWidth() {
-    assertEquals(MockTiledMap.TILE_WIDTH, victim.getTileWidth());
+    assertEquals(TiledMapMock.TILE_WIDTH, victim.getTileWidth());
   }
 
+  /**
+   * Test the {@link Board#getTileHeight()} method
+   */
+  @DisplayName("Get tile height")
   @Test
   void test_getTileHeight() {
-    assertEquals(MockTiledMap.TILE_HEIGHT, victim.getTileHeight());
+    assertEquals(TiledMapMock.TILE_HEIGHT, victim.getTileHeight());
   }
 
+  /**
+   * Test the {@link Board#getMapWidth()} method
+   */
+  @DisplayName("Get map width")
   @Test
-  void test_getMapWidth() {
-    assertEquals(MockTiledMap.MAP_WIDTH, victim.getMapWidth());
+  void testgetMapWidth() {
+    assertEquals(TiledMapMock.MAP_WIDTH, victim.getMapWidth());
   }
 
+  /**
+   * Test the {@link Board#getMapHeight()} method
+   */
+  @DisplayName("Get map height")
   @Test
-  void test_getMapHeight() {
-    assertEquals(MockTiledMap.MAP_HEIGHT, victim.getMapHeight());
+  void testgetMapHeight() {
+    assertEquals(TiledMapMock.MAP_HEIGHT, victim.getMapHeight());
   }
 
+  /**
+   * Test the {@link Board#getPixMapWidth()} method
+   */
+  @DisplayName("Get pix map width")
   @Test
-  void test_getPixMapWidth() {
-    assertEquals(MockTiledMap.TILE_WIDTH * MockTiledMap.MAP_WIDTH, victim.getPixMapWidth());
+  void testGetPixMapWidth() {
+    assertEquals(TiledMapMock.TILE_WIDTH * TiledMapMock.MAP_WIDTH, victim.getPixMapWidth());
   }
 
+  /**
+   * Test the {@link Board#getPixMapHeight()} method
+   */
+  @DisplayName("Get pix map height")
   @Test
-  void test_getPixMapHeight() {
-    assertEquals(MockTiledMap.TILE_HEIGHT * MockTiledMap.MAP_HEIGHT, victim.getPixMapHeight());
+  void testGetPixMapHeight() {
+    assertEquals(TiledMapMock.TILE_HEIGHT * TiledMapMock.MAP_HEIGHT, victim.getPixMapHeight());
   }
 }

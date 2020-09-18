@@ -53,6 +53,7 @@ subprojects {
 
         /*Google guava*/
         implementation 'com.google.guava:guava:28.2-jre'
+        implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
     }
 
     sonarqube {

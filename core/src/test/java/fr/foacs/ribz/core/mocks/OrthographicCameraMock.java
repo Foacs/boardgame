@@ -1,8 +1,8 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (14/09/2020 22:55)
- *
- * adinquer@yahoo.com
+ * contributor(s):
+ *  - Alexis DINQUER adinquer@yahoo.com
+ *  - Brice KESSLER brice.kessler@outlook.com
  *
  * This software is a computer program whose purpose is to develop and
  * play board game.
@@ -22,7 +22,7 @@
  * In this respect, the user's attention is drawn to the risks associated
  * with loading, using, modifying and/or developing or reproducing the
  * software by the user in light of its specific status of free software,
- * that may mean that it is complicated to manipulaten, and that also
+ * that may mean that it is complicated to manipulate, and that also
  * therefore means that it is reserved for developers and experienced
  * professionals having in-depth computer knowledge. Users are therefore
  * encourage to load and test the software's suitability as regards their
@@ -34,37 +34,14 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.boardgame.core.screens;
+package fr.foacs.ribz.core.mocks;
 
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import fr.foacs.boardgame.core.controllers.BoardGameController;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 
-import static org.mockito.Mockito.mock;
+public class OrthographicCameraMock extends OrthographicCamera {
 
-public class MockBoardController implements BoardGameController {
-
-  private final SpriteBatch batch = mock(SpriteBatch.class);
-  private final ShapeRenderer shapeRenderer = mock(ShapeRenderer.class);
-  private final AssetManager assetManager = new MockAssetManager();
-
-  @Override
-  public void showScreen(BoardGameScreens screen) {
+  public OrthographicCameraMock() {
+    // Avoid calling parent constructor
   }
 
-  @Override
-  public ShapeRenderer getShapeRenderer() {
-    return shapeRenderer;
-  }
-
-  @Override
-  public SpriteBatch getBatch() {
-    return batch;
-  }
-
-  @Override
-  public AssetManager getAssetManager() {
-    return assetManager;
-  }
 }

@@ -1,8 +1,8 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (17/09/2020 19:09)
- *
- * adinquer@yahoo.com
+ * contributor(s):
+ * - Alexis DINQUER adinquer@yahoo.com
+ * - Brice KESSLER brice.kessler@outlook.com
  *
  * This software is a computer program whose purpose is to develop and
  * play board game.
@@ -22,7 +22,7 @@
  * In this respect, the user's attention is drawn to the risks associated
  * with loading, using, modifying and/or developing or reproducing the
  * software by the user in light of its specific status of free software,
- * that may mean that it is complicated to manipulaten, and that also
+ * that may mean that it is complicated to manipulate, and that also
  * therefore means that it is reserved for developers and experienced
  * professionals having in-depth computer knowledge. Users are therefore
  * encourage to load and test the software's suitability as regards their
@@ -37,6 +37,7 @@
 package fr.foacs.ribz.core;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import fr.foacs.ribz.core.utils.PropertiesLoader;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -45,7 +46,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import fr.foacs.ribz.core.controllers.BoardGameController;
 import fr.foacs.ribz.core.screens.BoardGameScreens;
-import fr.foacs.ribz.core.utils.PropertiesLoader;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -56,6 +56,7 @@ import java.util.Properties;
 /**
  * Entry point class.
  * Initialize application scoped elements (e.g. Batch, ShapeRenderer)
+ *
  * @since 0.1
  */
 @Slf4j
@@ -68,15 +69,23 @@ public class BoardGame extends Game implements BoardGameController {
   private ShapeRenderer shapeRenderer;
   @Getter
   private AssetManager assetManager;
-  private SplashScreenWorker splashScreenWorker;
   @Setter
   private BoardGameScreens gameScreens;
   @Getter
+  @Setter
+  private OrthographicCamera camera;
+  @Getter
   private boolean created = false;
+  @Setter
+  private SplashScreenWorker splashScreenWorker;
 
 
   private static final BoardGame instance = new BoardGame();
 
+  /**
+   * Create new board game application.
+   * Log starting message with version information.
+   */
   private BoardGame() {
     Properties versionProperties = PropertiesLoader.loadProperties("version");
 
@@ -87,7 +96,7 @@ public class BoardGame extends Game implements BoardGameController {
   }
 
   /**
-   * Gets an instance of BoardGame.
+   * Get an instance of BoardGame.
    *
    * @return The BoardGame instance.
    */
@@ -95,6 +104,18 @@ public class BoardGame extends Game implements BoardGameController {
     return instance;
   }
 
+  /**
+   * {@inheritDoc}
+   * <p>
+   * Do:
+   * <ol>
+   *   <li>Close splashScreen</li>
+   *   <li>Initialize batch & camera (if not already set).</li>
+   *   <li>Initialize shapeRenderer & assetManager.</li>
+   *   <li>Load assets</li>
+   *   <li>Set startup screen</li>
+   * </ol>
+   */
   @Override
   public void create() {
     if (Objects.nonNull(splashScreenWorker)) {
@@ -102,6 +123,9 @@ public class BoardGame extends Game implements BoardGameController {
     }
     if (Objects.isNull(this.batch)) {
       this.batch = new SpriteBatch();
+    }
+    if (Objects.isNull(this.camera)) {
+      this.camera = new OrthographicCamera();
     }
     this.shapeRenderer = new ShapeRenderer();
     this.assetManager = new AssetManager();
@@ -111,28 +135,32 @@ public class BoardGame extends Game implements BoardGameController {
     if (Objects.nonNull(this.gameScreens)) {
       this.setScreen(this.gameScreens.createScreen(this));
     }
+
     this.created = true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public void showScreen(BoardGameScreens screen) {
+  public void showScreen(final BoardGameScreens screen) {
     // Nothing for the moment
   }
 
+  /**
+   * {@inheritDoc}
+   * Destroy:
+   * <ol>
+   *   <li>Batch</li>
+   *   <li>ShapeRenderer</li>
+   *   <li>AssetManager</li>
+   * </ol>
+   */
   @Override
   public void dispose() {
     this.batch.dispose();
     this.shapeRenderer.dispose();
     this.assetManager.dispose();
-  }
-
-  /**
-   * Set the splashScreenWorker to used.
-   *
-   * @param splashScreenWorker The splashScreen to used.
-   */
-  public void setSplashScreenWorker(SplashScreenWorker splashScreenWorker) {
-    this.splashScreenWorker = splashScreenWorker;
   }
 
   /**

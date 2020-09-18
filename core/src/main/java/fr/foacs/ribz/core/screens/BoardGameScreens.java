@@ -1,8 +1,8 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (14/09/2020 20:16)
- *
- * adinquer@yahoo.com
+ * contributor(s):
+ * - Alexis DINQUER adinquer@yahoo.com
+ * - Brice KESSLER brice.kessler@outlook.com
  *
  * This software is a computer program whose purpose is to develop and
  * play board game.
@@ -22,7 +22,7 @@
  * In this respect, the user's attention is drawn to the risks associated
  * with loading, using, modifying and/or developing or reproducing the
  * software by the user in light of its specific status of free software,
- * that may mean that it is complicated to manipulaten, and that also
+ * that may mean that it is complicated to manipulate, and that also
  * therefore means that it is reserved for developers and experienced
  * professionals having in-depth computer knowledge. Users are therefore
  * encourage to load and test the software's suitability as regards their
@@ -34,11 +34,11 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.boardgame.core.screens;
+package fr.foacs.ribz.core.screens;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import fr.foacs.boardgame.core.controllers.BoardGameController;
+import fr.foacs.ribz.core.controllers.BoardGameController;
 import java.util.function.BiFunction;
 
 /**
@@ -53,6 +53,11 @@ public enum BoardGameScreens {
 
   private final BiFunction<BoardGameController, SpriteBatch, Screen> supplier;
 
+  /**
+   * Create enumeration value with a screen supplier.
+   *
+   * @param supplier The screen supplier use to create a screen.
+   */
   BoardGameScreens(BiFunction<BoardGameController, SpriteBatch, Screen> supplier) {
     this.supplier = supplier;
   }
@@ -61,9 +66,9 @@ public enum BoardGameScreens {
    * Create a instance of the screen by using a controller.
    *
    * @param controller The controller to use.
-   * @return The new screen instance
+   * @return The new screen instance.
    */
-  public Screen createScreen(BoardGameController controller) {
+  public Screen createScreen(final BoardGameController controller) {
     return supplier.apply(controller, controller.getBatch());
   }
 
