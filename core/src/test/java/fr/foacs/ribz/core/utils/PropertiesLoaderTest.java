@@ -37,6 +37,7 @@
 package fr.foacs.ribz.core.utils;
 
 
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.lang.reflect.Constructor;
@@ -109,15 +110,12 @@ class PropertiesLoaderTest {
    */
   @DisplayName("Load properties constructor")
   @Test
+  @SneakyThrows
   void testPropertiesLoaderConstructorThrows() {
       final Class<?> propertiesLoaderClass;
-      try {
-        propertiesLoaderClass = Class.forName("fr.foacs.ribz.core.utils.PropertiesLoader");
-        final Constructor<?> declaredConstructor = propertiesLoaderClass.getDeclaredConstructors()[0];
-        declaredConstructor.setAccessible(true);
-        assertThrows(InvocationTargetException.class, declaredConstructor::newInstance);
-      } catch (ClassNotFoundException e) {
-        e.printStackTrace();
-      }
+      propertiesLoaderClass = Class.forName("fr.foacs.ribz.core.utils.PropertiesLoader");
+      final Constructor<?> declaredConstructor = propertiesLoaderClass.getDeclaredConstructors()[0];
+      declaredConstructor.setAccessible(true);
+      assertThrows(InvocationTargetException.class, declaredConstructor::newInstance);
   }
 }
