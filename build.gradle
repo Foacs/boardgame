@@ -1,5 +1,4 @@
 plugins {
-//    id 'jacoco'
     id 'org.sonarqube' version "3.0"
 }
 
@@ -14,7 +13,7 @@ allprojects {
     }
 
     ext {
-        appName = "board-game"
+        appName = "ribz"
         gdxVersion = '1.9.10'
 //        roboVMVersion = '2.3.8'
 //        box2DLightsVersion = '1.4'
@@ -31,6 +30,10 @@ subprojects {
     dependencies {
         testImplementation "org.junit.jupiter:junit-jupiter-api:5.6.0"
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.6.0"
+        testCompile "org.mockito:mockito-core:2.+"
+        testCompile "org.mockito:mockito-junit-jupiter:2.+"
+
+        testImplementation 'org.awaitility:awaitility:4.0.3'
 
         /* LOMBOK */
         compileOnly 'org.projectlombok:lombok:1.18.12'
@@ -50,6 +53,7 @@ subprojects {
 
         /*Google guava*/
         implementation 'com.google.guava:guava:28.2-jre'
+        implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
     }
 
     sonarqube {

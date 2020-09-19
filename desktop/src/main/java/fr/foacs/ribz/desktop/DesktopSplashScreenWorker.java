@@ -22,7 +22,7 @@
  * In this respect, the user's attention is drawn to the risks associated
  * with loading, using, modifying and/or developing or reproducing the
  * software by the user in light of its specific status of free software,
- * that may mean that it is complicated to manipulate, and that also
+ * that may mean that it is complicated to manipulaten, and that also
  * therefore means that it is reserved for developers and experienced
  * professionals having in-depth computer knowledge. Users are therefore
  * encourage to load and test the software's suitability as regards their
@@ -34,48 +34,26 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.ribz.core.utils;
+package fr.foacs.ribz.desktop;
 
-import fr.foacs.ribz.core.BoardGame;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.Validate;
-import java.io.IOException;
-import java.io.InputStream;
+import fr.foacs.ribz.core.SplashScreenWorker;
+import java.awt.SplashScreen;
 import java.util.Objects;
-import java.util.Properties;
 
 /**
- * Utility class to load from resource properties files.
- *
- * @since 0.1
+ * Desktop implementation of {@link SplashScreenWorker} interface.
  */
-@Slf4j
-public final class PropertiesLoader {
-
-  private PropertiesLoader() {
-    throw new UnsupportedOperationException("You cannot instantiate PropertiesLoader");
-  }
+public class DesktopSplashScreenWorker implements SplashScreenWorker {
 
   /**
-   * Load properties from a resource file by its name (without .properties extension).
-   *
-   * @param propertiesResourceName The properties resource file without extension
-   * @return The loaded properties.
+   * {@inheritDoc}
    */
-  public static Properties loadProperties(final String propertiesResourceName) {
-    Validate.notBlank(propertiesResourceName, "You should specify a valid properties resource name");
-    Properties properties = new Properties();
-
-    try (InputStream stream = BoardGame.class.getResourceAsStream("/" + propertiesResourceName + ".properties")) {
-      if (Objects.isNull(stream)) {
-        throw new IOException("Unable to get stream for properties " + propertiesResourceName);
-      }
-      properties.load(stream);
-    } catch (IOException ioException) {
-      log.warn("Could not read {} properties file", propertiesResourceName, ioException);
+  @Override
+  public void closeSplashScreen() {
+    SplashScreen splashScreen = SplashScreen.getSplashScreen();
+    if(Objects.nonNull(splashScreen)) {
+      splashScreen.close();
     }
-
-    return properties;
   }
 
 }

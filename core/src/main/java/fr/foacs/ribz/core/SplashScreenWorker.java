@@ -34,48 +34,16 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.ribz.core.utils;
-
-import fr.foacs.ribz.core.BoardGame;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.Validate;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Objects;
-import java.util.Properties;
+package fr.foacs.ribz.core;
 
 /**
- * Utility class to load from resource properties files.
+ * Interface to handle splashScreen for desktop version.
  *
  * @since 0.1
  */
-@Slf4j
-public final class PropertiesLoader {
-
-  private PropertiesLoader() {
-    throw new UnsupportedOperationException("You cannot instantiate PropertiesLoader");
-  }
-
+public interface SplashScreenWorker {
   /**
-   * Load properties from a resource file by its name (without .properties extension).
-   *
-   * @param propertiesResourceName The properties resource file without extension
-   * @return The loaded properties.
+   * Close the splashscreen after loading.
    */
-  public static Properties loadProperties(final String propertiesResourceName) {
-    Validate.notBlank(propertiesResourceName, "You should specify a valid properties resource name");
-    Properties properties = new Properties();
-
-    try (InputStream stream = BoardGame.class.getResourceAsStream("/" + propertiesResourceName + ".properties")) {
-      if (Objects.isNull(stream)) {
-        throw new IOException("Unable to get stream for properties " + propertiesResourceName);
-      }
-      properties.load(stream);
-    } catch (IOException ioException) {
-      log.warn("Could not read {} properties file", propertiesResourceName, ioException);
-    }
-
-    return properties;
-  }
-
+  void closeSplashScreen();
 }

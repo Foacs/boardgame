@@ -34,48 +34,42 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.ribz.core.utils;
+package fr.foacs.ribz.core.screens;
 
-import fr.foacs.ribz.core.BoardGame;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.Validate;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Objects;
-import java.util.Properties;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import fr.foacs.ribz.core.controllers.BoardGameController;
+import java.util.function.BiFunction;
 
 /**
- * Utility class to load from resource properties files.
+ * Application applicable screens.
+ * Can create a screen.
  *
  * @since 0.1
  */
-@Slf4j
-public final class PropertiesLoader {
+public enum BoardGameScreens {
 
-  private PropertiesLoader() {
-    throw new UnsupportedOperationException("You cannot instantiate PropertiesLoader");
+  BOARD(BoardScreen::new);
+
+  private final BiFunction<BoardGameController, SpriteBatch, Screen> supplier;
+
+  /**
+   * Create enumeration value with a screen supplier.
+   *
+   * @param supplier The screen supplier use to create a screen.
+   */
+  BoardGameScreens(BiFunction<BoardGameController, SpriteBatch, Screen> supplier) {
+    this.supplier = supplier;
   }
 
   /**
-   * Load properties from a resource file by its name (without .properties extension).
+   * Create a instance of the screen by using a controller.
    *
-   * @param propertiesResourceName The properties resource file without extension
-   * @return The loaded properties.
+   * @param controller The controller to use.
+   * @return The new screen instance.
    */
-  public static Properties loadProperties(final String propertiesResourceName) {
-    Validate.notBlank(propertiesResourceName, "You should specify a valid properties resource name");
-    Properties properties = new Properties();
-
-    try (InputStream stream = BoardGame.class.getResourceAsStream("/" + propertiesResourceName + ".properties")) {
-      if (Objects.isNull(stream)) {
-        throw new IOException("Unable to get stream for properties " + propertiesResourceName);
-      }
-      properties.load(stream);
-    } catch (IOException ioException) {
-      log.warn("Could not read {} properties file", propertiesResourceName, ioException);
-    }
-
-    return properties;
+  public Screen createScreen(final BoardGameController controller) {
+    return supplier.apply(controller, controller.getBatch());
   }
 
 }

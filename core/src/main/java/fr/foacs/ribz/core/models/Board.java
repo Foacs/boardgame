@@ -34,48 +34,43 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.ribz.core.utils;
+package fr.foacs.ribz.core.models;
 
-import fr.foacs.ribz.core.BoardGame;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.Validate;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Objects;
-import java.util.Properties;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import lombok.Getter;
 
 /**
- * Utility class to load from resource properties files.
+ * Board entity - contains the board map and its properties.
  *
  * @since 0.1
  */
-@Slf4j
-public final class PropertiesLoader {
+@Getter
+public class Board {
 
-  private PropertiesLoader() {
-    throw new UnsupportedOperationException("You cannot instantiate PropertiesLoader");
-  }
+  private final TiledMap boardMap;
+  private final int tileWidth;
+  private final int tileHeight;
+  private final int mapWidth;
+  private final int mapHeight;
+  private final int pixMapWidth;
+  private final int pixMapHeight;
 
   /**
-   * Load properties from a resource file by its name (without .properties extension).
+   * Create a board from its name.
+   * Retrieve the board map from assets.
    *
-   * @param propertiesResourceName The properties resource file without extension
-   * @return The loaded properties.
+   * @param boardName    The board name.
+   * @param assetManager The asset manager to use to retrieve board map.
    */
-  public static Properties loadProperties(final String propertiesResourceName) {
-    Validate.notBlank(propertiesResourceName, "You should specify a valid properties resource name");
-    Properties properties = new Properties();
-
-    try (InputStream stream = BoardGame.class.getResourceAsStream("/" + propertiesResourceName + ".properties")) {
-      if (Objects.isNull(stream)) {
-        throw new IOException("Unable to get stream for properties " + propertiesResourceName);
-      }
-      properties.load(stream);
-    } catch (IOException ioException) {
-      log.warn("Could not read {} properties file", propertiesResourceName, ioException);
-    }
-
-    return properties;
+  public Board(final String boardName, final AssetManager assetManager) {
+    this.boardMap = assetManager.get("boards/" + boardName + ".tmx", TiledMap.class);
+    this.tileWidth = this.boardMap.getProperties().get("tilewidth", 0, Integer.class);
+    this.tileHeight = this.boardMap.getProperties().get("tileheight", 0, Integer.class);
+    this.mapWidth = this.boardMap.getProperties().get("width", 0, Integer.class);
+    this.mapHeight = this.boardMap.getProperties().get("height", 0, Integer.class);
+    this.pixMapWidth = this.mapWidth * this.tileWidth;
+    this.pixMapHeight = this.mapHeight * this.tileHeight;
   }
 
 }

@@ -1,8 +1,8 @@
 /*
  * Copyright or © or Copr. Foacs
  * contributor(s):
- * - Alexis DINQUER adinquer@yahoo.com
- * - Brice KESSLER brice.kessler@outlook.com
+ *  - Alexis DINQUER adinquer@yahoo.com
+ *  - Brice KESSLER brice.kessler@outlook.com
  *
  * This software is a computer program whose purpose is to develop and
  * play board game.
@@ -34,48 +34,31 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.ribz.core.utils;
+package fr.foacs.ribz.core.mocks;
 
-import fr.foacs.ribz.core.BoardGame;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.Validate;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Objects;
-import java.util.Properties;
+import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 
 /**
- * Utility class to load from resource properties files.
- *
- * @since 0.1
+ * Mock class for the {@link TiledMap} class
  */
-@Slf4j
-public final class PropertiesLoader {
+public class TiledMapMock extends TiledMap {
 
-  private PropertiesLoader() {
-    throw new UnsupportedOperationException("You cannot instantiate PropertiesLoader");
+  public static final int MAP_WIDTH = 15;
+  public static final int MAP_HEIGHT = 22;
+  public static final int TILE_WIDTH = 32;
+  public static final int TILE_HEIGHT = 36;
+  private static final MapProperties PROPERTIES = new MapProperties();
+
+  static {
+    PROPERTIES.put("width", MAP_WIDTH);
+    PROPERTIES.put("height", MAP_HEIGHT);
+    PROPERTIES.put("tilewidth", TILE_WIDTH);
+    PROPERTIES.put("tileheight", TILE_HEIGHT);
   }
 
-  /**
-   * Load properties from a resource file by its name (without .properties extension).
-   *
-   * @param propertiesResourceName The properties resource file without extension
-   * @return The loaded properties.
-   */
-  public static Properties loadProperties(final String propertiesResourceName) {
-    Validate.notBlank(propertiesResourceName, "You should specify a valid properties resource name");
-    Properties properties = new Properties();
-
-    try (InputStream stream = BoardGame.class.getResourceAsStream("/" + propertiesResourceName + ".properties")) {
-      if (Objects.isNull(stream)) {
-        throw new IOException("Unable to get stream for properties " + propertiesResourceName);
-      }
-      properties.load(stream);
-    } catch (IOException ioException) {
-      log.warn("Could not read {} properties file", propertiesResourceName, ioException);
-    }
-
-    return properties;
+  @Override
+  public MapProperties getProperties() {
+    return PROPERTIES;
   }
-
 }

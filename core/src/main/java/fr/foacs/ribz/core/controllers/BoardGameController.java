@@ -34,48 +34,55 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.ribz.core.utils;
+package fr.foacs.ribz.core.controllers;
 
-import fr.foacs.ribz.core.BoardGame;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.Validate;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Objects;
-import java.util.Properties;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import fr.foacs.ribz.core.screens.BoardGameScreens;
 
 /**
- * Utility class to load from resource properties files.
+ * Controller main purpose is to handle screen.
+ * It provides to screen application scope graphical object (e.g. ShapeRenderer, SpriteBatch).
+ * It lets application to switch active screen.
  *
  * @since 0.1
  */
-@Slf4j
-public final class PropertiesLoader {
-
-  private PropertiesLoader() {
-    throw new UnsupportedOperationException("You cannot instantiate PropertiesLoader");
-  }
+public interface BoardGameController {
 
   /**
-   * Load properties from a resource file by its name (without .properties extension).
+   * Switch the active screen.
    *
-   * @param propertiesResourceName The properties resource file without extension
-   * @return The loaded properties.
+   * @param screen The new active screen.
    */
-  public static Properties loadProperties(final String propertiesResourceName) {
-    Validate.notBlank(propertiesResourceName, "You should specify a valid properties resource name");
-    Properties properties = new Properties();
+  void showScreen(BoardGameScreens screen);
 
-    try (InputStream stream = BoardGame.class.getResourceAsStream("/" + propertiesResourceName + ".properties")) {
-      if (Objects.isNull(stream)) {
-        throw new IOException("Unable to get stream for properties " + propertiesResourceName);
-      }
-      properties.load(stream);
-    } catch (IOException ioException) {
-      log.warn("Could not read {} properties file", propertiesResourceName, ioException);
-    }
+  /**
+   * Get the shape renderer.
+   *
+   * @return the shape renderer.
+   */
+  ShapeRenderer getShapeRenderer();
 
-    return properties;
-  }
+  /**
+   * Get the sprite batch.
+   *
+   * @return The sprite batch.
+   */
+  SpriteBatch getBatch();
 
+  /**
+   * Get the asset manager.
+   *
+   * @return The asset manager.
+   */
+  AssetManager getAssetManager();
+
+  /**
+   * Get camera.
+   *
+   * @return The camera.
+   */
+  OrthographicCamera getCamera();
 }

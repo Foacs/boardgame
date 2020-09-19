@@ -34,48 +34,47 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.ribz.core.utils;
+package fr.foacs.ribz.core.screens;
 
-import fr.foacs.ribz.core.BoardGame;
+import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import fr.foacs.ribz.core.controllers.BoardGameController;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.Validate;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Objects;
-import java.util.Properties;
 
 /**
- * Utility class to load from resource properties files.
+ * Holds for screen the controller and the sprite batch.
  *
  * @since 0.1
  */
 @Slf4j
-public final class PropertiesLoader {
+@Getter
+public abstract class AbstractScreen extends ScreenAdapter {
 
-  private PropertiesLoader() {
-    throw new UnsupportedOperationException("You cannot instantiate PropertiesLoader");
+  private final BoardGameController controller;
+  private final SpriteBatch batch;
+  @Setter
+  private boolean rendered = false;
+
+  /**
+   * Create a screen from a controller and a batch.
+   *
+   * @param controller The controller.
+   * @param batch      The sprite batch.
+   */
+  public AbstractScreen(final BoardGameController controller, final SpriteBatch batch) {
+    this.controller = controller;
+    this.batch = batch;
   }
 
   /**
-   * Load properties from a resource file by its name (without .properties extension).
+   * Provide the shape renderer.
    *
-   * @param propertiesResourceName The properties resource file without extension
-   * @return The loaded properties.
+   * @return The shape renderer.
    */
-  public static Properties loadProperties(final String propertiesResourceName) {
-    Validate.notBlank(propertiesResourceName, "You should specify a valid properties resource name");
-    Properties properties = new Properties();
-
-    try (InputStream stream = BoardGame.class.getResourceAsStream("/" + propertiesResourceName + ".properties")) {
-      if (Objects.isNull(stream)) {
-        throw new IOException("Unable to get stream for properties " + propertiesResourceName);
-      }
-      properties.load(stream);
-    } catch (IOException ioException) {
-      log.warn("Could not read {} properties file", propertiesResourceName, ioException);
-    }
-
-    return properties;
+  public ShapeRenderer getShapeRenderer() {
+    return this.controller.getShapeRenderer();
   }
-
 }
