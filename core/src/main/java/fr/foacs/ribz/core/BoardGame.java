@@ -37,6 +37,7 @@
 package fr.foacs.ribz.core;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import fr.foacs.ribz.core.utils.PropertiesLoader;
 import com.badlogic.gdx.assets.AssetManager;
@@ -125,7 +126,7 @@ public class BoardGame extends Game implements BoardGameController {
       this.batch = new SpriteBatch();
     }
     if (Objects.isNull(this.camera)) {
-      this.camera = new OrthographicCamera();
+      this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
     this.shapeRenderer = new ShapeRenderer();
     this.assetManager = new AssetManager();
