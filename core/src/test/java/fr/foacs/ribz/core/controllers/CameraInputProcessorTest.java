@@ -38,7 +38,9 @@ package fr.foacs.ribz.core.controllers;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
 import fr.foacs.ribz.core.mocks.OrthographicCameraMock;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -46,7 +48,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -99,6 +103,27 @@ class CameraInputProcessorTest {
 
     victim.zoom(zoomAmount);
     assertEquals(CameraInputProcessor.ZOOM_MIN, cameraMock.zoom);
+    verify(cameraMock).update();
+  }
+
+  /**
+   * Test for the {@link CameraInputProcessor#process(float, float, int)} method with no button
+   */
+  @DisplayName("Process: No button")
+  @Test
+  void testProcessNoButton() {
+    victim.process(0,0,0);
+    verify(cameraMock).update();
+  }
+
+  /**
+   * Test for the {@link CameraInputProcessor#process(float, float, int)} method
+   */
+  @DisplayName("Process")
+  @Test
+  void testProcess() {
+    victim.process(2,2, Input.Buttons.LEFT);
+    verify(cameraMock, times(2)).translate(any(Vector3.class));
     verify(cameraMock).update();
   }
 
