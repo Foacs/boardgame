@@ -36,9 +36,12 @@
 
 package fr.foacs.ribz.core.controllers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.math.MathUtils;
+
 
 /**
  * Input processor for the board camera.
@@ -46,7 +49,7 @@ import com.badlogic.gdx.math.MathUtils;
  *
  * @since 0.1
  */
-public class CameraInputProcessor extends com.badlogic.gdx.graphics.g3d.utils.CameraInputController {
+public class CameraInputProcessor extends CameraInputController {
 
 
   /** The factor which used to divide the zoom amount. */
@@ -58,6 +61,10 @@ public class CameraInputProcessor extends com.badlogic.gdx.graphics.g3d.utils.Ca
   private static final int DEFAULT_TRANSLATE_BUTTON = Input.Buttons.LEFT;
   private static final float DEFAULT_TRANSLATE_UNITS = 400f;
 
+  private float totalDeltaX = 0;
+  private float totalDeltaY = 0;
+  private final float screenWidth;
+  private final float screenHeight;
   private final OrthographicCamera orthographicCamera;
 
   /**
@@ -68,6 +75,8 @@ public class CameraInputProcessor extends com.badlogic.gdx.graphics.g3d.utils.Ca
    */
   public CameraInputProcessor(final OrthographicCamera camera) {
     super(camera);
+    this.screenWidth = Gdx.graphics.getWidth();
+    this.screenHeight = Gdx.graphics.getHeight();
     this.orthographicCamera = camera;
     translateButton = DEFAULT_TRANSLATE_BUTTON;
     // Disable the rotation button
@@ -86,5 +95,28 @@ public class CameraInputProcessor extends com.badlogic.gdx.graphics.g3d.utils.Ca
     orthographicCamera.zoom = MathUtils.clamp(orthographicCamera.zoom, 0.3f, 1f);
     if (autoUpdate) camera.update();
     return true;
+  }
+
+
+  /**
+   * {@inheritDoc}
+   *
+   * Limit the camera movement to screen's size / 2.
+   */
+  @Override
+  protected boolean process(float deltaX, float deltaY, int button) {
+    this.totalDeltaX += (deltaX * translateUnits);
+    this.totalDeltaY += (deltaY * translateUnits);
+    float overrideDeltaX = deltaX;
+    float overrideDeltaY = deltaY;
+    if (Math.abs(this.totalDeltaX) > (this.screenWidth /2) ) {
+      overrideDeltaX = 0;
+      this.totalDeltaX -= (deltaX * translateUnits);
+    }
+    if (Math.abs(this.totalDeltaY) > (this.screenHeight /2) ) {
+      overrideDeltaY = 0;
+      this.totalDeltaY -= (deltaY * translateUnits);
+    }
+    return super.process(overrideDeltaX, overrideDeltaY, button);
   }
 }
