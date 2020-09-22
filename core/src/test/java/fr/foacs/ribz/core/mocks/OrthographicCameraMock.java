@@ -44,4 +44,8 @@ public class OrthographicCameraMock extends OrthographicCamera {
     // Avoid calling parent constructor
   }
 
+  @Override
+  public void update() {
+    // Avoid calling parent update();
+  }
 }

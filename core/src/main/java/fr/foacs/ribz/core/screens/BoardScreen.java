@@ -43,6 +43,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import fr.foacs.ribz.core.controllers.BoardGameController;
+import fr.foacs.ribz.core.controllers.CameraInputProcessor;
 import fr.foacs.ribz.core.models.Board;
 import fr.foacs.ribz.core.utils.PropertiesLoader;
 import lombok.Setter;
@@ -60,6 +61,7 @@ public class BoardScreen extends AbstractScreen {
 
   private final Color backgroundColor;
   private final OrthographicCamera camera;
+  private final CameraInputProcessor cameraController;
 
   /**
    * Set the map renderer to use.
@@ -82,28 +84,36 @@ public class BoardScreen extends AbstractScreen {
     log.info("Create board screen");
 
     this.camera = controller.getCamera();
+    this.cameraController = controller.getCameraInputProcessor();
 
     final Properties colors = PropertiesLoader.loadProperties("colors");
     this.backgroundColor = Color.valueOf(colors.getProperty("background", "#000000"));
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void show() {
     final Board board = new Board("test", getController().getAssetManager());
-    camera.position.x = board.getPixMapWidth() * 0.5f;
-    camera.position.y = board.getPixMapHeight() * 0.5f;
+    camera.position.x = board.getPixMapWidth() * Board.SCALE_UNIT * 0.5f;
+    camera.position.y = board.getPixMapHeight() * Board.SCALE_UNIT *  0.5f;
+    camera.update();
     if (Objects.isNull(mapRenderer)) {
-      mapRenderer = new OrthogonalTiledMapRenderer(board.getBoardMap());
+      mapRenderer = new OrthogonalTiledMapRenderer(board.getBoardMap(), Board.SCALE_UNIT, getBatch());
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public void render(float delta) {
+  public void render(final float delta) {
     this.setRendered(true);
     Gdx.gl.glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-    camera.update();
+    this.cameraController.update();
     mapRenderer.setView(camera);
     mapRenderer.render();
   }

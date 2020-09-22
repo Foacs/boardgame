@@ -58,7 +58,7 @@ public enum BoardGameScreens {
    *
    * @param supplier The screen supplier use to create a screen.
    */
-  BoardGameScreens(BiFunction<BoardGameController, SpriteBatch, Screen> supplier) {
+  BoardGameScreens(final BiFunction<BoardGameController, SpriteBatch, Screen> supplier) {
     this.supplier = supplier;
   }
 

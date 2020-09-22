@@ -1,8 +1,8 @@
 /*
  * Copyright or © or Copr. Foacs
  * contributor(s):
- * - Alexis DINQUER adinquer@yahoo.com
- * - Brice KESSLER brice.kessler@outlook.com
+ *  - Alexis DINQUER adinquer@yahoo.com
+ *  - Brice KESSLER brice.kessler@outlook.com
  *
  * This software is a computer program whose purpose is to develop and
  * play board game.
@@ -36,60 +36,55 @@
 
 package fr.foacs.ribz.core.controllers;
 
-import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import fr.foacs.ribz.core.screens.BoardGameScreens;
+import com.badlogic.gdx.math.MathUtils;
 
 /**
- * Controller main purpose is to handle screen.
- * It provides to screen application scope graphical object (e.g. ShapeRenderer, SpriteBatch).
- * It lets application to switch active screen.
+ * Input processor for the board camera.
+ * Handle Zoom / Translation.
  *
  * @since 0.1
  */
-public interface BoardGameController {
+public class CameraInputProcessor extends com.badlogic.gdx.graphics.g3d.utils.CameraInputController {
+
+
+  /** The factor which used to divide the zoom amount. */
+  public static final float ZOOM_FACTOR = 25f;
+  /** The minimum value for the zoom. */
+  public static final float ZOOM_MIN = 0.3f;
+  /** The maximum value for the zoom. */
+  public static final float ZOOM_MAX = 1f;
+  private static final int DEFAULT_TRANSLATE_BUTTON = Input.Buttons.LEFT;
+  private static final float DEFAULT_TRANSLATE_UNITS = 400f;
+
+  private final OrthographicCamera orthographicCamera;
 
   /**
-   * Switch the active screen.
+   * Constructor.
+   * Set default values for zoom & translation factors
    *
-   * @param screen The new active screen.
+   * @param camera The camera to process
    */
-  void showScreen(BoardGameScreens screen);
+  public CameraInputProcessor(final OrthographicCamera camera) {
+    super(camera);
+    this.orthographicCamera = camera;
+    translateButton = DEFAULT_TRANSLATE_BUTTON;
+    // Disable the rotation button
+    rotateButton = -1;
+    translateUnits = DEFAULT_TRANSLATE_UNITS;
+    scrollFactor = -1f / DEFAULT_TRANSLATE_UNITS;
+  }
 
   /**
-   * Get the shape renderer.
-   *
-   * @return the shape renderer.
+   * {@inheritDoc}.
+   * Compute & apply zoom level to orthographic camera.
    */
-  ShapeRenderer getShapeRenderer();
-
-  /**
-   * Get the sprite batch.
-   *
-   * @return The sprite batch.
-   */
-  SpriteBatch getBatch();
-
-  /**
-   * Get the asset manager.
-   *
-   * @return The asset manager.
-   */
-  AssetManager getAssetManager();
-
-  /**
-   * Get camera.
-   *
-   * @return The camera.
-   */
-  OrthographicCamera getCamera();
-
-  /**
-   * Get the input processor for camera.
-   *
-   * @return The input processor.
-   */
-  CameraInputProcessor getCameraInputProcessor();
+  @Override
+  public boolean zoom(final float amount) {
+    this.orthographicCamera.zoom += (amount/ZOOM_FACTOR);
+    orthographicCamera.zoom = MathUtils.clamp(orthographicCamera.zoom, 0.3f, 1f);
+    if (autoUpdate) camera.update();
+    return true;
+  }
 }

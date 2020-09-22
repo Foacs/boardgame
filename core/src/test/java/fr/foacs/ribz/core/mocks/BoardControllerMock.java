@@ -41,6 +41,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import fr.foacs.ribz.core.controllers.BoardGameController;
+import fr.foacs.ribz.core.controllers.CameraInputProcessor;
 import fr.foacs.ribz.core.screens.BoardGameScreens;
 
 import static org.mockito.Mockito.mock;
@@ -54,6 +55,7 @@ public class BoardControllerMock implements BoardGameController {
   private final ShapeRenderer shapeRenderer = mock(ShapeRenderer.class);
   private final AssetManager assetManager = new AssetManagerMock();
   private final OrthographicCamera camera = new OrthographicCameraMock();
+  private final CameraInputProcessor cameraInputProcessor = mock(CameraInputProcessor.class);
 
 
 
@@ -80,4 +82,10 @@ public class BoardControllerMock implements BoardGameController {
   public OrthographicCamera getCamera() {
     return camera;
   }
+
+  @Override
+  public CameraInputProcessor getCameraInputProcessor() {
+    return cameraInputProcessor;
+  }
+
 }
