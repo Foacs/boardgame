@@ -48,6 +48,9 @@ import lombok.Getter;
 @Getter
 public class Board {
 
+  /** The Scale unit used to determine map size (in pixel). */
+  public static final float SCALE_UNIT = 0.8f;
+
   private final TiledMap boardMap;
   private final int tileWidth;
   private final int tileHeight;

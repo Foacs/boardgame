@@ -38,15 +38,16 @@ package fr.foacs.ribz.core;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import fr.foacs.ribz.core.utils.PropertiesLoader;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import fr.foacs.ribz.core.controllers.BoardGameController;
+import fr.foacs.ribz.core.controllers.CameraInputProcessor;
 import fr.foacs.ribz.core.screens.BoardGameScreens;
+import fr.foacs.ribz.core.utils.PropertiesLoader;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -64,19 +65,21 @@ import java.util.Properties;
 public class BoardGame extends Game implements BoardGameController {
 
   @Getter
-  @Setter
-  private SpriteBatch batch;
-  @Getter
   private ShapeRenderer shapeRenderer;
   @Getter
   private AssetManager assetManager;
+  @Getter
+  private boolean created = false;
+  @Getter
+  private CameraInputProcessor cameraInputProcessor;
+  @Getter
   @Setter
-  private BoardGameScreens gameScreens;
+  private SpriteBatch batch;
   @Getter
   @Setter
   private OrthographicCamera camera;
-  @Getter
-  private boolean created = false;
+  @Setter
+  private BoardGameScreens gameScreens;
   @Setter
   private SplashScreenWorker splashScreenWorker;
 
@@ -128,6 +131,8 @@ public class BoardGame extends Game implements BoardGameController {
     if (Objects.isNull(this.camera)) {
       this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
+    this.cameraInputProcessor = new CameraInputProcessor(this.camera);
+    Gdx.input.setInputProcessor(this.cameraInputProcessor);
     this.shapeRenderer = new ShapeRenderer();
     this.assetManager = new AssetManager();
     this.assetManager.setLoader(TiledMap.class, new TmxMapLoader());

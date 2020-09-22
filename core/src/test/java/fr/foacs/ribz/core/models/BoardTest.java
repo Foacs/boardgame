@@ -54,7 +54,7 @@ class BoardTest {
 
   private static final String BOARD_NAME = "MySuperDuperBoard";
   private Board victim;
-  private AssetManagerMock assetManagerMock = new AssetManagerMock();
+  private final AssetManagerMock assetManagerMock = new AssetManagerMock();
 
   @BeforeEach
   void setup() {

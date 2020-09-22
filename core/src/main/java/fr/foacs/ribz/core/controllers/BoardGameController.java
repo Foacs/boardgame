@@ -85,4 +85,11 @@ public interface BoardGameController {
    * @return The camera.
    */
   OrthographicCamera getCamera();
+
+  /**
+   * Get the input processor for camera.
+   *
+   * @return The input processor.
+   */
+  CameraInputProcessor getCameraInputProcessor();
 }
