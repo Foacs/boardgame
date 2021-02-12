@@ -69,7 +69,7 @@ public class CameraInputProcessor extends CameraInputController {
 
   /**
    * Constructor.
-   * Set default values for zoom & translation factors
+   * Set default values for zoom &amp; translation factors
    *
    * @param camera The camera to process
    */
@@ -87,7 +87,7 @@ public class CameraInputProcessor extends CameraInputController {
 
   /**
    * {@inheritDoc}.
-   * Compute & apply zoom level to orthographic camera.
+   * Compute &amp; apply zoom level to orthographic camera.
    */
   @Override
   public boolean zoom(final float amount) {

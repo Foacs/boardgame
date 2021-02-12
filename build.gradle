@@ -1,5 +1,6 @@
 plugins {
     id 'org.sonarqube' version "3.0"
+    id 'base'
 }
 
 allprojects {
@@ -15,10 +16,6 @@ allprojects {
     ext {
         appName = "ribz"
         gdxVersion = '1.9.10'
-//        roboVMVersion = '2.3.8'
-//        box2DLightsVersion = '1.4'
-//        ashleyVersion = '1.7.0'
-//        aiVersion = '1.8.0'
     }
 }
 
@@ -36,11 +33,10 @@ subprojects {
         testImplementation 'org.awaitility:awaitility:4.0.3'
 
         /* LOMBOK */
-        compileOnly 'org.projectlombok:lombok:1.18.12'
+        compile 'org.projectlombok:lombok:1.18.12'
         annotationProcessor 'org.projectlombok:lombok:1.18.12'
 
         /* LOMBOK Test */
-        testCompileOnly 'org.projectlombok:lombok:1.18.12'
         testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
 
         /* SLF4J */
@@ -53,7 +49,7 @@ subprojects {
 
         /*Google guava*/
         implementation 'com.google.guava:guava:28.2-jre'
-        implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
+        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
     }
 
     sonarqube {
@@ -101,4 +97,32 @@ sonarqube {
         property "sonar.organization", "foacs"
         property "sonar.projectKey", "Foacs_ribz"
     }
+}
+
+/*
+ * Generate doc under 'doc/latest'.
+ */
+task ribzdoc(type: Javadoc) {
+    title "RIBZ Api"
+
+    subprojects.each {
+        source it.sourceSets.main.allJava
+        classpath += it.configurations.compile
+    }
+
+    destinationDir =  file("${buildDir}/doc/latest")
+}
+
+/*
+ * Generate doc under 'doc/version/{version_number}' with version number in title.
+ */
+task ribzdocVersion(type: Javadoc) {
+    title "RIBZ Api version ${version}"
+
+    subprojects.each {
+        source it.sourceSets.main.allJava
+        classpath += it.configurations.compile
+    }
+
+    destinationDir =  file("${buildDir}/doc/version/${version}/")
 }

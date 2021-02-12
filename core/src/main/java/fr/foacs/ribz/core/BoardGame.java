@@ -114,8 +114,8 @@ public class BoardGame extends Game implements BoardGameController {
    * Do:
    * <ol>
    *   <li>Close splashScreen</li>
-   *   <li>Initialize batch & camera (if not already set).</li>
-   *   <li>Initialize shapeRenderer & assetManager.</li>
+   *   <li>Initialize batch &amp; camera (if not already set).</li>
+   *   <li>Initialize shapeRenderer &amp; assetManager.</li>
    *   <li>Load assets</li>
    *   <li>Set startup screen</li>
    * </ol>

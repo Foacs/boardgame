@@ -8,6 +8,7 @@
 
 ![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/foacs/ribz?include_prereleases)
 ![License](https://img.shields.io/badge/license-CeCILL-blue)
+[![javadoc](https://img.shields.io/badge/javadoc-0.1-blue)](http://foacs.ovh/ribz/apidocs/index.php)
 
 Board game application and library created with Java
 
@@ -37,6 +38,23 @@ To launch it:
 ```shell script
 ./gradlew run
 ```
+
+To create the JAR file:
+```shell script
+./gradlew dist
+```
+The file is available in `desktop/build/lib/ribz-desktop-{VERSION}.jar`
+
+## Documentation
+### Where to found documentation
+The java documentation of the project is available [here](http://foacs.ovh/ribz/apidocs/index.php)
+
+### How to generate javadoc
+In order to generate javadoc, run the following command: 
+```shell script
+./gradlew ribzdoc
+```
+The generated documentation can be found in folder `./build/doc/latest`.
 
 ## License
 > You can check out the full license [here](https://github.com/Foacs/ribz/blob/master/LICENSE.md)

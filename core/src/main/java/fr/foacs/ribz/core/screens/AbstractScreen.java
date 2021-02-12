@@ -64,7 +64,7 @@ public abstract class AbstractScreen extends ScreenAdapter {
    * @param controller The controller.
    * @param batch      The sprite batch.
    */
-  public AbstractScreen(final BoardGameController controller, final SpriteBatch batch) {
+  protected AbstractScreen(final BoardGameController controller, final SpriteBatch batch) {
     this.controller = controller;
     this.batch = batch;
   }
