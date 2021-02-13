@@ -22,7 +22,7 @@
  * In this respect, the user's attention is drawn to the risks associated
  * with loading, using, modifying and/or developing or reproducing the
  * software by the user in light of its specific status of free software,
- * that may mean that it is complicated to manipulaten, and that also
+ * that may mean that it is complicated to manipulate, and that also
  * therefore means that it is reserved for developers and experienced
  * professionals having in-depth computer knowledge. Users are therefore
  * encourage to load and test the software's suitability as regards their
@@ -34,7 +34,47 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
+package fr.foacs.ribz.frontend.screens;
+
+import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import fr.foacs.ribz.frontend.controllers.BoardGameController;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+
 /**
- * Contains tests for desktop module.
+ * Holds for screen the controller and the sprite batch.
+ *
+ * @since 0.1
  */
-package fr.foacs.ribz.desktop;
+@Slf4j
+@Getter
+public abstract class AbstractScreen extends ScreenAdapter {
+
+  private final BoardGameController controller;
+  private final SpriteBatch batch;
+  @Setter
+  private boolean rendered = false;
+
+  /**
+   * Create a screen from a controller and a batch.
+   *
+   * @param controller The controller.
+   * @param batch      The sprite batch.
+   */
+  protected AbstractScreen(final BoardGameController controller, final SpriteBatch batch) {
+    this.controller = controller;
+    this.batch = batch;
+  }
+
+  /**
+   * Provide the shape renderer.
+   *
+   * @return The shape renderer.
+   */
+  public ShapeRenderer getShapeRenderer() {
+    return this.controller.getShapeRenderer();
+  }
+}

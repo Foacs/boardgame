@@ -34,47 +34,58 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.ribz.core.utils;
+package fr.foacs.ribz.frontend.mocks;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.Validate;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Objects;
-import java.util.Properties;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import fr.foacs.ribz.frontend.controllers.BoardGameController;
+import fr.foacs.ribz.frontend.controllers.CameraInputProcessor;
+import fr.foacs.ribz.frontend.screens.BoardGameScreens;
+
+import static org.mockito.Mockito.mock;
 
 /**
- * Utility class to load from resource properties files.
- *
- * @since 0.1
+ * Mock class the {@link BoardGameController} class
  */
-@Slf4j
-public final class PropertiesLoader {
+public class BoardControllerMock implements BoardGameController {
 
-  private PropertiesLoader() {
-    throw new AssertionError("You cannot instantiate PropertiesLoader");
+  private final SpriteBatch batch = mock(SpriteBatch.class);
+  private final ShapeRenderer shapeRenderer = mock(ShapeRenderer.class);
+  private final AssetManager assetManager = new AssetManagerMock();
+  private final OrthographicCamera camera = new OrthographicCameraMock();
+  private final CameraInputProcessor cameraInputProcessor = mock(CameraInputProcessor.class);
+
+
+
+  @Override
+  public void showScreen(BoardGameScreens screen) {
   }
 
-  /**
-   * Load properties from a resource file by its name (without .properties extension).
-   *
-   * @param propertiesResourceName The properties resource file without extension
-   * @return The loaded properties.
-   */
-  public static Properties loadProperties(final String propertiesResourceName) {
-    Validate.notBlank(propertiesResourceName, "You should specify a valid properties resource name");
-    Properties properties = new Properties();
+  @Override
+  public ShapeRenderer getShapeRenderer() {
+    return shapeRenderer;
+  }
 
-    try (InputStream stream = PropertiesLoader.class.getResourceAsStream("/" + propertiesResourceName + ".properties")) {
-      if (Objects.isNull(stream)) {
-        throw new IOException("Unable to get stream for properties " + propertiesResourceName);
-      }
-      properties.load(stream);
-    } catch (IOException ioException) {
-      log.warn("Could not read {} properties file", propertiesResourceName, ioException);
-    }
+  @Override
+  public SpriteBatch getBatch() {
+    return batch;
+  }
 
-    return properties;
+  @Override
+  public AssetManager getAssetManager() {
+    return assetManager;
+  }
+
+  @Override
+  public OrthographicCamera getCamera() {
+    return camera;
+  }
+
+  @Override
+  public CameraInputProcessor getCameraInputProcessor() {
+    return cameraInputProcessor;
   }
 
 }

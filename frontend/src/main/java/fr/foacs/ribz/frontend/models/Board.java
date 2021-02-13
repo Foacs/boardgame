@@ -22,7 +22,7 @@
  * In this respect, the user's attention is drawn to the risks associated
  * with loading, using, modifying and/or developing or reproducing the
  * software by the user in light of its specific status of free software,
- * that may mean that it is complicated to manipulaten, and that also
+ * that may mean that it is complicated to manipulate, and that also
  * therefore means that it is reserved for developers and experienced
  * professionals having in-depth computer knowledge. Users are therefore
  * encourage to load and test the software's suitability as regards their
@@ -34,7 +34,46 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
+package fr.foacs.ribz.frontend.models;
+
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import lombok.Getter;
+
 /**
- * Contains tests for desktop module.
+ * Board entity - contains the board map and its properties.
+ *
+ * @since 0.1
  */
-package fr.foacs.ribz.desktop;
+@Getter
+public class Board {
+
+  /** The Scale unit used to determine map size (in pixel). */
+  public static final float SCALE_UNIT = 0.8f;
+
+  private final TiledMap boardMap;
+  private final int tileWidth;
+  private final int tileHeight;
+  private final int mapWidth;
+  private final int mapHeight;
+  private final int pixMapWidth;
+  private final int pixMapHeight;
+
+  /**
+   * Create a board from its name.
+   * Retrieve the board map from assets.
+   *
+   * @param boardName    The board name.
+   * @param assetManager The asset manager to use to retrieve board map.
+   */
+  public Board(final String boardName, final AssetManager assetManager) {
+    this.boardMap = assetManager.get("boards/" + boardName + ".tmx", TiledMap.class);
+    this.tileWidth = this.boardMap.getProperties().get("tilewidth", 0, Integer.class);
+    this.tileHeight = this.boardMap.getProperties().get("tileheight", 0, Integer.class);
+    this.mapWidth = this.boardMap.getProperties().get("width", 0, Integer.class);
+    this.mapHeight = this.boardMap.getProperties().get("height", 0, Integer.class);
+    this.pixMapWidth = this.mapWidth * this.tileWidth;
+    this.pixMapHeight = this.mapHeight * this.tileHeight;
+  }
+
+}

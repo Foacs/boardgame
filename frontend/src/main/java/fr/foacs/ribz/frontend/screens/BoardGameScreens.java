@@ -22,7 +22,7 @@
  * In this respect, the user's attention is drawn to the risks associated
  * with loading, using, modifying and/or developing or reproducing the
  * software by the user in light of its specific status of free software,
- * that may mean that it is complicated to manipulaten, and that also
+ * that may mean that it is complicated to manipulate, and that also
  * therefore means that it is reserved for developers and experienced
  * professionals having in-depth computer knowledge. Users are therefore
  * encourage to load and test the software's suitability as regards their
@@ -34,7 +34,42 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
+package fr.foacs.ribz.frontend.screens;
+
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import fr.foacs.ribz.frontend.controllers.BoardGameController;
+import java.util.function.BiFunction;
+
 /**
- * Contains tests for desktop module.
+ * Application applicable screens.
+ * Can create a screen.
+ *
+ * @since 0.1
  */
-package fr.foacs.ribz.desktop;
+public enum BoardGameScreens {
+
+  BOARD(BoardScreen::new);
+
+  private final BiFunction<BoardGameController, SpriteBatch, Screen> supplier;
+
+  /**
+   * Create enumeration value with a screen supplier.
+   *
+   * @param supplier The screen supplier use to create a screen.
+   */
+  BoardGameScreens(final BiFunction<BoardGameController, SpriteBatch, Screen> supplier) {
+    this.supplier = supplier;
+  }
+
+  /**
+   * Create a instance of the screen by using a controller.
+   *
+   * @param controller The controller to use.
+   * @return The new screen instance.
+   */
+  public Screen createScreen(final BoardGameController controller) {
+    return supplier.apply(controller, controller.getBatch());
+  }
+
+}

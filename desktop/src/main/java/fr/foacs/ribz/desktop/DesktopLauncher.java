@@ -38,8 +38,8 @@ package fr.foacs.ribz.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import fr.foacs.ribz.core.BoardGame;
-import fr.foacs.ribz.core.screens.BoardGameScreens;
+import fr.foacs.ribz.frontend.BoardGame;
+import fr.foacs.ribz.frontend.screens.BoardGameScreens;
 
 /**
  * Desktop application entry point.

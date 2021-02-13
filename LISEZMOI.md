@@ -16,6 +16,7 @@ Application et library de jeu de plateau créé avec Java.
 - [Informations générales](#informations-gnrales)
 - [Technologies](#technologies)
 - [Configuration](#configuration)
+- [Documentation](#documentation)
 - [Licence](#licence)
 
 ## Informations générales

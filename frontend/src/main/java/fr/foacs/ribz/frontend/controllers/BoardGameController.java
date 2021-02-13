@@ -22,7 +22,7 @@
  * In this respect, the user's attention is drawn to the risks associated
  * with loading, using, modifying and/or developing or reproducing the
  * software by the user in light of its specific status of free software,
- * that may mean that it is complicated to manipulaten, and that also
+ * that may mean that it is complicated to manipulate, and that also
  * therefore means that it is reserved for developers and experienced
  * professionals having in-depth computer knowledge. Users are therefore
  * encourage to load and test the software's suitability as regards their
@@ -34,7 +34,62 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
+package fr.foacs.ribz.frontend.controllers;
+
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import fr.foacs.ribz.frontend.screens.BoardGameScreens;
+
 /**
- * Contains tests for desktop module.
+ * Controller main purpose is to handle screen.
+ * It provides to screen application scope graphical object (e.g. ShapeRenderer, SpriteBatch).
+ * It lets application to switch active screen.
+ *
+ * @since 0.1
  */
-package fr.foacs.ribz.desktop;
+public interface BoardGameController {
+
+  /**
+   * Switch the active screen.
+   *
+   * @param screen The new active screen.
+   */
+  void showScreen(BoardGameScreens screen);
+
+  /**
+   * Get the shape renderer.
+   *
+   * @return the shape renderer.
+   */
+  ShapeRenderer getShapeRenderer();
+
+  /**
+   * Get the sprite batch.
+   *
+   * @return The sprite batch.
+   */
+  SpriteBatch getBatch();
+
+  /**
+   * Get the asset manager.
+   *
+   * @return The asset manager.
+   */
+  AssetManager getAssetManager();
+
+  /**
+   * Get camera.
+   *
+   * @return The camera.
+   */
+  OrthographicCamera getCamera();
+
+  /**
+   * Get the input processor for camera.
+   *
+   * @return The input processor.
+   */
+  CameraInputProcessor getCameraInputProcessor();
+}
