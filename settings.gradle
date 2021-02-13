@@ -1,4 +1,6 @@
 rootProject.name = 'ribz'
 include 'core'
+include 'backend'
+include 'frontend'
 include 'desktop'
 

@@ -16,6 +16,7 @@ Board game application and library created with Java
 - [General info](#general-info)
 - [Technologies](#technologies)
 - [Setup](#setup)
+- [Documentation](#documentation)
 - [License](#license)
 
 ## General info
