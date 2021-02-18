@@ -40,5 +40,5 @@ dependencies {
 }
 
 sonarqube.properties{
-    property "sonar.exclusins", "src/test/**"
+    property "sonar.exclusions", "src/test/**"
 }
