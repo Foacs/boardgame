@@ -1,6 +1,6 @@
 dependencies {
-    compile project(":backend")
-    compile project(":frontend")
+    compile project(":backend-impl")
+    compile project(":frontend-impl")
     compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
     compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"

@@ -107,7 +107,7 @@ sonarqube {
  * Generate doc under 'doc/latest'.
  */
 task ribzdoc(type: Javadoc) {
-    title "RIBZ Api"
+    title "RIBZ API"
 
     subprojects.each {
         source it.sourceSets.main.allJava
@@ -121,7 +121,7 @@ task ribzdoc(type: Javadoc) {
  * Generate doc under 'doc/version/{version_number}' with version number in title.
  */
 task ribzdocVersion(type: Javadoc) {
-    title "RIBZ Api version ${version}"
+    title "RIBZ API version ${version}"
 
     subprojects.each {
         source it.sourceSets.main.allJava

@@ -36,5 +36,7 @@
 
 /**
  * Contains desktop platform specific classes.
+ *
+ * @since 0.1
  */
 package fr.foacs.ribz.desktop;

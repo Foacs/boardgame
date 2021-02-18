@@ -42,8 +42,9 @@ package fr.foacs.ribz.core;
  * @since 0.1
  */
 public interface SplashScreenWorker {
+
   /**
-   * Close the splashscreen after loading.
+   * Closes the splashscreen after loading.
    */
   void closeSplashScreen();
 }
