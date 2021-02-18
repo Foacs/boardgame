@@ -40,5 +40,5 @@ dependencies {
 }
 
 sonarqube.properties{
-    property "sonar.exclusions", "src/test/**"
+    property "sonar.coverage.jacoco.xmlReportPaths", ""
 }
