@@ -36,7 +36,6 @@
 
 package fr.foacs.ribz.backend.impl;
 
-import com.badlogic.gdx.utils.Disposable;
 import fr.foacs.ribz.backend.api.Backend;
 import fr.foacs.ribz.core.event.MessageListener;
 import fr.foacs.ribz.response.controller.Response;
@@ -53,7 +52,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 0.1
  */
 @Slf4j
-public class RibzBackend implements Disposable, Backend {
+public class RibzBackend implements Backend {
 
   @Getter
   @NonNull
