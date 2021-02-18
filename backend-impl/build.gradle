@@ -38,3 +38,7 @@ dependencies {
     compile project(":backend-api")
     compile project(":response-controller")
 }
+
+sonarqube.properties{
+    property "sonar.tests", "src/test/java"
+}

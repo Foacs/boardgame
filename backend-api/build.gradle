@@ -37,3 +37,11 @@
 dependencies {
     compile project(":core")
 }
+
+/*
+ * No tests in API module
+ */
+sonarqube.properties{
+    property "sonar.coverage.jacoco.xmlReportPaths", ""
+    property "sonar.junit.reportPaths", ""
+}

@@ -37,3 +37,7 @@
 dependencies {
     compile project(":backend-api")
 }
+
+sonarqube.properties{
+    property "sonar.tests", "src/test/java"
+}
