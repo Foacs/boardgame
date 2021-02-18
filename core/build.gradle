@@ -37,3 +37,7 @@
 dependencies {
     compile "org.reflections:reflections:0.9.12"
 }
+
+sonarqube.properties{
+    property "sonar.tests", "src/test/java"
+}

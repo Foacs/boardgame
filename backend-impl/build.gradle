@@ -39,3 +39,7 @@ dependencies {
     compile project(":response-controller")
     compile "com.badlogicgames.gdx:gdx:$gdxVersion"
 }
+
+sonarqube.properties{
+    property "sonar.tests", "src/test/java"
+}

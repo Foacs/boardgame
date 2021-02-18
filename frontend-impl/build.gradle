@@ -41,3 +41,7 @@ dependencies {
     testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     compile "com.badlogicgames.gdx:gdx:$gdxVersion"
 }
+
+sonarqube.properties{
+    property "sonar.tests", "src/test/java"
+}

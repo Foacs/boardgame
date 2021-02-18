@@ -37,7 +37,3 @@
 dependencies {
     compile project(":core")
 }
-
-sonarqube.properties{
-    property "sonar.exclusions", "src/test/**"
-}
