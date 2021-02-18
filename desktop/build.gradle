@@ -40,3 +40,7 @@ task dist(type: Jar) {
 }
 
 dist.dependsOn classes
+
+sonarqube.properties{
+    property "sonar.exclusins", "src/test/**"
+}

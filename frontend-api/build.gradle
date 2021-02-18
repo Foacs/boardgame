@@ -38,3 +38,7 @@ dependencies {
     compile project(":core")
     compile "com.badlogicgames.gdx:gdx:$gdxVersion"
 }
+
+sonarqube.properties{
+    property "sonar.exclusins", "src/test/**"
+}
