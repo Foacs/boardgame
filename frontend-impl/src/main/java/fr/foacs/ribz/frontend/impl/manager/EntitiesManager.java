@@ -1,8 +1,8 @@
 /*
  * Copyright or © or Copr. Foacs
  * contributor(s):
- *  - Alexis DINQUER adinquer@yahoo.com
- *  - Brice KESSLER brice.kessler@outlook.com
+ * - Alexis DINQUER adinquer@yahoo.com
+ * - Brice KESSLER brice.kessler@outlook.com
  *
  * This software is a computer program whose purpose is to develop and
  * play board game.
@@ -34,70 +34,7 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.ribz.backend.impl;
-
-import fr.foacs.ribz.backend.api.Backend;
-import fr.foacs.ribz.core.event.MessageListener;
-import fr.foacs.ribz.response.controller.Response;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-
 /**
- * Entry point of Ribz back end.<br>
- * It should be initialised with:
- * {@code RibzBackend.getInstance().setMessageListener(messageListenerInstance)}.
- *
- * @since 0.1
+ * Contains tests for desktop module.
  */
-@Slf4j
-public class RibzBackend implements Backend {
-
-  @Getter
-  @NonNull
-  private static final RibzBackend instance = new RibzBackend();
-
-  @Getter
-  @Setter
-  private MessageListener<Response> messageListener;
-
-  /**
-   * Hides the default constructor.
-   */
-  private RibzBackend() {
-    log.info("Starting RIBZ backend.");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void init() {
-    log.info("Init backend");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void pause() {
-    log.info("Pause backend");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void resume() {
-    log.info("Resume backend");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void dispose() {
-    log.info("Dispose backend");
-  }
-}
+package fr.foacs.ribz.desktop;

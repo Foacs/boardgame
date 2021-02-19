@@ -44,12 +44,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import fr.foacs.ribz.core.SplashScreenWorker;
 import fr.foacs.ribz.core.event.MessageListener;
 import fr.foacs.ribz.core.utils.PropertiesLoader;
 import fr.foacs.ribz.event.controller.events.Event;
 import fr.foacs.ribz.event.controller.events.LifeCycleEvent;
 import fr.foacs.ribz.frontend.api.Frontend;
+import fr.foacs.ribz.frontend.api.SplashScreenWorker;
 import fr.foacs.ribz.frontend.impl.controllers.BoardGameController;
 import fr.foacs.ribz.frontend.impl.controllers.CameraInputProcessor;
 import fr.foacs.ribz.frontend.impl.screens.BoardGameScreens;
@@ -126,7 +126,7 @@ public class RibzFrontend implements BoardGameController, Frontend {
    *   <li>Loads assets</li>
    *   <li>Sets startup screen</li>
    * </ol>
-   * {@inheritDoc}.
+   * {@inheritDoc}
    */
   @Override
   public void init() {
@@ -158,7 +158,7 @@ public class RibzFrontend implements BoardGameController, Frontend {
 
   /**
    * Delegates to {@link Screen}.
-   * {@inheritDoc}.
+   * {@inheritDoc}
    */
   @Override
   public void resize(int width, int height) {
@@ -180,7 +180,7 @@ public class RibzFrontend implements BoardGameController, Frontend {
 
   /**
    * Delegates to {@link Screen}.
-   * {@inheritDoc}.
+   * {@inheritDoc}
    */
   @Override
   public void pause() {
@@ -194,7 +194,7 @@ public class RibzFrontend implements BoardGameController, Frontend {
 
   /**
    * Delegates to {@link Screen}.
-   * {@inheritDoc}.
+   * {@inheritDoc}
    */
   @Override
   public void resume() {
@@ -207,7 +207,7 @@ public class RibzFrontend implements BoardGameController, Frontend {
   }
 
   /**
-   * {@inheritDoc}.
+   * {@inheritDoc}
    */
   @Override
   public void showScreen(final BoardGameScreens screen) {
@@ -221,7 +221,7 @@ public class RibzFrontend implements BoardGameController, Frontend {
    *   <li>ShapeRenderer</li>
    *   <li>AssetManager</li>
    * </ol>
-   * {@inheritDoc}.
+   * {@inheritDoc}
    */
   @Override
   public void dispose() {

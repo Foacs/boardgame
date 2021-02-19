@@ -58,7 +58,7 @@ public abstract class MessageController<T extends Message> implements MessageLis
   }
 
   /**
-   * {@inheritDoc}.
+   * {@inheritDoc}
    */
   @Override
   public boolean dispatchMessage(@Nonnull T message) {

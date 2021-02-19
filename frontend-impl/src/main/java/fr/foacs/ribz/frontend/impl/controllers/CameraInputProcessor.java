@@ -86,7 +86,7 @@ public class CameraInputProcessor extends CameraInputController {
   }
 
   /**
-   * {@inheritDoc}.
+   * {@inheritDoc}
    * Computes &amp; applies zoom level to orthographic camera.
    */
   @Override
@@ -99,7 +99,7 @@ public class CameraInputProcessor extends CameraInputController {
 
 
   /**
-   * {@inheritDoc}.
+   * {@inheritDoc}
    * Limits the camera movement to screen's size / 2.
    */
   @Override

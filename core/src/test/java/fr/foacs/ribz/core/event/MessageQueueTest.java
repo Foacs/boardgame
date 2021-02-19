@@ -36,9 +36,17 @@
 
 package fr.foacs.ribz.core.event;
 
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -53,14 +61,16 @@ import static org.mockito.Mockito.mock;
 @DisplayName("Message Queue")
 class MessageQueueTest {
 
+  private final static int NUM_THREAD = 10;
+
   private final MessageQueue<MessageTestImpl> victim = new MessageQueue<>();
 
   /**
    * Test for {@link MessageQueue#add(Message)} method.
    */
-  @DisplayName("Offer")
+  @DisplayName("Add")
   @Test
-  void testOffer() {
+  void testAdd() {
     final MessageTestImpl event = mock(MessageTestImpl.class);
 
     victim.add(event);
@@ -69,6 +79,32 @@ class MessageQueueTest {
 
     assertTrue(polledEvent.isPresent());
     assertEquals(event, polledEvent.get());
+  }
+
+  /**
+   * Test for {@link MessageQueue#add(Message)} method.
+   * Synchronized test.
+   */
+  @SneakyThrows
+  @DisplayName("Add - synchronized test")
+  @Test
+  void testAddSynchronized() {
+    final ExecutorService executor = Executors.newFixedThreadPool(NUM_THREAD);
+
+    for (int i = 0; i < NUM_THREAD; i++) {
+      executor.submit(() -> victim.add(mock(MessageTestImpl.class)));
+    }
+
+    executor.shutdown();
+
+    int queueSize = 0;
+    if (executor.awaitTermination(1000, TimeUnit.SECONDS)) {
+      while (victim.poll().isPresent()) {
+        queueSize++;
+      }
+    }
+
+    assertEquals(NUM_THREAD, queueSize);
   }
 
   /**
@@ -83,26 +119,45 @@ class MessageQueueTest {
   }
 
   /**
-   * Test for {@link MessageQueue#clear()} method.
+   * Test for {@link MessageQueue#poll()} method.
+   * Synchronized test.
    */
-  @DisplayName("Clear")
+  @SneakyThrows
+  @DisplayName("Poll - synchronized test")
   @Test
-  void testClear() {
-    victim.add(mock(MessageTestImpl.class));
-    victim.add(mock(MessageTestImpl.class));
+  void testPollSynchronized() {
+    final ExecutorService executor = Executors.newFixedThreadPool(NUM_THREAD);
+    final MessageTestImpl[] expectedMessageArray = new MessageTestImpl[NUM_THREAD];
+    final List<MessageTestImpl> resultMessageList = new ArrayList<>(NUM_THREAD);
 
-    victim.clear();
+    for (int i = 0; i < NUM_THREAD; i++) {
+      final MessageTestImpl mockMessage = mock(MessageTestImpl.class);
+      victim.add(mockMessage);
+      expectedMessageArray[i] = mockMessage;
+    }
 
-    assertFalse(victim.poll().isPresent());
+    final List<Future<MessageTestImpl>> futureList = new ArrayList<>();
+    for (int i = 0; i < NUM_THREAD; i++) {
+      futureList.add(executor.submit(() -> victim.poll().orElse(null)));
+    }
+
+    for (Future<MessageTestImpl> future : futureList) {
+      resultMessageList.add(future.get());
+    }
+
+    executor.shutdown();
+    assertTrue(executor.awaitTermination(1000, TimeUnit.SECONDS));
+    assertTrue(resultMessageList.containsAll(Arrays.asList(expectedMessageArray)));
   }
+
 
   /**
    * Test for {@link MessageQueue#add(Message)} method.
    * Order by priority.
    */
-  @DisplayName("Offer: order by priority")
+  @DisplayName("Add: order by priority")
   @Test
-  void testOfferOrderByPriority() {
+  void testAddOrderByPriority() {
     final MessageTestImpl highPriorityEvent = new MessageTestImpl((short) 0);
     final MessageTestImpl mediumPriorityEvent = new MessageTestImpl((short) 10);
     final MessageTestImpl lowPriorityEvent = new MessageTestImpl((short) 100);

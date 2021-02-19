@@ -38,6 +38,7 @@ package fr.foacs.ribz.core.event.handler;
 
 import fr.foacs.ribz.core.event.MessageTestImpl;
 import lombok.Getter;
+import javax.annotation.Nonnull;
 
 @HandleMessage(MessageTestImpl.class)
 public class MessageHandlerTestImpl extends MessageHandler<MessageTestImpl> {
@@ -58,7 +59,7 @@ public class MessageHandlerTestImpl extends MessageHandler<MessageTestImpl> {
   }
 
   @Override
-  protected void handle(MessageTestImpl event) {
+  protected void handle(@Nonnull MessageTestImpl event) {
 
   }
 

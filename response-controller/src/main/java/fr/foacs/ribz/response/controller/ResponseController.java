@@ -68,7 +68,7 @@ public class ResponseController extends MessageController<Response> implements A
 
   /**
    * Calls {@link Frontend#init()} if it is set.<br>
-   * {@inheritDoc}.
+   * {@inheritDoc}
    */
   @Override
   public void create() {
@@ -81,7 +81,7 @@ public class ResponseController extends MessageController<Response> implements A
 
   /**
    * Calls {@link Frontend#resize(int, int)} with given parameters.<br>
-   * {@inheritDoc}.
+   * {@inheritDoc}
    */
   @Override
   public void resize(int width, int height) {
@@ -92,13 +92,13 @@ public class ResponseController extends MessageController<Response> implements A
 
   /**
    * Polls event in queue &amp; call {@link Frontend#render()}. <br>
-   * {@inheritDoc}.
+   * {@inheritDoc}
    */
   @Override
   public void render() {
     // Handle response from backend
     getMessageQueue().poll().ifPresent(response ->
-        ResponseHandlerFactory.getInstance().getHandler(response.getClass())
+        ResponseHandlerFactory.getInstance().getHandlerSet(response.getClass())
             .forEach(handler -> handler.handleMessage(response)));
     // Trigger render of frontend
     if (Objects.nonNull(frontend)) {
@@ -108,7 +108,7 @@ public class ResponseController extends MessageController<Response> implements A
 
   /**
    * Calls {@link Frontend#pause()}.<br>
-   * {@inheritDoc}.
+   * {@inheritDoc}
    */
   @Override
   public void pause() {
@@ -119,7 +119,7 @@ public class ResponseController extends MessageController<Response> implements A
 
   /**
    * Calls {@link Frontend#resume()}.<br>
-   * {@inheritDoc}.
+   * {@inheritDoc}
    */
   @Override
   public void resume() {
@@ -130,7 +130,7 @@ public class ResponseController extends MessageController<Response> implements A
 
   /**
    * Calls {@link Frontend#dispose()}.<br>
-   * {@inheritDoc}.
+   * {@inheritDoc}
    */
   @Override
   public void dispose() {

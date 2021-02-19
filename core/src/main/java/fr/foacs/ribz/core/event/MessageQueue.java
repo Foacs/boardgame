@@ -36,6 +36,7 @@
 
 package fr.foacs.ribz.core.event;
 
+import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import javax.annotation.Nonnull;
 import java.util.Optional;
@@ -45,18 +46,19 @@ import java.util.PriorityQueue;
  * Class for queued event. Events are ordered by priority.<br>
  * Action to dispatch event is listened by a {@link MessageListener}.
  *
+ * @param <T> The type of message in the queue.
  * @since 0.1
  */
 @Slf4j
 public class MessageQueue<T extends Message> {
 
-  private final PriorityQueue<T> events;
+  private final PriorityQueue<T> queue;
 
   /**
    * Creates an event queue.
    */
   public MessageQueue() {
-    this.events = new PriorityQueue<>();
+    this.queue = new PriorityQueue<>();
   }
 
   /**
@@ -65,8 +67,9 @@ public class MessageQueue<T extends Message> {
    * @return An optional with top priority event, empty if no event is available.
    */
   @Nonnull
+  @Synchronized
   public Optional<T> poll() {
-    return Optional.ofNullable(events.poll());
+    return Optional.ofNullable(queue.poll());
   }
 
   /**
@@ -76,15 +79,8 @@ public class MessageQueue<T extends Message> {
    * @param event The event to insert.
    * @return True if the event is properly insert (as specified in {@link java.util.Queue#offer(Object)}).
    */
+  @Synchronized
   public boolean add(@Nonnull final T event) {
-    return events.add(event);
-  }
-
-  /**
-   * Clears the event queue.
-   */
-  public void clear() {
-    log.warn("Clearing the event queue");
-    events.clear();
+    return queue.add(event);
   }
 }

@@ -38,7 +38,6 @@ package fr.foacs.ribz.core.event.handler;
 
 import com.google.common.collect.MapMaker;
 import fr.foacs.ribz.core.event.Message;
-import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 import javax.annotation.Nonnull;
@@ -79,10 +78,8 @@ public abstract class MessageHandlerFactory<T extends Message> {
    * @return An optional with handler found. Empty if no handler exists or an issue has been thrown.
    */
   @Nonnull
-  public Set<MessageHandler<T>> getHandler(@Nonnull final Class<? extends T> eventClass) {
-    synchronized (cache) {
-      return cache.computeIfAbsent(eventClass, this::searchHandler);
-    }
+  public Set<MessageHandler<T>> getHandlerSet(@Nonnull final Class<? extends T> eventClass) {
+    return cache.computeIfAbsent(eventClass, this::searchHandlerSet);
   }
 
   /**
@@ -91,8 +88,8 @@ public abstract class MessageHandlerFactory<T extends Message> {
    * @param searchEventClass The {@link Message} class used to map {@link MessageHandler}.
    * @return The found {@link MessageHandler}.
    */
-  private @Nonnull
-  Set<MessageHandler<T>> searchHandler(@Nonnull Class<? extends T> searchEventClass) {
+  @Nonnull
+  private Set<MessageHandler<T>> searchHandlerSet(@Nonnull Class<? extends T> searchEventClass) {
     final Set<MessageHandler<T>> resultSet = new TreeSet<>(new MessageHandlerComparator<>());
     for (Class<?> handler : reflections.getTypesAnnotatedWith(HandleMessage.class)) {
       final HandleMessage handleMessageAnnotation = handler.getAnnotation(HandleMessage.class);
@@ -120,12 +117,10 @@ public abstract class MessageHandlerFactory<T extends Message> {
       }
     } catch (InstantiationException e) {
       log.error("The event handler {} is abstract.", handler.getSimpleName());
-    } catch (IllegalAccessException e) {
-      log.error("The event handler {} has no public constructor.", handler.getSimpleName());
     } catch (InvocationTargetException e) {
       log.error(String.format("The event handler %s constructor has throws exception", handler.getSimpleName()), e);
-    } catch (NoSuchMethodException e) {
-      log.error("The event handler {} has no empty constructor.", handler.getSimpleName());
+    } catch (IllegalAccessException | NoSuchMethodException e) {
+      log.error("The event handler {} has no empty public constructor.", handler.getSimpleName());
     }
     return Optional.empty();
   }
@@ -133,11 +128,10 @@ public abstract class MessageHandlerFactory<T extends Message> {
   /**
    * Comparator of {@link MessageHandler} based on salience define in annotation {@link HandleMessage}.
    */
-  @EqualsAndHashCode
   private static class MessageHandlerComparator<T extends Message> implements Comparator<MessageHandler<T>> {
 
     /**
-     * {@inheritDoc}.
+     * {@inheritDoc}
      */
     @Override
     public int compare(@Nullable final MessageHandler handler1, @Nullable final MessageHandler handler2) {
@@ -146,9 +140,12 @@ public abstract class MessageHandlerFactory<T extends Message> {
       }
       final HandleMessage annotation1 = handler1.getClass().getAnnotation(HandleMessage.class);
       final HandleMessage annotation2 = handler2.getClass().getAnnotation(HandleMessage.class);
-      final int salience1 = Objects.nonNull(annotation1) ? annotation1.priority() : 0;
-      final int salience2 = Objects.nonNull(annotation2) ? annotation2.priority() : 0;
-      return Integer.compare(salience1, salience2);
+      if (Objects.isNull(annotation1) || Objects.isNull(annotation2)) {
+        return 0;
+      }
+      final int priority = annotation1.priority();
+      final int priority1 = annotation2.priority();
+      return Integer.compare(priority, priority1);
     }
   }
 }

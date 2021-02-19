@@ -42,6 +42,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import javax.annotation.Nonnull;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -57,12 +58,20 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DisplayName("Event handler factory")
 class MessageHandlerFactoryTest {
 
+  private final static int NUM_THREADS = 10;
+  private final static int NUM_ITERATIONS = 1000;
+
+  /**
+   * Test for {@link MessageHandlerFactory#getHandlerSet(Class)} method.
+   * No cache.
+   */
   @Test
-  void testGetHandlerNoCache() {
+  @DisplayName("Get handlerSet - no cache")
+  void testGetHandlerSetNoCache() {
     MessageHandlerTestImpl.resetCounter();
 
     final Set<MessageHandler<MessageTestImpl>> handlerSet = MessageHandlerFactoryTestImpl.getInstance()
-        .getHandler(MessageTestImpl.class);
+        .getHandlerSet(MessageTestImpl.class);
 
     handlerSet.forEach(handler ->
         assertTrue(handler instanceof MessageHandlerTestImpl)
@@ -70,4 +79,42 @@ class MessageHandlerFactoryTest {
     assertEquals(1, MessageHandlerTestImpl.getCounter());
   }
 
+
+  /**
+   * Test for {@link MessageHandlerFactory#getHandlerSet(Class)} method.
+   * Private constructor.
+   */
+  @Test
+  @DisplayName("Get handlerSet - Private constructor")
+  void testGetHandlerPrivateConstructor() {
+    MessageHandlerTestImpl.resetCounter();
+
+    class InstantiationExceptionMessage extends MessageTestImpl {
+
+      public InstantiationExceptionMessage() {
+        super((short) 10);
+      }
+    }
+
+    @HandleMessage(InstantiationExceptionMessage.class)
+    class InstantiationExceptionMessageHandler extends MessageHandler<InstantiationExceptionMessage> {
+
+      /**
+       * Constructs a handler with the class of handled type.
+       */
+      private InstantiationExceptionMessageHandler() {
+        super(InstantiationExceptionMessage.class);
+      }
+
+      @Override
+      protected void handle(@Nonnull InstantiationExceptionMessage event) {
+
+      }
+    }
+
+    final Set<MessageHandler<MessageTestImpl>> handlerSet = MessageHandlerFactoryTestImpl.getInstance()
+        .getHandlerSet(InstantiationExceptionMessage.class);
+
+    assertTrue(handlerSet.isEmpty());
+  }
 }

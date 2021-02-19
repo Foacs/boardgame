@@ -34,70 +34,17 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.ribz.backend.impl;
-
-import fr.foacs.ribz.backend.api.Backend;
-import fr.foacs.ribz.core.event.MessageListener;
-import fr.foacs.ribz.response.controller.Response;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+package fr.foacs.ribz.frontend.api;
 
 /**
- * Entry point of Ribz back end.<br>
- * It should be initialised with:
- * {@code RibzBackend.getInstance().setMessageListener(messageListenerInstance)}.
+ * Interface to handle splashScreen for desktop version.
  *
  * @since 0.1
  */
-@Slf4j
-public class RibzBackend implements Backend {
-
-  @Getter
-  @NonNull
-  private static final RibzBackend instance = new RibzBackend();
-
-  @Getter
-  @Setter
-  private MessageListener<Response> messageListener;
+public interface SplashScreenWorker {
 
   /**
-   * Hides the default constructor.
+   * Closes the splashscreen after loading.
    */
-  private RibzBackend() {
-    log.info("Starting RIBZ backend.");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void init() {
-    log.info("Init backend");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void pause() {
-    log.info("Pause backend");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void resume() {
-    log.info("Resume backend");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void dispose() {
-    log.info("Dispose backend");
-  }
+  void closeSplashScreen();
 }

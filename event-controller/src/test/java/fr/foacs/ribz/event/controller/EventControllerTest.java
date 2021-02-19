@@ -40,6 +40,7 @@ import fr.foacs.ribz.core.event.MessageController;
 import fr.foacs.ribz.core.event.handler.MessageHandlerFactory;
 import fr.foacs.ribz.event.controller.events.Event;
 import fr.foacs.ribz.event.controller.handlers.EventHandler;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -121,21 +122,15 @@ class EventControllerTest {
     verify(messageQueue).add(event);
   }
 
+  @SneakyThrows
   private void setMockEventQueue() {
-    try {
-      FieldSetter.setField(victim, MessageController.class.getDeclaredField("messageQueue"), messageQueue);
-    } catch (NoSuchFieldException e) {
-      log.warn("No field eventQueue", e);
-    }
+    FieldSetter.setField(victim, MessageController.class.getDeclaredField("messageQueue"), messageQueue);
   }
 
+  @SneakyThrows
   private void setMockEventHandlerCache() {
     final HashMap<Class<? extends Event>, Set<EventHandler<? extends Event>>> mockCache = new HashMap<>();
     mockCache.put(EventTestImpl.class, Set.of(messageHandler));
-    try {
-      FieldSetter.setField(EventHandlerFactory.getInstance(), MessageHandlerFactory.class.getDeclaredField("cache"), mockCache);
-    } catch (NoSuchFieldException e) {
-      log.warn("No field cache", e);
-    }
+    FieldSetter.setField(EventHandlerFactory.getInstance(), MessageHandlerFactory.class.getDeclaredField("cache"), mockCache);
   }
 }

@@ -47,9 +47,10 @@ import javax.annotation.Nonnull;
  * @since 0.1
  */
 @RequiredArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class Message implements Comparable<Message> {
 
+  @EqualsAndHashCode.Include
   @Getter
   private final short priority;
 
@@ -72,7 +73,7 @@ public abstract class Message implements Comparable<Message> {
    * Cancels the event.<br>
    * Other handler will not handle it.
    */
-  public void cancelEvent() {
+  public void cancel() {
     this.active = false;
   }
 }

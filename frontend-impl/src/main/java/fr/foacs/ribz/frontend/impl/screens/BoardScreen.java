@@ -98,7 +98,7 @@ public class BoardScreen extends AbstractScreen {
   }
 
   /**
-   * {@inheritDoc}.
+   * {@inheritDoc}
    */
   @Override
   public void render(final float delta) {

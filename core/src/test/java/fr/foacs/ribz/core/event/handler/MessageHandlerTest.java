@@ -37,44 +37,74 @@
 package fr.foacs.ribz.core.event.handler;
 
 import fr.foacs.ribz.core.event.Message;
-import javax.annotation.Nonnull;
+import fr.foacs.ribz.core.event.MessageTestImpl;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
- * Handles {@link Message}.
+ * Test for {@link MessageHandler} class.
  *
- * @param <T> The type of {@link Message} handled.
+ * @since 0.1
  */
-public abstract class MessageHandler<T extends Message> {
+@ExtendWith(MockitoExtension.class)
+class MessageHandlerTest {
 
-  private final Class<T> handledClass;
+  @Spy
+  private final MessageHandler<MessageTestImpl> victim = new MessageHandlerTestImpl();
 
   /**
-   * Constructs a handler with the class of handled type.
-   *
-   * @param handledClass The class of handle type.
+   * Test for {@link MessageHandler#handleMessage(Message)} method.
+   * Inactive message.
    */
-  public MessageHandler(@Nonnull final Class<T> handledClass) {
-    this.handledClass = handledClass;
+  @DisplayName("Handle message - Inactive message")
+  @Test
+  void testHandleMessageInactiveMessage() {
+    final MessageTestImpl messageTest = mock(MessageTestImpl.class);
+
+    when(messageTest.isActive()).thenReturn(false);
+
+    victim.handleMessage(messageTest);
+
+    verify(victim, never()).handle(any(MessageTestImpl.class));
   }
 
   /**
-   * Handles a message.<br>
-   * Converts message and calls {@link MessageHandler#handle(Message)}.
-   *
-   * @param message The message to handle.
+   * Test for {@link MessageHandler#handleMessage(Message)} method.
+   * Non assignable message.
    */
-  public void handleMessage(@Nonnull final Message message) {
-    if (message.isActive() && message.getClass().isAssignableFrom(handledClass)) {
-      handle(handledClass.cast(message));
-    }
+  @DisplayName("Handle message - Non assignable message")
+  @Test
+  void testHandleMessageNonAssignableMessage() {
+    final Message messageTest = mock(Message.class);
+
+    when(messageTest.isActive()).thenReturn(true);
+
+    victim.handleMessage(messageTest);
+
+    verify(victim, never()).handle(any(MessageTestImpl.class));
   }
 
   /**
-   * Handles casted event.
-   *
-   * @param event The casted event to handle.
-   * @see MessageHandler#handleMessage(Message)
+   * Test for {@link MessageHandler#handleMessage(Message)} method.
    */
-  protected abstract void handle(@Nonnull final T event);
+  @DisplayName("Handle message")
+  @Test
+  void testHandleMessage() {
+    final MessageTestImpl messageTest = new MessageTestImpl((short) 10);
+
+    victim.handleMessage(messageTest);
+
+    verify(victim).handle(any(MessageTestImpl.class));
+  }
+
 
 }

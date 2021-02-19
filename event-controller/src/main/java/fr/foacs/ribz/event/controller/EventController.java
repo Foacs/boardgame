@@ -100,7 +100,7 @@ public class EventController extends MessageController<Event> implements Runnabl
   public void tick() {
     getMessageQueue().poll().ifPresent((Event event) -> {
       log.debug("Treat event {}", event);
-      EventHandlerFactory.getInstance().getHandler(event.getClass())
+      EventHandlerFactory.getInstance().getHandlerSet(event.getClass())
           .forEach(eventHandler -> eventHandler.handleMessage(event));
     });
   }

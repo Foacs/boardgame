@@ -41,6 +41,7 @@ import org.junit.jupiter.api.Test;
 
 import static java.lang.Math.signum;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -94,5 +95,20 @@ class MessageTest {
 
     assertEquals(0, high1PriorityEvent.compareTo(high2PriorityEvent));
     assertEquals(signum(high1PriorityEvent.compareTo(lowPriorityEvent)), signum(high2PriorityEvent.compareTo(lowPriorityEvent)));
+  }
+
+  /**
+   * Test for {@link Message#cancel()} method.
+   */
+  @DisplayName("Cancel")
+  @Test
+  void testCancel() {
+    final MessageTestImpl messageTest = new MessageTestImpl((short) 10);
+
+    assertTrue(messageTest.isActive());
+
+    messageTest.cancel();
+
+    assertFalse(messageTest.isActive());
   }
 }

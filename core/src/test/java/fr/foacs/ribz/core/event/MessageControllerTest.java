@@ -34,17 +34,48 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.ribz.core;
+package fr.foacs.ribz.core.event;
+
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.internal.util.reflection.FieldSetter;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.verify;
 
 /**
- * Interface to handle splashScreen for desktop version.
+ * Tests for {@link MessageController} class.
  *
  * @since 0.1
  */
-public interface SplashScreenWorker {
+@ExtendWith(MockitoExtension.class)
+class MessageControllerTest {
+
+  private final MessageControllerTestImpl victim = new MessageControllerTestImpl();
+
+  @Mock
+  private MessageQueue<Message> messageQueue;
 
   /**
-   * Closes the splashscreen after loading.
+   * Test for {@link MessageController#dispatchMessage(Message)} method.
    */
-  void closeSplashScreen();
+  @SneakyThrows
+  @DisplayName("Dispatch message")
+  @Test
+  void testDispatchMessage() {
+
+    final MessageTestImpl messageTest = new MessageTestImpl((short) 10);
+
+    FieldSetter.setField(victim, MessageController.class.getDeclaredField("messageQueue"), messageQueue);
+
+    victim.dispatchMessage(messageTest);
+
+    assertSame(messageQueue, victim.getMessageQueue());
+    verify(messageQueue).add(messageTest);
+  }
+
 }

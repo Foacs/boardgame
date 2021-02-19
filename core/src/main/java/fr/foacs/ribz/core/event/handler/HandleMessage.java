@@ -64,5 +64,5 @@ public @interface HandleMessage {
    *
    * @return The priority of handler.
    */
-  short priority() default 0;
+  short priority() default Short.MAX_VALUE;
 }
