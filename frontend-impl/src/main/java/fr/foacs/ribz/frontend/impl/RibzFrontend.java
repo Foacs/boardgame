@@ -44,6 +44,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.utils.Disposable;
 import fr.foacs.ribz.core.event.MessageListener;
 import fr.foacs.ribz.core.utils.PropertiesLoader;
 import fr.foacs.ribz.event.controller.events.Event;
@@ -56,6 +57,7 @@ import fr.foacs.ribz.frontend.impl.screens.BoardGameScreens;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -85,11 +87,9 @@ public class RibzFrontend implements BoardGameController, Frontend {
   private ShapeRenderer shapeRenderer;
 
   @Getter
-  @Setter
   private SpriteBatch batch;
 
   @Getter
-  @Setter
   private OrthographicCamera camera;
   @Getter
   @Setter
@@ -136,12 +136,8 @@ public class RibzFrontend implements BoardGameController, Frontend {
     if (Objects.nonNull(splashScreenWorker)) {
       this.splashScreenWorker.closeSplashScreen();
     }
-    if (Objects.isNull(this.batch)) {
-      this.batch = new SpriteBatch();
-    }
-    if (Objects.isNull(this.camera)) {
-      this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    }
+    this.batch = new SpriteBatch();
+    this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     this.cameraInputProcessor = new CameraInputProcessor(this.camera);
     Gdx.input.setInputProcessor(this.cameraInputProcessor);
     this.shapeRenderer = new ShapeRenderer();
@@ -225,15 +221,17 @@ public class RibzFrontend implements BoardGameController, Frontend {
    */
   @Override
   public void dispose() {
+    log.info("Dispose frontend.");
     if (Objects.nonNull(getMessageListener())) {
       getMessageListener().dispatchMessage(new LifeCycleEvent(LifeCycleEvent.Type.DISPOSE));
     }
-    log.info("Dispose frontend.");
-    this.batch.dispose();
-    this.shapeRenderer.dispose();
-    this.assetManager.dispose();
+    if (Objects.nonNull(screen)) {
+      this.screen.dispose();
+    }
+    disposeIfNonNull(batch);
+    disposeIfNonNull(shapeRenderer);
+    disposeIfNonNull(assetManager);
   }
-
 
   /**
    * Sets the current screen. {@link Screen#hide()} is called on any old screen, and {@link Screen#show()} is called on the new
@@ -242,7 +240,7 @@ public class RibzFrontend implements BoardGameController, Frontend {
    * @param screen may be {@code null}
    */
   @Override
-  public void setScreen(Screen screen) {
+  public void setScreen(@Nullable Screen screen) {
     if (this.screen != null) {
       this.screen.hide();
     }
@@ -259,5 +257,11 @@ public class RibzFrontend implements BoardGameController, Frontend {
   private void loadAssets() {
     this.assetManager.load("boards/test.tmx", TiledMap.class);
     this.assetManager.finishLoading();
+  }
+
+  private <T extends Disposable> void disposeIfNonNull(final T object) {
+    if (Objects.nonNull(object)) {
+      object.dispose();
+    }
   }
 }

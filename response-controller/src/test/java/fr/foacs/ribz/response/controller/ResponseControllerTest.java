@@ -130,7 +130,7 @@ class ResponseControllerTest {
 
   /**
    * Test for {@link ResponseController#render()} method.
-   * Delegate to frontend.
+   * Poll events.
    */
   @SneakyThrows
   @DisplayName("Render - Poll event")
@@ -145,10 +145,10 @@ class ResponseControllerTest {
 
   /**
    * Test for {@link ResponseController#render()} method.
-   * Delegate to frontend.
+   * Trigger event handler.
    */
   @SneakyThrows
-  @DisplayName("Render - Poll event")
+  @DisplayName("Render - Trigger event handler")
   @Test
   void testRenderTriggerHandler() {
     FieldSetter.setField(ResponseController.getInstance(), MessageController.class.getDeclaredField("messageQueue"), messageQueue);
