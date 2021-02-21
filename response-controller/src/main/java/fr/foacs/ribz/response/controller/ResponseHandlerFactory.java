@@ -37,6 +37,8 @@
 package fr.foacs.ribz.response.controller;
 
 import fr.foacs.ribz.core.event.handler.MessageHandlerFactory;
+import fr.foacs.ribz.response.controller.handlers.ResponseHandler;
+import fr.foacs.ribz.response.controller.responses.Response;
 import lombok.Getter;
 
 /**

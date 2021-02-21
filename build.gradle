@@ -49,6 +49,7 @@ subprojects {
 
         /*Google guava*/
         implementation 'com.google.guava:guava:28.2-jre'
+        testImplementation 'com.google.guava:guava-testlib:28.2-jre'
         compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
     }
 

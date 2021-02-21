@@ -131,7 +131,7 @@ public class RibzFrontend implements BoardGameController, Frontend {
   @Override
   public void init() {
     if (Objects.nonNull(getMessageListener())) {
-      getMessageListener().dispatchMessage(new LifeCycleEvent(LifeCycleEvent.LifeCycleEventType.INIT));
+      getMessageListener().dispatchMessage(new LifeCycleEvent(LifeCycleEvent.Type.INIT));
     }
     if (Objects.nonNull(splashScreenWorker)) {
       this.splashScreenWorker.closeSplashScreen();
@@ -188,7 +188,7 @@ public class RibzFrontend implements BoardGameController, Frontend {
       screen.pause();
     }
     if (Objects.nonNull(getMessageListener())) {
-      getMessageListener().dispatchMessage(new LifeCycleEvent(LifeCycleEvent.LifeCycleEventType.PAUSE));
+      getMessageListener().dispatchMessage(new LifeCycleEvent(LifeCycleEvent.Type.PAUSE));
     }
   }
 
@@ -202,7 +202,7 @@ public class RibzFrontend implements BoardGameController, Frontend {
       screen.resume();
     }
     if (Objects.nonNull(getMessageListener())) {
-      getMessageListener().dispatchMessage(new LifeCycleEvent(LifeCycleEvent.LifeCycleEventType.RESUME));
+      getMessageListener().dispatchMessage(new LifeCycleEvent(LifeCycleEvent.Type.RESUME));
     }
   }
 
@@ -226,7 +226,7 @@ public class RibzFrontend implements BoardGameController, Frontend {
   @Override
   public void dispose() {
     if (Objects.nonNull(getMessageListener())) {
-      getMessageListener().dispatchMessage(new LifeCycleEvent(LifeCycleEvent.LifeCycleEventType.DISPOSE));
+      getMessageListener().dispatchMessage(new LifeCycleEvent(LifeCycleEvent.Type.DISPOSE));
     }
     log.info("Dispose frontend.");
     this.batch.dispose();

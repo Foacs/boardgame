@@ -34,70 +34,24 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.ribz.backend.impl;
+package fr.foacs.ribz.response.controller.responses;
 
-import fr.foacs.ribz.backend.api.Backend;
-import fr.foacs.ribz.core.event.MessageListener;
-import fr.foacs.ribz.response.controller.responses.Response;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+import fr.foacs.ribz.core.event.Message;
 
 /**
- * Entry point of Ribz back end.<br>
- * It should be initialised with:
- * {@code RibzBackend.getInstance().setMessageListener(messageListenerInstance)}.
+ * Responses dispatched by the backend and listen by the frontend.
  *
  * @since 0.1
  */
-@Slf4j
-public class RibzBackend implements Backend {
-
-  @Getter
-  @NonNull
-  private static final RibzBackend instance = new RibzBackend();
-
-  @Getter
-  @Setter
-  private MessageListener<Response> messageListener;
+public abstract class Response extends Message {
 
   /**
-   * Hides the default constructor.
+   * Creates a response.
+   *
+   * @param priority Priority of the response (lower value is higher priority).
    */
-  private RibzBackend() {
-    log.info("Starting RIBZ backend.");
+  public Response(short priority) {
+    super(priority);
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void init() {
-    log.info("Init backend");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void pause() {
-    log.info("Pause backend");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void resume() {
-    log.info("Resume backend");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void dispose() {
-    log.info("Dispose backend");
-  }
 }

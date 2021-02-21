@@ -37,100 +37,97 @@
 package fr.foacs.ribz.event.controller;
 
 import fr.foacs.ribz.core.event.MessageController;
-import fr.foacs.ribz.core.event.handler.MessageHandlerFactory;
+import fr.foacs.ribz.core.event.MessageQueue;
 import fr.foacs.ribz.event.controller.events.Event;
-import fr.foacs.ribz.event.controller.handlers.EventHandler;
+import fr.foacs.ribz.event.controller.events.EventTestImpl;
+import fr.foacs.ribz.event.controller.handlers.EventHandlerTestImpl;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.internal.util.reflection.FieldSetter;
 import org.mockito.junit.jupiter.MockitoExtension;
-import java.util.HashMap;
 import java.util.Optional;
-import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
  * Test for {@link EventController} class.
+ *
+ * @since 0.1
  */
 @ExtendWith(MockitoExtension.class)
-@Slf4j
-@DisplayName("Event controller")
 class EventControllerTest {
 
-  @Spy
-  private final EventController victim = EventController.getInstance();
   @Mock
-  private EventQueue messageQueue;
-  @Mock
-  private EventHandler<EventTestImpl> messageHandler;
+  private MessageQueue<Event> messageQueue;
+
+  /**
+   * Test for {@link EventController#getInstance()} method.
+   * Singleton non null.
+   */
+  @DisplayName("Singleton - non null")
+  @Test
+  void testGetInstanceNonNull() {
+    assertNotNull(EventController.getInstance());
+  }
 
   /**
    * Test for {@link EventController#tick()} method.
-   * Tick polls event.
+   * Delegate to frontend.
    */
-  @DisplayName("Tick: Poll event")
+  @SneakyThrows
+  @DisplayName("Tick - Poll event")
   @Test
   void testTickPollEvent() {
+    FieldSetter.setField(EventController.getInstance(), MessageController.class.getDeclaredField("messageQueue"), messageQueue);
 
-    setMockEventQueue();
+    EventController.getInstance().tick();
 
-    victim.tick();
-
-    verify(messageQueue).poll();
+    verify(messageQueue, atLeastOnce()).poll();
   }
 
   /**
    * Test for {@link EventController#tick()} method.
-   * Tick handle events.
+   * Trigger handler.
    */
-  @DisplayName("Tick: handle event")
+  @SneakyThrows
+  @DisplayName("Render - Poll event")
   @Test
-  void testTickHandleEvent() {
+  void testRenderTriggerHandler() {
+    FieldSetter.setField(EventController.getInstance(), MessageController.class.getDeclaredField("messageQueue"), messageQueue);
+    EventHandlerTestImpl.setCalled(false);
 
-    final EventTestImpl event = new EventTestImpl((short) 20);
+    when(messageQueue.poll()).thenReturn(Optional.of(new EventTestImpl((short) 10)));
 
-    setMockEventQueue();
-    setMockEventHandlerCache();
+    EventController.getInstance().tick();
 
-    when(messageQueue.poll()).thenReturn(Optional.of(event));
-
-    victim.tick();
-
-    verify(messageHandler).handleMessage(event);
+    assertTrue(EventHandlerTestImpl.isCalled());
   }
+
 
   /**
-   * Test for {@link EventController#dispatchMessage(Event)} method.
+   * Test for {@link EventController#dispose()} method.
+   * Stop thread.
    */
-  @DisplayName("dispatch event")
+  @SneakyThrows
+  @DisplayName("Dispose - Stop thread")
   @Test
-  void testDispatchEvent() {
+  void testDisposeStopThread() {
+    ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    final EventTestImpl event = new EventTestImpl((short) 20);
+    executor.submit(() -> EventController.getInstance().run());
 
-    setMockEventQueue();
-
-    victim.dispatchMessage(event);
-
-    verify(messageQueue).add(event);
-  }
-
-  @SneakyThrows
-  private void setMockEventQueue() {
-    FieldSetter.setField(victim, MessageController.class.getDeclaredField("messageQueue"), messageQueue);
-  }
-
-  @SneakyThrows
-  private void setMockEventHandlerCache() {
-    final HashMap<Class<? extends Event>, Set<EventHandler<? extends Event>>> mockCache = new HashMap<>();
-    mockCache.put(EventTestImpl.class, Set.of(messageHandler));
-    FieldSetter.setField(EventHandlerFactory.getInstance(), MessageHandlerFactory.class.getDeclaredField("cache"), mockCache);
+    executor.shutdown();
+    EventController.getInstance().dispose();
+    assertTrue(executor.awaitTermination(5, TimeUnit.SECONDS));
   }
 }

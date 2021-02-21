@@ -34,70 +34,26 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.ribz.backend.impl;
+package fr.foacs.ribz.response.controller.handlers;
 
-import fr.foacs.ribz.backend.api.Backend;
-import fr.foacs.ribz.core.event.MessageListener;
+import fr.foacs.ribz.core.event.handler.MessageHandler;
 import fr.foacs.ribz.response.controller.responses.Response;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
 /**
- * Entry point of Ribz back end.<br>
- * It should be initialised with:
- * {@code RibzBackend.getInstance().setMessageListener(messageListenerInstance)}.
+ * Handler for {@link Response}.
  *
+ * @param <T> The type of the response handled.
  * @since 0.1
  */
-@Slf4j
-public class RibzBackend implements Backend {
-
-  @Getter
-  @NonNull
-  private static final RibzBackend instance = new RibzBackend();
-
-  @Getter
-  @Setter
-  private MessageListener<Response> messageListener;
+public abstract class ResponseHandler<T extends Response> extends MessageHandler<T> {
 
   /**
-   * Hides the default constructor.
+   * Constructs a handler with the class of handled type.
+   *
+   * @param handledClass The class of handle type.
    */
-  private RibzBackend() {
-    log.info("Starting RIBZ backend.");
+  public ResponseHandler(Class<T> handledClass) {
+    super(handledClass);
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void init() {
-    log.info("Init backend");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void pause() {
-    log.info("Pause backend");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void resume() {
-    log.info("Resume backend");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void dispose() {
-    log.info("Dispose backend");
-  }
 }

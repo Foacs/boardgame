@@ -34,15 +34,47 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.ribz.event.controller;
+package fr.foacs.ribz.event.controller.events;
 
-import fr.foacs.ribz.core.event.MessageQueue;
-import fr.foacs.ribz.event.controller.events.Event;
+import com.google.common.testing.EqualsTester;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Queue of {@link Event}.
+ * Tests for {@link LifeCycleEvent} class.
  *
  * @since 0.1
  */
-public class EventQueue extends MessageQueue<Event> {
+class LifeCycleEventTest {
+
+  /**
+   * Test for {@link LifeCycleEvent#LifeCycleEvent(LifeCycleEvent.Type)} constructor.
+   * Initialize properly value.
+   */
+  @DisplayName("Constructor - Init value")
+  @Test
+  void testConstructor() {
+    final LifeCycleEvent lifeCycleEvent = new LifeCycleEvent(LifeCycleEvent.Type.DISPOSE);
+    assertEquals(LifeCycleEvent.Type.DISPOSE, lifeCycleEvent.getType());
+  }
+
+  /**
+   * Test for {@link LifeCycleEventTest#equals(Object)} method.
+   */
+  @DisplayName("Equals")
+  @Test
+  void testEquals() {
+    // Beta feature - acceptable in test
+    //noinspection UnstableApiUsage
+    new EqualsTester()
+        .addEqualityGroup(new LifeCycleEvent(LifeCycleEvent.Type.INIT), new LifeCycleEvent(LifeCycleEvent.Type.INIT))
+        .addEqualityGroup(new LifeCycleEvent(LifeCycleEvent.Type.PAUSE), new LifeCycleEvent(LifeCycleEvent.Type.PAUSE))
+        .addEqualityGroup(new LifeCycleEvent(LifeCycleEvent.Type.RESUME), new LifeCycleEvent(LifeCycleEvent.Type.RESUME))
+        .addEqualityGroup(new LifeCycleEvent(LifeCycleEvent.Type.DISPOSE), new LifeCycleEvent(LifeCycleEvent.Type.DISPOSE))
+        .testEquals();
+  }
+
+
 }

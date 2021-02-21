@@ -34,24 +34,20 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.ribz.event.controller;
-
-import fr.foacs.ribz.core.event.Message;
-import fr.foacs.ribz.event.controller.events.Event;
+package fr.foacs.ribz.response.controller.responses;
 
 /**
- * Mock for {@link Message} class.
+ * Test implementation for {@link Response} class.
  *
  * @since 0.1
  */
-public class EventTestImpl extends Event {
-
+public class ResponseTestImpl extends Response {
   /**
-   * Default constructor.
+   * Creates a response.
    *
-   * @param eventPriority The event priority.
+   * @param priority Priority of the response (lower value is higher priority).
    */
-  public EventTestImpl(short eventPriority) {
-    super(eventPriority);
+  public ResponseTestImpl(short priority) {
+    super(priority);
   }
 }

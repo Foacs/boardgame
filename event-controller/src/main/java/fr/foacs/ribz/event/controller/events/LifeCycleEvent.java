@@ -50,22 +50,22 @@ import javax.annotation.Nonnull;
 @EqualsAndHashCode(callSuper = false)
 public class LifeCycleEvent extends Event {
 
-  private final LifeCycleEventType lifeCycleEventType;
+  private final Type type;
 
   /**
    * Creates a application's lifecycle event.
    *
-   * @param lifeCycleEventType The lifecycle event type.
+   * @param type The lifecycle event type.
    */
-  public LifeCycleEvent(@Nonnull final LifeCycleEventType lifeCycleEventType) {
+  public LifeCycleEvent(@Nonnull final Type type) {
     super((short) 0);
-    this.lifeCycleEventType = lifeCycleEventType;
+    this.type = type;
   }
 
   /**
    * Type of lifecycle event.
    */
-  public enum LifeCycleEventType {
+  public enum Type {
     INIT,
     PAUSE,
     RESUME,

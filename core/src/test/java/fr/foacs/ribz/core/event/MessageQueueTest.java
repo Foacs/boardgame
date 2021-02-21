@@ -98,7 +98,7 @@ class MessageQueueTest {
     executor.shutdown();
 
     int queueSize = 0;
-    if (executor.awaitTermination(1000, TimeUnit.SECONDS)) {
+    if (executor.awaitTermination(5, TimeUnit.SECONDS)) {
       while (victim.poll().isPresent()) {
         queueSize++;
       }
@@ -146,7 +146,7 @@ class MessageQueueTest {
     }
 
     executor.shutdown();
-    assertTrue(executor.awaitTermination(1000, TimeUnit.SECONDS));
+    assertTrue(executor.awaitTermination(5, TimeUnit.SECONDS));
     assertTrue(resultMessageList.containsAll(Arrays.asList(expectedMessageArray)));
   }
 

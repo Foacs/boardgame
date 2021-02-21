@@ -56,36 +56,41 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class PropertiesLoaderTest {
 
   /**
-   * Test the {@link PropertiesLoader#loadProperties(String)} method with null parameters
+   * Test for {@link PropertiesLoader#loadProperties(String)} method.
+   * Null parameters
    */
-  @DisplayName("Load properties: null parameter")
+  @DisplayName("Load properties - null parameter")
   @Test
   void testLoadPropertiesNullPropertiesName() {
+    //noinspection ConstantConditions
     assertThrows(NullPointerException.class, () -> PropertiesLoader.loadProperties(null));
   }
 
   /**
-   * Test the {@link PropertiesLoader#loadProperties(String)} method with empty parameters
+   * Test for {@link PropertiesLoader#loadProperties(String)} method.
+   * Empty parameters
    */
-  @DisplayName("Load properties: empty parameter")
+  @DisplayName("Load properties - empty parameter")
   @Test
   void testLoadPropertiesEmptyPropertiesName() {
     assertThrows(IllegalArgumentException.class, () -> PropertiesLoader.loadProperties(""));
   }
 
   /**
-   * Test the {@link PropertiesLoader#loadProperties(String)} method with blank parameters
+   * Test for {@link PropertiesLoader#loadProperties(String)} method.
+   * Blank parameters
    */
-  @DisplayName("Load properties: blank parameter")
+  @DisplayName("Load properties - blank parameter")
   @Test
   void testLoadPropertiesBlankPropertiesName() {
     assertThrows(IllegalArgumentException.class, () -> PropertiesLoader.loadProperties("   "));
   }
 
   /**
-   * Test the {@link PropertiesLoader#loadProperties(String)} method with invalid parameters
+   * Test for {@link PropertiesLoader#loadProperties(String)} method.
+   * Invalid parameters
    */
-  @DisplayName("Load properties: invalide parameter")
+  @DisplayName("Load properties - invalide parameter")
   @Test
   void testLoadPropertiesInvalidPropertiesName() {
     final Properties properties = PropertiesLoader.loadProperties("invalid");
@@ -94,7 +99,7 @@ class PropertiesLoaderTest {
   }
 
   /**
-   * Test the {@link PropertiesLoader#loadProperties(String)} method
+   * Test for {@link PropertiesLoader#loadProperties(String)} method.
    */
   @DisplayName("Load properties")
   @Test
@@ -106,7 +111,7 @@ class PropertiesLoaderTest {
   }
 
   /**
-   * Test the {@link PropertiesLoader} constructor
+   * Test for {@link PropertiesLoader} constructor.
    */
   @DisplayName("Load properties constructor")
   @Test

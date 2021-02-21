@@ -39,6 +39,7 @@ package fr.foacs.ribz.response.controller;
 import com.badlogic.gdx.ApplicationListener;
 import fr.foacs.ribz.core.event.MessageController;
 import fr.foacs.ribz.frontend.api.Frontend;
+import fr.foacs.ribz.response.controller.responses.Response;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

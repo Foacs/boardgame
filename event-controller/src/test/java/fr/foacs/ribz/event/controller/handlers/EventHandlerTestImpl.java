@@ -34,24 +34,38 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.ribz.response.controller;
+package fr.foacs.ribz.event.controller.handlers;
 
-import fr.foacs.ribz.core.event.Message;
+import fr.foacs.ribz.core.event.handler.HandleMessage;
+import fr.foacs.ribz.event.controller.events.EventTestImpl;
+import lombok.Getter;
+import lombok.Setter;
+import javax.annotation.Nonnull;
 
 /**
- * Responses dispatched by the backend and listen by the frontend.
+ * Test implementaion for {@link EventHandler} class.
  *
  * @since 0.1
  */
-public abstract class Response extends Message {
+@HandleMessage(EventTestImpl.class)
+public class EventHandlerTestImpl extends EventHandler<EventTestImpl> {
+
+  @Getter
+  @Setter
+  private static boolean called = false;
 
   /**
-   * Creates a response.
-   *
-   * @param priority Priority of the response (lower value is higher priority).
+   * Constructs a handler with the class of handled type.
    */
-  public Response(short priority) {
-    super(priority);
+  public EventHandlerTestImpl() {
+    super(EventTestImpl.class);
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected void handle(@Nonnull EventTestImpl event) {
+    EventHandlerTestImpl.called = true;
+  }
 }

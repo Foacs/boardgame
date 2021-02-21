@@ -36,6 +36,7 @@
 
 package fr.foacs.ribz.core.event;
 
+import com.google.common.testing.EqualsTester;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -110,5 +111,23 @@ class MessageTest {
     messageTest.cancel();
 
     assertFalse(messageTest.isActive());
+  }
+
+
+  /**
+   * Test for {@link Message#equals(Object)} method.
+   */
+  @DisplayName("Equals")
+  @Test
+  void testEquals() {
+    final MessageTestImpl messageTestCanceled = new MessageTestImpl((short) 30);
+    messageTestCanceled.cancel();
+    // Beta feature - acceptable in test
+    //noinspection UnstableApiUsage
+    new EqualsTester()
+        .addEqualityGroup(new MessageTestImpl((short) 10), new MessageTestImpl((short) 10))
+        .addEqualityGroup(new MessageTestImpl((short) 20), new MessageTestImpl((short) 20))
+        .addEqualityGroup(new MessageTestImpl((short) 30), messageTestCanceled)
+        .testEquals();
   }
 }

@@ -37,50 +37,80 @@
 package fr.foacs.ribz.event.controller.handlers;
 
 import fr.foacs.ribz.backend.api.Backend;
-import fr.foacs.ribz.core.event.handler.HandleMessage;
 import fr.foacs.ribz.event.controller.EventController;
 import fr.foacs.ribz.event.controller.events.LifeCycleEvent;
-import javax.annotation.Nonnull;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.mockito.Mockito.verify;
 
 /**
- * Handles {@link LifeCycleEvent}.<br>
- * Calls lifecycle' function in backend.
+ * Test for {@link LifeCycleEventHandler} class.
  *
  * @since 0.1
  */
-@HandleMessage(LifeCycleEvent.class)
-public final class LifeCycleEventHandler extends EventHandler<LifeCycleEvent> {
+@ExtendWith(MockitoExtension.class)
+class LifeCycleEventHandlerTest {
 
-  /**
-   * Constructs a handler with the class of handled type.
-   */
-  public LifeCycleEventHandler() {
-    super(LifeCycleEvent.class);
+  private final LifeCycleEventHandler victim = new LifeCycleEventHandler();
+
+  @Mock
+  private Backend backend;
+
+  @BeforeEach
+  void init() {
+    EventController.getInstance().setBackend(backend);
   }
 
   /**
-   * Handles lifecycle event.<br>
-   * Triggers {@link fr.foacs.ribz.core.api.LifeCycleAware}'s method on backend and controller.
+   * Test for {@link LifeCycleEventHandler#handle(LifeCycleEvent)} method.
+   * Delegate {@link LifeCycleEvent.Type#INIT} to Backend.
    */
-  @Override
-  protected void handle(@Nonnull final LifeCycleEvent event) {
-    final Backend backend = EventController.getInstance().getBackend();
-    switch (event.getType()) {
-      case INIT:
-        backend.init();
-        break;
-      case PAUSE:
-        backend.pause();
-        break;
-      case RESUME:
-        backend.resume();
-        break;
-      case DISPOSE:
-        backend.dispose();
-        EventController.getInstance().dispose();
-        break;
-      default:
-        // Nothing to do
-    }
+  @DisplayName("Handle - delegate INIT to backend")
+  @Test
+  void testHandleInit() {
+    victim.handle(new LifeCycleEvent(LifeCycleEvent.Type.INIT));
+
+    verify(backend).init();
+  }
+
+  /**
+   * Test for {@link LifeCycleEventHandler#handle(LifeCycleEvent)} method.
+   * Delegate {@link LifeCycleEvent.Type#PAUSE} to Backend.
+   */
+  @DisplayName("Handle - delegate PAUSE to backend")
+  @Test
+  void testHandlePause() {
+    victim.handle(new LifeCycleEvent(LifeCycleEvent.Type.PAUSE));
+
+    verify(backend).pause();
+  }
+
+  /**
+   * Test for {@link LifeCycleEventHandler#handle(LifeCycleEvent)} method.
+   * Delegate {@link LifeCycleEvent.Type#RESUME} to Backend.
+   */
+  @DisplayName("Handle - delegate RESUME to backend")
+  @Test
+  void testHandleResume() {
+    victim.handle(new LifeCycleEvent(LifeCycleEvent.Type.RESUME));
+
+    verify(backend).resume();
+  }
+
+  /**
+   * Test for {@link LifeCycleEventHandler#handle(LifeCycleEvent)} method.
+   * Delegate {@link LifeCycleEvent.Type#DISPOSE} to Backend.
+   */
+  @DisplayName("Handle - delegate DISPOSE to backend")
+  @Test
+  void testHandleDispose() {
+    victim.handle(new LifeCycleEvent(LifeCycleEvent.Type.DISPOSE));
+
+    verify(backend).dispose();
   }
 }

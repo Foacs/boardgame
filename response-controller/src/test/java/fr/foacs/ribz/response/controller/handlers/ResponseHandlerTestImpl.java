@@ -34,25 +34,38 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.ribz.response.controller;
+package fr.foacs.ribz.response.controller.handlers;
 
-import fr.foacs.ribz.core.event.handler.MessageHandler;
+import fr.foacs.ribz.core.event.handler.HandleMessage;
+import fr.foacs.ribz.response.controller.responses.ResponseTestImpl;
+import lombok.Getter;
+import lombok.Setter;
+import javax.annotation.Nonnull;
 
 /**
- * Handler for {@link Response}.
+ * Test implementation for {@link ResponseHandler} class.
  *
- * @param <T> The type of the response handled.
  * @since 0.1
  */
-public abstract class ResponseHandler<T extends Response> extends MessageHandler<T> {
+@HandleMessage(ResponseTestImpl.class)
+public class ResponseHandlerTestImpl extends ResponseHandler<ResponseTestImpl> {
+
+  @Getter
+  @Setter
+  private static boolean called = false;
 
   /**
    * Constructs a handler with the class of handled type.
-   *
-   * @param handledClass The class of handle type.
    */
-  public ResponseHandler(Class<T> handledClass) {
-    super(handledClass);
+  public ResponseHandlerTestImpl() {
+    super(ResponseTestImpl.class);
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected void handle(@Nonnull ResponseTestImpl event) {
+    ResponseHandlerTestImpl.called = true;
+  }
 }

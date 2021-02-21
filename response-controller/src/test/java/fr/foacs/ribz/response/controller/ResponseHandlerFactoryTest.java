@@ -34,70 +34,28 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-package fr.foacs.ribz.backend.impl;
+package fr.foacs.ribz.response.controller;
 
-import fr.foacs.ribz.backend.api.Backend;
-import fr.foacs.ribz.core.event.MessageListener;
-import fr.foacs.ribz.response.controller.responses.Response;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
- * Entry point of Ribz back end.<br>
- * It should be initialised with:
- * {@code RibzBackend.getInstance().setMessageListener(messageListenerInstance)}.
+ * Tests for {@link ResponseHandlerFactory} class.
  *
  * @since 0.1
  */
-@Slf4j
-public class RibzBackend implements Backend {
-
-  @Getter
-  @NonNull
-  private static final RibzBackend instance = new RibzBackend();
-
-  @Getter
-  @Setter
-  private MessageListener<Response> messageListener;
+class ResponseHandlerFactoryTest {
 
   /**
-   * Hides the default constructor.
+   * Test for {@link ResponseHandlerFactory#getInstance()} method.
+   * Singleton non null.
    */
-  private RibzBackend() {
-    log.info("Starting RIBZ backend.");
+  @DisplayName("Singleton - non null")
+  @Test
+  void testGetInstanceNonNull() {
+    assertNotNull(ResponseHandlerFactory.getInstance());
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void init() {
-    log.info("Init backend");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void pause() {
-    log.info("Pause backend");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void resume() {
-    log.info("Resume backend");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void dispose() {
-    log.info("Dispose backend");
-  }
 }
