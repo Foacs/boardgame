@@ -38,6 +38,7 @@ package fr.foacs.ribz.core.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Validate;
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
@@ -56,12 +57,13 @@ public final class PropertiesLoader {
   }
 
   /**
-   * Load properties from a resource file by its name (without .properties extension).
+   * Loads properties from a resource file by its name (without .properties extension).
    *
    * @param propertiesResourceName The properties resource file without extension
    * @return The loaded properties.
    */
-  public static Properties loadProperties(final String propertiesResourceName) {
+  @Nonnull
+  public static Properties loadProperties(@Nonnull final String propertiesResourceName) {
     Validate.notBlank(propertiesResourceName, "You should specify a valid properties resource name");
     Properties properties = new Properties();
 

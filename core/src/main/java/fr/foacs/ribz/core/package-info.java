@@ -35,7 +35,9 @@
  */
 
 /**
- * Core features of RIBZ application.
- * Contains tools, common functions and util stuff for RIBZ application (backend and frontend).
+ * Core &amp; common features.<br>
+ * Contains tools, common functions and util stuff.
+ *
+ * @since 0.1
  */
 package fr.foacs.ribz.core;

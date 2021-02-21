@@ -49,13 +49,13 @@ subprojects {
 
         /*Google guava*/
         implementation 'com.google.guava:guava:28.2-jre'
+        testImplementation 'com.google.guava:guava-testlib:28.2-jre'
         compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
     }
 
     sonarqube {
         properties {
             property "sonar.sources", "src/main/java"
-            property "sonar.tests", "src/test/java"
         }
     }
 
@@ -107,7 +107,7 @@ sonarqube {
  * Generate doc under 'doc/latest'.
  */
 task ribzdoc(type: Javadoc) {
-    title "RIBZ Api"
+    title "RIBZ API"
 
     subprojects.each {
         source it.sourceSets.main.allJava
@@ -121,7 +121,7 @@ task ribzdoc(type: Javadoc) {
  * Generate doc under 'doc/version/{version_number}' with version number in title.
  */
 task ribzdocVersion(type: Javadoc) {
-    title "RIBZ Api version ${version}"
+    title "RIBZ API version ${version}"
 
     subprojects.each {
         source it.sourceSets.main.allJava

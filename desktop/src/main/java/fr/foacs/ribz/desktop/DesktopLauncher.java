@@ -38,12 +38,21 @@ package fr.foacs.ribz.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import fr.foacs.ribz.frontend.BoardGame;
-import fr.foacs.ribz.frontend.screens.BoardGameScreens;
+import fr.foacs.ribz.backend.impl.RibzBackend;
+import fr.foacs.ribz.event.controller.EventController;
+import fr.foacs.ribz.frontend.impl.RibzFrontend;
+import fr.foacs.ribz.frontend.impl.screens.BoardGameScreens;
+import fr.foacs.ribz.response.controller.ResponseController;
 
 /**
  * Desktop application entry point.
- * Instantiate a new {@link LwjglApplication} and give it {@link BoardGame} instance.
+ * Initialises {@link fr.foacs.ribz.backend.api.Backend} and {@link fr.foacs.ribz.frontend.api.Frontend}
+ * with {@link fr.foacs.ribz.core.event.MessageListener}.
+ * <br>
+ * Initialises {@link fr.foacs.ribz.core.event.MessageController} with {@link fr.foacs.ribz.backend.api.Backend}
+ * and {@link fr.foacs.ribz.frontend.api.Frontend}.
+ * <br>
+ * Instantiate a new {@link LwjglApplication}.
  *
  * @since 0.1
  */
@@ -51,7 +60,7 @@ public class DesktopLauncher {
 
   /**
    * Entry point.
-   * Create a {@link LwjglApplication}.
+   * Creates a {@link LwjglApplication}.
    *
    * @param args Application arguments
    */
@@ -59,8 +68,17 @@ public class DesktopLauncher {
     LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
     config.width = 1920;
     config.height = 1080;
-    BoardGame.getInstance().setSplashScreenWorker(new DesktopSplashScreenWorker());
-    BoardGame.getInstance().setGameScreens(BoardGameScreens.BOARD);
-    new LwjglApplication(BoardGame.getInstance(), config);
+    RibzFrontend.getInstance().setSplashScreenWorker(new DesktopSplashScreenWorker());
+    RibzFrontend.getInstance().setGameScreens(BoardGameScreens.BOARD);
+
+    // Sets frontend and backend in controller
+    EventController.getInstance().setBackend(RibzBackend.getInstance());
+    ResponseController.getInstance().setFrontend(RibzFrontend.getInstance());
+
+    // Sets message listener in backend and frontend
+    RibzFrontend.getInstance().setMessageListener(EventController.getInstance());
+    RibzBackend.getInstance().setMessageListener(ResponseController.getInstance());
+
+    new LwjglApplication(ResponseController.getInstance(), config);
   }
 }

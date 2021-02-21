@@ -36,7 +36,7 @@
 
 package fr.foacs.ribz.desktop;
 
-import fr.foacs.ribz.core.SplashScreenWorker;
+import fr.foacs.ribz.frontend.api.SplashScreenWorker;
 import java.awt.SplashScreen;
 import java.util.Objects;
 
