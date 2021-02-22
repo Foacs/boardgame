@@ -52,7 +52,7 @@ public abstract class EventHandler<T extends Event> extends MessageHandler<T> {
    *
    * @param handledClass The class of handle type.
    */
-  public EventHandler(Class<T> handledClass) {
+  protected EventHandler(Class<T> handledClass) {
     super(handledClass);
   }
 

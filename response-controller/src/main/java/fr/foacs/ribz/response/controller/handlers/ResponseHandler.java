@@ -52,7 +52,7 @@ public abstract class ResponseHandler<T extends Response> extends MessageHandler
    *
    * @param handledClass The class of handle type.
    */
-  public ResponseHandler(Class<T> handledClass) {
+  protected ResponseHandler(Class<T> handledClass) {
     super(handledClass);
   }
 
