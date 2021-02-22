@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>fr.foacs.ribz.backend.impl.RibzBackend</OriginalElement>
+  <nodes>
+    <node x="985.9999999999999" y="353.0">fr.foacs.ribz.frontend.impl.RibzFrontend</node>
+    <node x="361.58333333333326" y="0.0">fr.foacs.ribz.core.api.LifeCycleAware</node>
+    <node x="330.8611111111111" y="232.5">fr.foacs.ribz.backend.api.Backend</node>
+    <node x="0.0" y="553.0">fr.foacs.ribz.backend.impl.RibzBackend</node>
+    <node x="569.75" y="37.5">fr.foacs.ribz.core.event.MessageListener</node>
+    <node x="65.54513888888891" y="219.0">com.badlogic.gdx.utils.Disposable</node>
+    <node x="544.75" y="206.5">fr.foacs.ribz.core.event.MessageController</node>
+    <node x="902.375" y="194.0">fr.foacs.ribz.frontend.api.Frontend</node>
+    <node x="421.0" y="565.5">fr.foacs.ribz.event.controller.EventController</node>
+    <node x="693.0" y="528.0">fr.foacs.ribz.response.controller.ResponseController</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="fr.foacs.ribz.event.controller.EventController" target="fr.foacs.ribz.core.event.MessageController">
+      <point x="0.0" y="-92.0" />
+      <point x="547.0" y="328.0" />
+      <point x="579.75" y="328.0" />
+      <point x="-105.0" y="42.0" />
+    </edge>
+    <edge source="fr.foacs.ribz.frontend.impl.RibzFrontend" target="fr.foacs.ribz.frontend.api.Frontend">
+      <point x="-100.25" y="-304.5" />
+      <point x="1086.25" y="328.0" />
+      <point x="1053.875" y="328.0" />
+      <point x="50.5" y="54.5" />
+    </edge>
+    <edge source="fr.foacs.ribz.frontend.api.Frontend" target="fr.foacs.ribz.core.api.LifeCycleAware">
+      <point x="0.0" y="-54.5" />
+      <point x="1003.375" y="164.0" />
+      <point x="472.58333333333326" y="164.0" />
+      <point x="37.0" y="67.0" />
+    </edge>
+    <edge source="fr.foacs.ribz.response.controller.ResponseController" target="fr.foacs.ribz.core.event.MessageController">
+      <point x="-91.0" y="-129.5" />
+      <point x="738.5" y="328.0" />
+      <point x="719.75" y="328.0" />
+      <point x="35.0" y="42.0" />
+    </edge>
+    <edge source="fr.foacs.ribz.backend.impl.RibzBackend" target="fr.foacs.ribz.backend.api.Backend">
+      <point x="133.66666666666663" y="-104.5" />
+      <point x="334.16666666666663" y="328.0" />
+      <point x="355.3611111111111" y="328.0" />
+      <point x="-24.5" y="16.0" />
+    </edge>
+    <edge source="fr.foacs.ribz.core.event.MessageController" target="fr.foacs.ribz.core.event.MessageListener">
+      <point x="0.0" y="-42.0" />
+      <point x="0.0" y="29.5" />
+    </edge>
+    <edge source="fr.foacs.ribz.backend.api.Backend" target="fr.foacs.ribz.core.api.LifeCycleAware">
+      <point x="0.0" y="-16.0" />
+      <point x="379.8611111111111" y="164.0" />
+      <point x="398.58333333333326" y="164.0" />
+      <point x="-37.0" y="67.0" />
+    </edge>
+    <edge source="fr.foacs.ribz.backend.impl.RibzBackend" target="com.badlogic.gdx.utils.Disposable">
+      <point x="-133.66666666666663" y="-104.5" />
+      <point x="66.83333333333337" y="328.0" />
+      <point x="138.0451388888889" y="328.0" />
+      <point x="0.0" y="29.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.8578535891968728" x="693.5" y="481.0" />
+  <SelectedNodes>
+    <node>fr.foacs.ribz.frontend.impl.RibzFrontend</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+

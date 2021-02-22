@@ -1,5 +1,6 @@
 dependencies {
-    compile project(":core")
+    compile project(":backend-impl")
+    compile project(":frontend-impl")
     compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
     compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
@@ -17,6 +18,7 @@ task createProperties(dependsOn: processResources) {
 }
 classes.dependsOn createProperties
 
+setArchivesBaseName("ribz-desktop")
 
 project.ext.mainClassName = "fr.foacs.ribz.desktop.DesktopLauncher"
 
@@ -24,6 +26,25 @@ task run(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
-//    workingDir = project.assetsDir
-    ignoreExitValue = true
+    workingDir = sourceSets.main.output.resourcesDir
+    setIgnoreExitValue(true)
+}
+
+task dist(type: Jar) {
+    from {configurations.compile.collect {zipTree(it)}}
+    with jar
+    manifest {
+        attributes ('Main-Class': project.mainClassName, 'SplashScreen-Image': 'foacs.png')
+    }
+
+}
+
+dist.dependsOn classes
+
+/*
+ * No tests planed for this module
+ */
+sonarqube.properties{
+    property "sonar.coverage.jacoco.xmlReportPaths", ""
+    property "sonar.junit.reportPaths", ""
 }

@@ -1,8 +1,8 @@
 /*
  * Copyright or © or Copr. Foacs
- * contributor(s): Alexis DINQUER (17/09/2020 19:09)
- *
- * adinquer@yahoo.com
+ * contributor(s):
+ *  - Alexis DINQUER adinquer@yahoo.com
+ *  - Brice KESSLER brice.kessler@outlook.com
  *
  * This software is a computer program whose purpose is to develop and
  * play board game.
@@ -22,7 +22,7 @@
  * In this respect, the user's attention is drawn to the risks associated
  * with loading, using, modifying and/or developing or reproducing the
  * software by the user in light of its specific status of free software,
- * that may mean that it is complicated to manipulaten, and that also
+ * that may mean that it is complicated to manipulate, and that also
  * therefore means that it is reserved for developers and experienced
  * professionals having in-depth computer knowledge. Users are therefore
  * encourage to load and test the software's suitability as regards their
@@ -36,8 +36,9 @@
 
 package fr.foacs.ribz.core.utils;
 
-import fr.foacs.ribz.core.BoardGame;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.Validate;
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
@@ -45,26 +46,28 @@ import java.util.Properties;
 
 /**
  * Utility class to load from resource properties files.
+ *
  * @since 0.1
  */
 @Slf4j
 public final class PropertiesLoader {
 
   private PropertiesLoader() {
-    throw new UnsupportedOperationException("You cannot instantiate PropertiesLoader");
+    throw new AssertionError("You cannot instantiate PropertiesLoader");
   }
 
   /**
-   * Load properties from a resource file by its name (without .properties extension).
+   * Loads properties from a resource file by its name (without .properties extension).
    *
    * @param propertiesResourceName The properties resource file without extension
    * @return The loaded properties.
    */
-  public static Properties loadProperties(final String propertiesResourceName) {
-    ArgumentValidate.notBlank(propertiesResourceName, "You should specify a valid properties resource name");
+  @Nonnull
+  public static Properties loadProperties(@Nonnull final String propertiesResourceName) {
+    Validate.notBlank(propertiesResourceName, "You should specify a valid properties resource name");
     Properties properties = new Properties();
 
-    try (InputStream stream = BoardGame.class.getResourceAsStream("/" + propertiesResourceName + ".properties")) {
+    try (InputStream stream = PropertiesLoader.class.getResourceAsStream("/" + propertiesResourceName + ".properties")) {
       if (Objects.isNull(stream)) {
         throw new IOException("Unable to get stream for properties " + propertiesResourceName);
       }

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="SonarLintProjectSettings">
     <option name="bindingEnabled" value="true" />
-    <option name="projectKey" value="Foacs_boardgame" />
+    <option name="projectKey" value="Foacs_ribz" />
     <option name="serverId" value="sonarcloud" />
   </component>
 </project>

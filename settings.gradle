@@ -1,4 +1,10 @@
-rootProject.name = 'boardgame'
+rootProject.name = 'ribz'
 include 'core'
+include 'event-controller'
+include 'response-controller'
+include 'backend-api'
+include 'backend-impl'
+include 'frontend-api'
+include 'frontend-impl'
 include 'desktop'
 

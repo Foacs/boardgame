@@ -1,5 +1,12 @@
 language: java
 
+git:
+  depth: false
+
+env:
+  global:
+    - 'FTP_USER=ribzci@foacs.ovh'
+
 dist: trusty
 
 before_cache:
@@ -27,8 +34,24 @@ addons:
 
 script:
   - ./gradlew check
+  - ./gradlew jacocoTestReport
   - ./gradlew sonarqube
   - ./gradlew codeCoverageReport
+  - ./gradlew ribzdoc
+  - ./gradlew ribzdocVersion
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: cd ./build/doc/version/ && find . -type f -exec curl --ftp-create-dirs -u ribzci@foacs.ovh:$FTP_PASSWORD -T {} ftp://cpanel.freehosting.com/apidocs/{} \;
+    on:
+      tags: true
+      branch: master
+  - provider: script
+    skip_cleanup: true
+    script: cd ./build/doc/latest/ && find . -type f -exec curl --ftp-create-dirs -u ribzci@foacs.ovh:$FTP_PASSWORD -T {} ftp://cpanel.freehosting.com/apidocs/latest/{} \;
+    on:
+      branch: develop

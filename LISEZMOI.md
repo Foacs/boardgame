@@ -8,7 +8,7 @@ _[English](https://github.com/Foacs/ribz/blob/master/README.md)_
 
 ![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/foacs/ribz?include_prereleases)
 ![License](https://img.shields.io/badge/license-CeCILL-blue)
-
+[![javadoc](https://img.shields.io/badge/javadoc-0.1-blue)](http://foacs.ovh/ribz/apidocs/index.php)
 
 Application et library de jeu de plateau créé avec Java.
 
@@ -16,6 +16,7 @@ Application et library de jeu de plateau créé avec Java.
 - [Informations générales](#informations-gnrales)
 - [Technologies](#technologies)
 - [Configuration](#configuration)
+- [Documentation](#documentation)
 - [Licence](#licence)
 
 ## Informations générales
@@ -38,6 +39,23 @@ Pour le lancer:
 ```shell script
 ./gradlew run
 ```
+
+Pour creer le ficher JAR:
+```shell script
+./gradlew dist
+```
+Le fichier est disponible dans `desktop/build/lib/ribz-desktop-{VERSION}.jar`
+
+## Documentation
+### Où trouver la documentation
+La documentation Java est disponible [ici](http://foacs.ovh/ribz/apidocs/index.php)
+
+### Comment générer la javadoc
+Pour générer la javadoc, executez la commande:
+```shell script
+./gradlew ribzdoc
+```
+La documentation générée peut être trouvé dans le dossier `./build/doc/latest`.
 
 ## Licence
 > Vous pouvez accéder à la version complète de la licence [ici](https://github.com/Foacs/ribz/blob/master/LICENCliE.md)
