@@ -48,7 +48,7 @@ public abstract class Event extends Message {
    *
    * @param priority Priority of the event (lower value is higher priority).
    */
-  public Event(short priority) {
+  protected Event(short priority) {
     super(priority);
   }
 }

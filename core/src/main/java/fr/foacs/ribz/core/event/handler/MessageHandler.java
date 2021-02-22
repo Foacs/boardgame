@@ -53,7 +53,7 @@ public abstract class MessageHandler<T extends Message> {
    *
    * @param handledClass The class of handle type.
    */
-  public MessageHandler(@Nonnull final Class<T> handledClass) {
+  protected MessageHandler(@Nonnull final Class<T> handledClass) {
     this.handledClass = handledClass;
   }
 

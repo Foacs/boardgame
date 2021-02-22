@@ -50,7 +50,7 @@ public abstract class Response extends Message {
    *
    * @param priority Priority of the response (lower value is higher priority).
    */
-  public Response(short priority) {
+  protected Response(short priority) {
     super(priority);
   }
 
