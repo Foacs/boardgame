@@ -38,6 +38,7 @@ package fr.foacs.ribz.frontend.impl.controllers;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
@@ -64,6 +65,7 @@ class CameraInputProcessorTest {
   @BeforeAll
   static void setup() {
     Gdx.app = mock(Application.class);
+    Gdx.graphics = mock(Graphics.class);
   }
 
 
